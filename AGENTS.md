@@ -336,6 +336,7 @@ something. Do not invent experience for the child (or for the project) that does
 - `docs/ENGINE-GUIDE.md` — engine contract and rules.
 - `docs/TESTING.md` — mandatory test policy, browser verification, PR evidence.
 - `docs/BRANCH-PROTECTION.md` — how to require `ci-success` before merging.
+- `docs/DEPLOY.md` — GitHub Pages deployment and troubleshooting.
 - `docs/design/spec.md` — why the platform looks like this (historical).
 - `docs/TODO-age-groups.md` — planned multi-age work; read before adding age features.
 - `docs/AUDIO.md` — how effects and speech work, and how to change them.

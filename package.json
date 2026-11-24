@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "An offline first-computer school for children aged 5+, built by parents. German and English, no dependencies, no build step.",
+  "homepage": "https://chindlab.github.io/learning-adventures/",
   "license": "MIT",
   "keywords": [
     "education",

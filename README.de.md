@@ -89,6 +89,16 @@ npm run seed
 
 ---
 
+## Live-Seite
+
+**https://chindlab.github.io/learning-adventures/**
+
+Der `deploy`-Job veröffentlicht nur `index.html`, `css/`, `js/` und `assets/`, und erst
+nachdem die CI (`ci-success`) auf `main` grün ist. Einrichtung und Fehlersuche:
+**[docs/DEPLOY.md](docs/DEPLOY.md)**.
+
+---
+
 ## Was drin ist
 
 | | |
