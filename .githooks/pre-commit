@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#
+# Fast checks before a local commit: syntax + unit tests (≈1–2 s).
+# The browser self-test is too slow for every commit; CI runs it.
+#
+# Enable once per clone:  npm run hooks
+# Skip once:              git commit --no-verify
+#
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "pre-commit: Node not found, skipping tests."
+  exit 0
+fi
+
+echo "pre-commit: syntax + unit tests"
+npm run --silent check

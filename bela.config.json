@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "activeProfile": "p1",
+  "settings": {
+    "sound": true,
+    "speech": true,
+    "effects": true,
+    "reducedMotion": false
+  },
+  "profiles": [
+    {
+      "id": "p1",
+      "name": "",
+      "language": "de",
+      "unlockAll": false
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Bela – Selbsttest</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { padding: 24px; }
+    table { border-collapse: collapse; width: 100%; font-size: 15px; }
+    td, th { border-bottom: 1px solid #ddd; padding: 5px 8px; text-align: left; }
+    .row-ok { color: #2FA36B; }
+    .row-fail { color: #B03A3A; background: #FFF2F2; }
+    .summary-ok { color: #2FA36B; }
+    .summary-fail { color: #B03A3A; }
+    #host { position: absolute; left: -9999px; }
+  </style>
+</head>
+<body>
+  <h1>Bela – Selbsttest</h1>
+  <p>Nur für die Entwicklung. Spielt jede Aufgabe automatisch durch.</p>
+  <h2 id="summary">Läuft …</h2>
+  <ul id="failures"></ul>
+  <table>
+    <thead><tr><th>ID</th><th>Engine</th><th>Ergebnis</th><th>Grund</th></tr></thead>
+    <tbody id="results"></tbody>
+  </table>
+  <div id="host"></div>
+  <div id="bobby-layer" class="bobby-layer"></div>
+  <div id="live" class="sr-only" aria-live="polite"></div>
+
+  <script>window.__BELASCHOOL_SELFTEST__ = true;</script>
+
+  <script defer src="js/config/seed.js"></script>
+  <script defer src="js/core/app.js"></script>
+  <script defer src="js/core/progress.js"></script>
+  <script defer src="js/core/audio.js"></script>
+  <script defer src="js/core/speech.js"></script>
+  <script defer src="js/core/ui.js"></script>
+  <script defer src="js/core/icons.js"></script>
+  <script defer src="js/core/i18n.js"></script>
+  <script defer src="js/core/router.js"></script>
+
+  <script defer src="js/content/index.js"></script>
+  <script defer src="js/content/bobby-lines.js"></script>
+  <script defer src="js/content/words.js"></script>
+  <script defer src="js/content/stage1.js"></script>
+  <script defer src="js/content/stage2.js"></script>
+  <script defer src="js/content/stage3.js"></script>
+  <script defer src="js/content/stage4.js"></script>
+  <script defer src="js/content/stage5.js"></script>
+  <script defer src="js/content/stage6.js"></script>
+  <script defer src="js/content/stage7.js"></script>
+  <script defer src="js/content/stage8.js"></script>
+  <script defer src="js/content/stage9.js"></script>
+  <script defer src="js/content/en.js"></script>
+
+  <script defer src="js/engines/explain.js"></script>
+  <script defer src="js/engines/pickOne.js"></script>
+  <script defer src="js/engines/matchPairs.js"></script>
+  <script defer src="js/engines/dragDrop.js"></script>
+  <script defer src="js/engines/target.js"></script>
+  <script defer src="js/engines/keyPress.js"></script>
+  <script defer src="js/engines/typeText.js"></script>
+  <script defer src="js/engines/homeRow.js"></script>
+  <script defer src="js/engines/rocket.js"></script>
+  <script defer src="js/engines/countObjects.js"></script>
+  <script defer src="js/engines/pattern.js"></script>
+  <script defer src="js/engines/sequence.js"></script>
+  <script defer src="js/engines/gridRun.js"></script>
+  <script defer src="js/engines/puzzle.js"></script>
+  <script defer src="js/engines/jsDemo.js"></script>
+
+  <script defer src="js/core/navigation.js"></script>
+  <script defer src="js/core/lesson.js"></script>
+  <script defer src="js/core/parent.js"></script>
+  <script defer src="js/dev/selftest.js"></script>
+</body>
+</html>

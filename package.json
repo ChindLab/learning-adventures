@@ -1,0 +1,22 @@
+{
+  "name": "bela-learning",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An offline first-computer school for children aged 5+, built by parents. German and English, no dependencies, no build step.",
+  "license": "MIT",
+  "keywords": [
+    "education",
+    "children",
+    "offline",
+    "vanilla-javascript",
+    "learning-games"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "node tools/check-syntax.js && node --test tests/*.test.js",
+    "setup": "bash setup.sh",
+    "hooks": "bash tools/install-hooks.sh",
+    "seed": "node tools/build-seed.js",
+    "serve": "python3 -m http.server 8080"
+  }
+}

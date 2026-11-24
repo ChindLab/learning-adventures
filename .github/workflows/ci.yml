@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  # One run per commit. No cancellation: an older commit must still finish.
+  group: ci-${{ github.ref }}-${{ github.sha }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    name: unit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Syntax check + unit tests
+        run: npm run check
+
+      - name: Generated seed is up to date
+        run: |
+          npm run seed
+          git diff --exit-code -- js/config/seed.js
+
+  browser:
+    name: browser
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright (test-only, not a project dependency)
+        run: |
+          npm install --no-save --no-audit --no-fund @playwright/test@1.49.1
+          npx playwright install --with-deps chromium
+
+      - name: Browser smoke + self-test
+        run: npx playwright test
+
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+          retention-days: 7
+
+  # Single stable check for branch protection. Require this one in GitHub.
+  ci-success:
+    name: ci-success
+    needs: [unit, browser]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Both jobs must have passed
+        run: |
+          echo "unit:    ${{ needs.unit.result }}"
+          echo "browser: ${{ needs.browser.result }}"
+          if [ "${{ needs.unit.result }}" != "success" ] || [ "${{ needs.browser.result }}" != "success" ]; then
+            echo "CI failed — merging is blocked."
+            exit 1
+          fi
+          echo "CI passed."
