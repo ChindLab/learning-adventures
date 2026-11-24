@@ -5,7 +5,8 @@ The live site is served from:
 **https://chindlab.github.io/learning-adventures/**
 
 The app is plain static files, so Pages can host it without a build step. The CI workflow
-already contains a `deploy` job; it only runs after `ci-success` and only for `main`.
+contains two jobs: **build** (packages `_site` and uploads the Pages artifact) and
+**deploy** (publishes it). Both run only after `ci-success` and only for `main`.
 
 ---
 
@@ -16,6 +17,10 @@ already contains a `deploy` job; it only runs after `ci-success` and only for `m
 3. Under **Build and deployment → Source**, choose **GitHub Actions**.
    Do **not** choose “Deploy from a branch”.
 4. Nothing else is required — no base path, no build command, no `gh-pages` branch.
+
+> If **Actions** shows internal runs named **“pages build and deployment”**, your source is
+> still **Deploy from a branch**. Change it to **GitHub Actions**; otherwise the workflow’s
+> deploy step cannot publish.
 
 The first deployment starts with the next push to `main` (or a manual CI run). The URL
 appears in **Settings → Pages** and in the `deploy` job’s environment link.
@@ -95,6 +100,7 @@ No accounts, no server, no data sent anywhere.
 | 404 at the Pages URL | Pages source is not **GitHub Actions**, or the first deploy has not run yet. |
 | Deploy job fails: “Get Pages site failed” / “Not Found” | Enable Pages once (Settings → Pages → Source: GitHub Actions). `GITHUB_TOKEN` cannot enable it automatically. |
 | Deploy skipped | The push was not to `main`, or `ci-success` failed. |
+| “No artifacts named `github-pages`” | Artifact race. The workflow splits build and deploy; re-run the failed deploy job once. If it persists, check GitHub status. |
 | Site loads but CSS/JS 404 | Assets were not copied into `_site`; check the “Build static site” step. |
 | Old version after deploy | Hard reload / check the deployment timestamp; Pages can take a minute. |
 | “Environment github-pages is waiting” | Repository environment protection requires approval; approve it under Actions. |

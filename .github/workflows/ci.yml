@@ -92,8 +92,8 @@ jobs:
   # Publishes the static app after CI. Requires one-time repository setup:
   # Settings → Pages → Build and deployment → Source: GitHub Actions.
   # Only runs for main (push or manual dispatch), never for pull requests.
-  deploy:
-    name: deploy
+  build:
+    name: build
     needs: [ci-success]
     if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
@@ -101,13 +101,6 @@ jobs:
     permissions:
       contents: read
       pages: write
-      id-token: write
-    concurrency:
-      group: github-pages
-      cancel-in-progress: false
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -126,6 +119,22 @@ jobs:
         with:
           path: _site
 
+  deploy:
+    name: deploy
+    needs: [build]
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
