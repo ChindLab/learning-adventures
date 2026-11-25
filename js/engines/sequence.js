@@ -24,7 +24,7 @@
       var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || '' });
       var board = ui.el('div');
       var feedback = ui.el('p', { className: 'feedback-line', attrs: { 'aria-live': 'polite' } });
-      var check = ui.button(NS.i18n.t('Prüfen', 'Check'), { onClick: function () { checkHandler(); } });
+      var check = ui.button(NS.i18n.t('Check', 'Prüfen'), { onClick: function () { checkHandler(); } });
       var checkHandler = verify;
       wrap.appendChild(prompt);
       wrap.appendChild(board);
@@ -82,7 +82,7 @@
         else {
           wrong += 1;
           api.sfx('wrong');
-          feedback.textContent = NS.i18n.t('Fast! Die grünen Karten stimmen schon.', 'Almost! The green cards are already right.');
+          feedback.textContent = NS.i18n.t('Almost! The green cards are already right.', 'Fast! Die grünen Karten stimmen schon.');
           feedback.className = 'feedback-line is-soft';
         }
       }
@@ -106,7 +106,7 @@
         placed.forEach(function (card, index) {
           var node = ui.el('button', {
             className: 'seq-slot' + (card ? ' is-filled' : '') + (activeSlot === index ? ' is-selected' : ''),
-            attrs: { type: 'button', 'aria-label': NS.i18n.t('Platz ', 'Slot ') + (index + 1) },
+            attrs: { type: 'button', 'aria-label': NS.i18n.t('Slot ', 'Platz ') + (index + 1) },
             data: { slot: index }
           }, card ? [ui.art(card.icon || card.art || 'stern', 44), ui.el('span', { text: card.label || '' })] : [ui.el('span', { text: String(index + 1) })]);
           node.addEventListener('click', function () {
@@ -127,7 +127,7 @@
           node.addEventListener('click', function () {
             if (done) { return; }
             if (activeSlot < 0) {
-              feedback.textContent = NS.i18n.t('Tippe zuerst auf einen Platz.', 'Tap a slot first.');
+              feedback.textContent = NS.i18n.t('Tap a slot first.', 'Tippe zuerst auf einen Platz.');
               feedback.className = 'feedback-line';
               return;
             }
@@ -152,7 +152,7 @@
           if (!placed[i] || placed[i].id !== solution[i]) {
             wrong += 1;
             api.sfx('wrong');
-            feedback.textContent = NS.i18n.t('Noch nicht ganz. Probier es nochmal.', 'Not quite. Try again.');
+            feedback.textContent = NS.i18n.t('Not quite. Try again.', 'Noch nicht ganz. Probier es nochmal.');
             feedback.className = 'feedback-line is-soft';
             return;
           }

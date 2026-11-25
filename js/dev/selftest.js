@@ -1,8 +1,8 @@
 /**
  * selftest.js – Entwicklungswerkzeug, nicht für Kinder.
  *
- * Spielt jede Aktivität automatisch durch: erst alle auf Deutsch, dann alle
- * noch einmal auf Englisch. Zusätzlich werden alle Bildschirme gebaut.
+ * Spielt jede Aktivität automatisch durch: zuerst auf Englisch (Quelle), dann
+ * auf Deutsch (Übersetzung). Zusätzlich werden alle Bildschirme gebaut.
  */
 (function (root) {
   'use strict';
@@ -90,7 +90,7 @@
         try { if (handle && handle.destroy) { handle.destroy(); } } catch (e) { /* egal */ }
       }
       container.remove();
-      table.appendChild(makeRow(activity.id + (languageTag === 'en' ? ' [en]' : ''), activity.type, reason ? 'fehlt' : 'ok', reason));
+      table.appendChild(makeRow(activity.id + (languageTag === 'en' ? ' [en]' : ' [' + languageTag + ']'), activity.type, reason ? 'fehlt' : 'ok', reason));
     }
 
     function uiItem(id, type, reason) {
@@ -112,20 +112,23 @@
       return chain;
     }
 
-    // 1. Alles auf Deutsch.
-    await eachActivity(null, 'de');
+    // 1. English is the source.
+    store.setLanguage('en');
+    NS.content.applyLanguage('en');
+    await eachActivity(null, 'en');
 
-    // 2. Alles noch einmal auf Englisch.
-    var englishStages = (NS.content.en && NS.content.en.stages)
-      ? Object.keys(NS.content.en.stages).map(Number)
-      : [];
-    if (englishStages.length) {
-      store.setLanguage('en');
-      NS.content.applyLanguage('en');
-      await eachActivity(englishStages, 'en');
-      store.setLanguage('de');
-      NS.content.applyLanguage('de');
+    // 2. Every translation overlay (German, French, Italian, Chinese).
+    var translations = NS.content.translations || {};
+    var codes = Object.keys(translations).filter(function (code) { return code !== 'en'; });
+    for (var i = 0; i < codes.length; i += 1) {
+      var code = codes[i];
+      var stagesForLanguage = Object.keys(translations[code].stages).map(Number);
+      store.setLanguage(code);
+      NS.content.applyLanguage(code);
+      await eachActivity(stagesForLanguage, code);
     }
+    store.setLanguage('en');
+    NS.content.applyLanguage('en');
 
     // 3. Bildschirme bauen.
     var screens = [

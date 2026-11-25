@@ -7,10 +7,10 @@ tests, and how to verify the app in a real browser.
 The short version:
 
 ```bash
-npm test                       # 87 unit tests
+npm test                       # 101 unit tests
 # then, in a browser:
 open http://localhost:8080/selftest.html
-# expect: Alles gut – Gesamt: 219/219 ok
+# expect: Alles gut – Gesamt: 754/754 ok
 ```
 
 A pull request without both results is not reviewable.
@@ -23,7 +23,7 @@ A pull request without both results is not reviewable.
 |---|---|---|---|
 | **Unit** | pure logic: progress, storage, seed, grid interpreter, typing, arithmetic, JS parser, voice ranking, clock | `npm test` | every function with branches |
 | **Content validator** | ids unique, answers valid, engines exist, speech ≤ 8 words, no placeholders, band/i18n coverage | inside `npm test` | every content change |
-| **English coverage** | every stage/lesson/activity has an English entry | inside `npm test` | every content/translation change |
+| **Translation coverage** | every stage/lesson/activity has an entry in de, fr, it, zh, hi and ne; each overlay has a UI dictionary and Bobby lines | inside `npm test` | every content/translation change |
 | **No-network** | no `fetch`, XHR, WebSocket, external URL in shipped files | inside `npm test` | every change |
 | **Self-test** | every activity mounts, exposes controls, is solvable without a mouse, completes exactly once; every screen builds | `selftest.html` | every content/engine/UI change |
 | **E2E smoke** | real browser: app loads, 9 islands, lesson starts, parent gate, language switch, selftest green | Playwright (CLI or MCP) | every UI change |
@@ -38,10 +38,10 @@ the class of bug that unit tests cannot: “the button exists but nothing happen
 
 ### A new lesson / activity
 - [ ] `npm test` — the content validator runs automatically.
-- [ ] Add English text; `tests/content-en.test.js` fails if you forget.
+- [ ] Add all six translations; `tests/content-de.test.js` and `tests/i18n-languages.test.js` fail if you forget.
 - [ ] Update the count in `tests/content.test.js` if you added an activity.
 - [ ] `selftest.html` must show `ok` for the new id.
-- [ ] Play it once in German and once in English.
+- [ ] Play it in English and in at least two overlays.
 
 You do **not** need a new unit test for a data-only lesson: the validator plus the
 self-test are its tests.
@@ -62,10 +62,10 @@ self-test are its tests.
 - [ ] Manual: reload after a star, reload after renaming, backup → reset → restore.
 
 ### A translation
-- [ ] Every activity/lesson entry exists (`tests/content-en.test.js`).
+- [ ] Every activity/lesson entry exists in all six overlays (`tests/i18n-languages.test.js`).
 - [ ] Speech lines ≤ 8 words.
 - [ ] Numbers/letters/words are correct for that language (Q = Queen, CAT not KATZE).
-- [ ] Self-test passes in that language (it runs German **and** English).
+- [ ] Self-test passes in that language (it runs English and all six overlays).
 
 ### UI / CSS / screens
 - [ ] `selftest.html` builds every screen.
@@ -76,7 +76,7 @@ self-test are its tests.
 
 ### Audio / speech
 - [ ] `tests/speech.test.js` for ranking/selection.
-- [ ] Manual: sound on/off, no German voice installed, rapid clicks.
+- [ ] Manual: sound on/off, no voice installed for the chosen language, rapid clicks.
 - [ ] Never make audio the only feedback.
 
 ---
@@ -89,12 +89,12 @@ npm run serve          # http://localhost:8080
 
 Open **`http://localhost:8080/selftest.html`**.
 
-- Green: `Alles gut – Gesamt: 219/219 ok`.
+- Green: `Alles gut – Gesamt: 754/754 ok`.
 - Red: a table row names the activity id, engine and reason
   (`completions=2`, `no-solver`, `no-controls`, `stars=undefined`).
 - A favicon 404 in the console is harmless. Any other console error is not.
 
-`219 = 107 German activities + 107 English activities + 5 screens.`
+`754 = 107 English activities + 6 × 107 translated activities + 5 screens.`
 
 Why `localhost` and not `file://`: the app works from `file://`, but Playwright and most
 automation block it. The self-test is the same either way.
@@ -149,7 +149,7 @@ npm run hooks          # once per clone
 ```
 
 This sets `core.hooksPath` to `.githooks`; `.githooks/pre-commit` runs
-`npm run check` — syntax plus 87 unit tests, about 1–2 seconds. It is deliberately **not**
+`npm run check` — syntax plus 101 unit tests, about 1–2 seconds. It is deliberately **not**
 the browser self-test (30 s per commit would be unbearable); CI runs that for every pushed
 commit.
 
@@ -195,10 +195,10 @@ That last item is worth more than the rest of this page.
 Paste into the PR description:
 
 ```
-npm test:               87/87 pass
-selftest.html:          Alles gut – Gesamt: 219/219 ok
+npm test:               101/101 pass
+selftest.html:          Alles gut – Gesamt: 754/754 ok
 console (app):          0 errors
-manual:                 German + English, 1024×600, keyboard only
+manual:                 all seven languages, 1024×600, keyboard only
 ```
 
 If you cannot run the browser layer, say so explicitly and ask for a maintainer to run
@@ -211,8 +211,8 @@ it. “Not run” is honest; “should work” is not evidence.
 Every **pushed commit on every branch** runs `.github/workflows/ci.yml` (and every pull
 request runs it against the head commit):
 
-- **unit** — `npm run check` (syntax + 87 unit tests) plus “generated seed is up to date”
-- **browser** — `npx playwright test` (5 smoke checks + self-test 219/219)
+- **unit** — `npm run check` (syntax + 101 unit tests) plus “generated seed is up to date”
+- **browser** — `npx playwright test` (5 smoke checks + self-test 754/754)
 - **ci-success** — a single aggregating job
 
 Runs are grouped per commit and **not cancelled**, so pushing three commits produces three

@@ -60,7 +60,7 @@
             className: 'target-dot',
             attrs: {
               type: 'button',
-              'aria-label': NS.i18n.t('Ziel antippen', 'Tap the target')
+              'aria-label': NS.i18n.t('Tap the target', 'Ziel antippen')
             },
             style: {
               width: size + 'px',
@@ -164,7 +164,7 @@
         board.appendChild(svg);
         board.setAttribute('tabindex', '0');
         board.setAttribute('role', 'application');
-        board.setAttribute('aria-label', NS.i18n.t('Linie mit den Pfeiltasten nachfahren', 'Follow the line with the arrow keys'));
+        board.setAttribute('aria-label', NS.i18n.t('Follow the line with the arrow keys', 'Linie mit den Pfeiltasten nachfahren'));
         var bobbyDot = ui.el('div', { className: 'target-dot', style: { left: '4%', top: '70%', width: '70px', height: '70px' } }, [ui.art('bobby', 64)]);
         board.appendChild(bobbyDot);
 

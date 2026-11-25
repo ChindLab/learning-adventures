@@ -19,15 +19,15 @@
       var side = ui.el('div');
       var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || config.title || '' });
       var points = ui.el('div', { className: 'points' });
-      var nextBtn = ui.button(NS.i18n.t('Weiter', 'Next'), { onClick: finish });
+      var nextBtn = ui.button(NS.i18n.t('Next', 'Weiter'), { onClick: finish });
 
       side.appendChild(prompt);
 
       if (config.scroll) {
-        var scrollBox = ui.el('div', { className: 'scroll-box', attrs: { tabindex: '0', 'aria-label': NS.i18n.t('Zum Scrollen', 'Scrollable area') } });
+        var scrollBox = ui.el('div', { className: 'scroll-box', attrs: { tabindex: '0', 'aria-label': NS.i18n.t('Scrollable area', 'Zum Scrollen') } });
         var tall = ui.el('div', { className: 'scroll-target' });
         tall.appendChild(ui.art(config.art, 180));
-        tall.appendChild(ui.el('p', { className: 'muted center', text: NS.i18n.t('Scrolle nach unten …', 'Scroll down …') }));
+        tall.appendChild(ui.el('p', { className: 'muted center', text: NS.i18n.t('Scroll down …', 'Scrolle nach unten …') }));
         tall.appendChild(ui.art('bobby', 120));
         scrollBox.appendChild(tall);
         artBox.appendChild(scrollBox);

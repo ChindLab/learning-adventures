@@ -23,7 +23,7 @@
       var roundIndex = 0;
 
       var wrap = ui.el('div', { className: 'activity' });
-      var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || NS.i18n.t('Was kommt als Nächstes?', 'What comes next?') });
+      var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || NS.i18n.t('What comes next?', 'Was kommt als Nächstes?') });
       var row = ui.el('div', { className: 'pattern-row' });
       var options = ui.el('div', { className: 'options' });
       var feedback = ui.el('p', { className: 'feedback-line', attrs: { 'aria-live': 'polite' } });
@@ -33,7 +33,7 @@
       wrap.appendChild(feedback);
       container.appendChild(wrap);
 
-      api.speak(config.speech || config.prompt || NS.i18n.t('Was kommt als Nächstes?', 'What comes next?'));
+      api.speak(config.speech || config.prompt || NS.i18n.t('What comes next?', 'Was kommt als Nächstes?'));
       render();
 
       function tile(item) {

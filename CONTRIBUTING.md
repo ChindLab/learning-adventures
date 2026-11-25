@@ -13,9 +13,9 @@ one file. This guide tells you exactly where things go.
 
 - **Add a lesson** — no programming required, just data. → [docs/CONTENT-GUIDE.md](docs/CONTENT-GUIDE.md)
 - **Add a game type** — one file, one contract. → [docs/ENGINE-GUIDE.md](docs/ENGINE-GUIDE.md)
-- **Translate** — English lives in one overlay file; a third language is one more file.
+- **Translate** — English is the source; each additional language is one overlay file in `i18n/`.
 - **Report a bug** — especially "my child got stuck here" reports.
-- **Improve wording** — German and English, for children and for parents.
+- **Improve wording** — in any supported language, for children and for parents.
 - **Accessibility** — keyboard use, screen readers, colour contrast, small screens.
 - **Art** — the drawings are inline SVG and can always be friendlier.
 
@@ -60,17 +60,17 @@ translation, not a CSS tweak. The full policy and per-change checklist is in
 Every change must pass:
 
 ```bash
-npm test          # 87 unit tests, Node 18+
+npm test          # 101 unit tests, Node 18+
 ```
 
 and the browser self-test:
 
 ```
 http://localhost:8080/selftest.html
-Alles gut – Gesamt: 219/219 ok
+Alles gut – Gesamt: 754/754 ok
 ```
 
-`219 = 107 German activities + 107 English activities + 5 screens.` The total grows with
+`754 = 107 English activities + 6 × 107 translated activities + 5 screens.` The total grows with
 every activity or screen you add; a wrong total means something is not being played.
 
 The self-test mounts every activity, finds its controls, solves it the way a child would,
@@ -120,14 +120,14 @@ Full walkthrough with a worked example: **[docs/ADD-A-GAME.md](docs/ADD-A-GAME.m
 Short version:
 
 1. Add the activity to a `js/content/stageN.js` lesson.
-2. Add its English text to `js/content/en.js`.
+2. Add its translations to `i18n/de.js`, `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js` and `i18n/ne.js`.
 3. Register a new lesson in the stage's `lessons` array.
 4. `npm test` and `selftest.html`.
 5. Update the activity count in `tests/content.test.js` only if you added a whole stage.
 
 Rules for content:
 
-- German is the source; English is required.
+- English is the source; all six overlays (de, fr, it, zh, hi, ne) are required.
 - Speech lines: **8 words maximum**, one idea per line.
 - Never "falsch", "Fehler", "leider", "Game over". Mistakes get a wobble and another try.
 - No time pressure, no score to lose.
@@ -167,22 +167,27 @@ Checklist for a new engine:
 - [ ] No timers that end the task, no lives, no failure screen.
 - [ ] Registered in `js/content/index.js` (`ENGINES`), `index.html` and `selftest.html`.
 - [ ] One unit test for any pure logic you add.
-- [ ] Content uses the engine, in German and English.
+- [ ] Content uses the engine, in English and all six overlays.
 
 ---
 
 ## Translating
 
-- German source: `js/content/stage*.js`.
-- English overlay: `js/content/en.js`, keyed by stage / lesson / activity id.
-- Short labels (options, targets, cards) go into `content.en.lexicon`.
-- UI strings use `NS.i18n.t('Deutsch', 'English')` at the call site.
+- English source: `js/content/stage*.js`.
+- Overlays: `i18n/de.js`, `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js`, `i18n/ne.js`, keyed by
+  stage / lesson / activity id.
+- Short labels (options, targets, cards) go into `content.translations.<lang>.lexicon`.
+- UI strings use `NS.i18n.t('English', 'Deutsch')` at the call site; for fr/it/zh/hi/ne the
+  English key is looked up in `content.ui.<lang>`. Dynamic values use `{name}`
+  placeholders in the third argument.
+- `tests/i18n-languages.test.js` fails if an overlay misses a stage, lesson or activity.
 
-A third language means: one overlay file, one lexicon, one `profiles.p.language` value.
-The architecture has no language limit.
+A new language means: one overlay file, one lexicon, one UI dictionary, one
+`profiles.p.language` value. The architecture has no language limit.
 
-Speech uses the operating system voice. If none exists for the chosen language the app is
-silent but fully usable — never make audio mandatory.
+Speech uses the operating system voice (`en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`, `ne-NP`). If none
+exists for the chosen language the app is silent but fully usable — never make audio
+mandatory.
 
 ---
 
@@ -206,7 +211,7 @@ silent but fully usable — never make audio mandatory.
 - [ ] One topic per pull request.
 - [ ] `npm test` green.
 - [ ] `selftest.html` green.
-- [ ] German **and** English text added.
+- [ ] English and all six overlay texts added.
 - [ ] Screenshot or short description of what a child sees.
 - [ ] No personal data, no tracking, no external links.
 - [ ] New ids are unique; existing ids unchanged.

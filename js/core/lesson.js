@@ -18,8 +18,8 @@
 
     if (!found) {
       var missing = ui.screen();
-      missing.appendChild(ui.el('h1', { className: 'screen-title', text: NS.i18n.t('Diese Lektion gibt es nicht.', 'This lesson does not exist.') }));
-      missing.appendChild(ui.button(NS.i18n.t('Zur Karte', 'Back to the map'), { onClick: function () { NS.router.go('#/'); } }));
+      missing.appendChild(ui.el('h1', { className: 'screen-title', text: NS.i18n.t('This lesson does not exist.', 'Diese Lektion gibt es nicht.') }));
+      missing.appendChild(ui.button(NS.i18n.t('Back to the map', 'Zur Karte'), { onClick: function () { NS.router.go('#/'); } }));
       return missing;
     }
 
@@ -41,7 +41,7 @@
     var dots = ui.el('div', { className: 'dots' });
     var skip = ui.el('button', {
       className: 'icon-btn skip-btn',
-      attrs: { type: 'button', 'aria-label': NS.i18n.t('Aufgabe überspringen', 'Skip activity') },
+      attrs: { type: 'button', 'aria-label': NS.i18n.t('Skip activity', 'Aufgabe überspringen') },
       text: '›'
     });
     var host = ui.el('div', { className: 'activity-host' });
@@ -75,8 +75,8 @@
       var welcome = ui.el('div', { className: 'card center', style: { padding: '40px' } }, [
         ui.art('bobby', 150),
         ui.el('h1', { className: 'screen-title', text: lesson.title }),
-        ui.el('p', { text: lesson.goal || NS.i18n.t('Komm, wir schauen uns das an!', 'Come on, let us take a look!') }),
-        ui.button(NS.i18n.t('Los geht es!', "Let's go!"), { onClick: function () { startActivity(); } })
+        ui.el('p', { text: lesson.goal || NS.i18n.t('Come on, let us take a look!', 'Komm, wir schauen uns das an!') }),
+        ui.button(NS.i18n.t("Let's go!", 'Los geht es!'), { onClick: function () { startActivity(); } })
       ]);
       host.appendChild(welcome);
       ui.say(lesson.goal || bobby.lessonStart);
@@ -107,7 +107,7 @@
 
       var engine = NS.engines[activity.type];
       if (!engine) {
-        host.appendChild(ui.el('p', { text: NS.i18n.t('Dieses Spiel fehlt noch.', 'This game is missing.') }));
+        host.appendChild(ui.el('p', { text: NS.i18n.t('This game is missing.', 'Dieses Spiel fehlt noch.') }));
         return;
       }
 
@@ -220,10 +220,10 @@
       var title = isMilestone ? stage.achievement.title : lesson.title;
       var celebrate = ui.el('div', { className: 'celebrate' }, [
         ui.el('div', { className: 'trophy' }, [ui.art(isMilestone ? 'pokal' : 'stern', 170)]),
-        ui.el('h1', { className: 'screen-title', text: isMilestone ? NS.i18n.t('Geschafft!', 'Done!') : bobby.correct[0] }),
+        ui.el('h1', { className: 'screen-title', text: isMilestone ? NS.i18n.t('Done!', 'Geschafft!') : bobby.correct[0] }),
         ui.el('p', { text: isMilestone
           ? bobby.stageDone(stage.title)
-          : NS.i18n.t(lesson.title + ' ist fertig.', lesson.title + ' is finished.') }),
+          : NS.i18n.t('{title} is finished.', '{title} ist fertig.', { title: lesson.title }) }),
         ui.el('p', { className: 'muted', text: isMilestone ? title : bobby.next })
       ]);
       var actions = ui.el('div', { className: 'row center', style: { justifyContent: 'center', marginTop: '20px' } });
@@ -233,11 +233,11 @@
       var next = lessons[position + 1];
 
       if (next) {
-        actions.appendChild(ui.button(NS.i18n.t('Weiter', 'Continue'), { onClick: function () {
+        actions.appendChild(ui.button(NS.i18n.t('Continue', 'Weiter'), { onClick: function () {
           NS.router.go('#/lesson/' + next.id);
         } }));
       }
-      actions.appendChild(ui.button(NS.i18n.t('Zur Karte', 'Back to the map'), { variant: 'soft', onClick: function () {
+      actions.appendChild(ui.button(NS.i18n.t('Back to the map', 'Zur Karte'), { variant: 'soft', onClick: function () {
         NS.router.go('#/');
       } }));
 

@@ -28,6 +28,7 @@ test('scanner akzeptiert harmlosen Text', () => {
 
 test('keine ausgelieferte Datei greift ins Netz', () => {
   const files = walk(path.join(__dirname, '..', 'js'))
+    .concat(walk(path.join(__dirname, '..', 'i18n')))
     .filter((f) => f.endsWith('.js'))
     .concat([
       path.join(__dirname, '..', 'index.html'),

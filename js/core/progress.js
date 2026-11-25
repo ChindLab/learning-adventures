@@ -11,6 +11,7 @@
 (function (root) {
   'use strict';
 
+  var LANGUAGES = ['en', 'de', 'fr', 'it', 'zh', 'hi', 'ne'];
   var KEY = 'belaschule.v1';
   var LEGACY = 'bobbyschule.v1';
   var BROKEN = 'belaschule.broken';
@@ -21,7 +22,7 @@
     return {
       id: id,
       name: '',
-      language: 'de',
+      language: 'en',
       createdAt: stamp,
       stages: {},
       stars: 0,
@@ -56,7 +57,7 @@
       return {
         id: 'p' + (index + 1),
         name: typeof entry.name === 'string' ? entry.name.trim().slice(0, 20) : '',
-        language: entry.language === 'en' ? 'en' : 'de',
+        language: LANGUAGES.indexOf(entry.language) !== -1 ? entry.language : 'en',
         unlockAll: !!entry.unlockAll
       };
     });
@@ -142,7 +143,7 @@
       p.unlockAll = !!p.unlockAll;
       p.stats = Object.assign({}, base.stats, p.stats || {});
       p.name = typeof p.name === 'string' ? p.name : '';
-      p.language = (p.language === 'en' || p.language === 'de') ? p.language : 'de';
+      p.language = LANGUAGES.indexOf(p.language) !== -1 ? p.language : 'en';
       raw.profiles[id] = p;
     });
 
@@ -311,7 +312,7 @@
       },
 
       setLanguage: function (lang) {
-        active().language = lang === 'en' ? 'en' : 'de';
+        active().language = LANGUAGES.indexOf(lang) !== -1 ? lang : 'en';
         commit();
       },
 

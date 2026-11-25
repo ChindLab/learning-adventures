@@ -33,10 +33,10 @@
     var hero = ui.el('div', { className: 'hero' }, [
       ui.el('div', { className: 'hero-art' }, [ui.art('bobby', 150)]),
       ui.el('div', {}, [
-        ui.el('h1', { text: NS.i18n.t('Meine erste Computer-Schule', 'My First Computer School') }),
+        ui.el('h1', { text: NS.i18n.t('My First Computer School', 'Meine erste Computer-Schule') }),
         ui.el('p', { text: name
-          ? NS.i18n.t('Schön, dass du da bist, ' + name + '!', 'Good to see you, ' + name + '!')
-          : NS.i18n.t('Schön, dass du da bist, kleine Entdeckerin!', 'Good to see you, little explorer!') })
+          ? NS.i18n.t('Good to see you, {name}!', 'Schön, dass du da bist, {name}!', { name: name })
+          : NS.i18n.t('Good to see you, little explorer!', 'Schön, dass du da bist, kleine Entdeckerin!') })
       ])
     ]);
     screen.appendChild(hero);
@@ -52,7 +52,7 @@
         className: classes,
         attrs: {
           type: 'button',
-          'aria-label': stage.title + (open ? '' : NS.i18n.t(' – gesperrt', ' – locked'))
+          'aria-label': stage.title + (open ? '' : NS.i18n.t(' – locked', ' – gesperrt'))
         },
         data: { stage: stage.id }
       }, [
@@ -89,8 +89,8 @@
     var screen = ui.screen('stage-screen');
 
     if (!stage) {
-      screen.appendChild(ui.el('h1', { className: 'screen-title', text: NS.i18n.t('Diese Stufe gibt es nicht.', 'This stage does not exist.') }));
-      screen.appendChild(ui.button(NS.i18n.t('Zur Karte', 'Back to the map'), { onClick: function () { NS.router.go('#/'); } }));
+      screen.appendChild(ui.el('h1', { className: 'screen-title', text: NS.i18n.t('This stage does not exist.', 'Diese Stufe gibt es nicht.') }));
+      screen.appendChild(ui.button(NS.i18n.t('Back to the map', 'Zur Karte'), { onClick: function () { NS.router.go('#/'); } }));
       return screen;
     }
 
@@ -140,10 +140,10 @@
     })[0] || stage.lessons[stage.lessons.length - 1];
 
     var actions = ui.el('div', { className: 'row', style: { marginTop: '26px' } }, [
-      ui.button(NS.i18n.t('Weiter', 'Continue'), { onClick: function () {
+      ui.button(NS.i18n.t('Continue', 'Weiter'), { onClick: function () {
         if (nextLesson) { NS.router.go('#/lesson/' + nextLesson.id); }
       } }),
-      ui.button(NS.i18n.t('Zur Karte', 'Back to the map'), { variant: 'soft', onClick: function () { NS.router.go('#/'); } })
+      ui.button(NS.i18n.t('Back to the map', 'Zur Karte'), { variant: 'soft', onClick: function () { NS.router.go('#/'); } })
     ]);
     screen.appendChild(actions);
 
@@ -157,8 +157,8 @@
     var profile = store.profile();
     var screen = ui.screen('achievements-screen');
 
-    screen.appendChild(ui.el('h1', { className: 'screen-title', text: NS.i18n.t('Meine Erfolge', 'My Achievements') }));
-    screen.appendChild(ui.el('p', { className: 'screen-sub', text: NS.i18n.t('Jeder Pokal ist ein großes Stück Abenteuer.', 'Every trophy is a big piece of the adventure.') }));
+    screen.appendChild(ui.el('h1', { className: 'screen-title', text: NS.i18n.t('My Achievements', 'Meine Erfolge') }));
+    screen.appendChild(ui.el('p', { className: 'screen-sub', text: NS.i18n.t('Every trophy is a big piece of the adventure.', 'Jeder Pokal ist ein großes Stück Abenteuer.') }));
 
     var grid = ui.el('div', { className: 'map' });
     NS.content.stages.forEach(function (stage) {
@@ -166,22 +166,22 @@
       var tile = ui.el('div', {
         className: 'island' + (earned ? ' is-done' : ' is-locked'),
         attrs: { 'aria-label': stage.achievement.title + (earned
-          ? NS.i18n.t(' – geschafft', ' – done')
-          : NS.i18n.t(' – noch nicht', ' – not yet')) }
+          ? NS.i18n.t(' – done', ' – geschafft')
+          : NS.i18n.t(' – not yet', ' – noch nicht')) }
       }, [
         ui.el('span', { className: 'island-art' }, [ui.art(earned ? 'pokal' : 'schloss', 80)]),
-        ui.el('span', { className: 'island-title', text: earned ? stage.achievement.title : NS.i18n.t('Bald!', 'Soon!') }),
-        ui.el('span', { className: 'island-stars', text: earned ? NS.i18n.t('★ geschafft', '★ done') : '★ ?' })
+        ui.el('span', { className: 'island-title', text: earned ? stage.achievement.title : NS.i18n.t('Soon!', 'Bald!') }),
+        ui.el('span', { className: 'island-stars', text: earned ? NS.i18n.t('★ done', '★ geschafft') : '★ ?' })
       ]);
       grid.appendChild(tile);
     });
 
     screen.appendChild(grid);
     screen.appendChild(ui.el('div', { className: 'row', style: { marginTop: '26px' } }, [
-      ui.button(NS.i18n.t('Zur Karte', 'Back to the map'), { onClick: function () { NS.router.go('#/'); } })
+      ui.button(NS.i18n.t('Back to the map', 'Zur Karte'), { onClick: function () { NS.router.go('#/'); } })
     ]));
 
-    ui.say(NS.i18n.t('Deine Erfolge!', 'Your achievements!'));
+    ui.say(NS.i18n.t('Your achievements!', 'Deine Erfolge!'));
     return screen;
   };
 

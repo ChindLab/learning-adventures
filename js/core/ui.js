@@ -100,7 +100,7 @@
   }
 
   function stars(n) {
-    return el('span', { className: 'stars-inline', attrs: { 'aria-label': n + ' Sterne' }, text: '★'.repeat(Math.max(0, n)) });
+    return el('span', { className: 'stars-inline', attrs: { 'aria-label': NS.i18n.t('{n} stars', '{n} Sterne', { n: n }) }, text: '★'.repeat(Math.max(0, n)) });
   }
 
   function confetti() {

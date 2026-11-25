@@ -162,10 +162,10 @@ No engine fork unless a mechanic genuinely does not exist.
 
 ### For every pack
 
-- [ ] German and English texts
+- [ ] English source and de/fr/it/zh/hi/ne translations
 - [ ] achievement gallery and milestone
 - [ ] activity counts in tests/docs
-- [ ] selftest plays every activity in both languages
+- [ ] selftest plays every activity in every language
 - [ ] parent guidance page ("what is this pack, what does it teach?")
 
 ---

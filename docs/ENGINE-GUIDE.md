@@ -76,8 +76,8 @@ and `attempts: 3` (three wrong keys), which feeds the parent report.
 7. **Respect reduced motion.** If the game depends on movement, provide a static variant
    (see `js/engines/rocket.js`).
 8. **No network, no external assets, no `eval`.** Use inline SVG and Web Audio.
-9. **Content is data.** No German or English strings that belong to a lesson inside the
-   engine. UI strings use `NS.i18n.t('Deutsch', 'English')`.
+9. **Content is data.** No translated strings that belong to a lesson inside the
+   engine. UI strings use `NS.i18n.t('English', 'Deutsch')` plus the overlay dictionaries.
 10. **Clean up after yourself.** Anything you add to `document` outside `container`
     (for example a drag ghost) must be removed in `destroy()`.
 
@@ -114,7 +114,7 @@ Four places, in this order:
 4. **`selftest.html`** — the same script tag, so the self-test can play it.
 
 Then add an activity in `js/content/stageN.js` with `type: 'myGame'` and the fields your
-engine expects, plus the English text in `js/content/en.js`.
+engine expects, plus the translations in `i18n/de.js`, `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js` and `i18n/ne.js`.
 
 Finally, add a unit test for any pure logic (`tests/myGame.test.js`). If the engine is
 entirely DOM animation with no pure logic, the self-test covers it — but it must then

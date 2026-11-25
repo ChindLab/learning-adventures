@@ -36,7 +36,7 @@
   };
 
   function keyLabel(symbol) {
-    return NS.i18n.t(LABELS[symbol] || symbol, LABELS_EN[symbol] || symbol);
+    return NS.i18n.t(LABELS_EN[symbol] || symbol, LABELS[symbol] || symbol);
   }
 
   function normalize(key) {
@@ -76,7 +76,7 @@
       var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || '' });
       var targetLine = ui.el('p', { className: 'key-target-line', attrs: { 'aria-live': 'polite' } });
       var progress = ui.el('div', { className: 'key-progress', attrs: { 'aria-live': 'polite' } });
-      var progressText = ui.el('span', { className: 'key-progress-text', text: '0' + NS.i18n.t(' von ', ' of ') + count });
+      var progressText = ui.el('span', { className: 'key-progress-text', text: '0' + NS.i18n.t(' of ', ' von ') + count });
       var dotsRow = ui.el('div', { className: 'key-progress-dots' });
       for (var dotIndex = 0; dotIndex < count; dotIndex++) {
         dotsRow.appendChild(ui.el('span', { className: 'key-progress-dot' }));
@@ -144,7 +144,7 @@
         });
         var node = keyNodes[targetKey];
         if (node) { node.classList.add('is-target'); }
-        targetLine.textContent = NS.i18n.t('Jetzt: ', 'Now: ') + (LABELS[targetKey] ? keyLabel(targetKey) : String(targetKey).toUpperCase());
+        targetLine.textContent = NS.i18n.t('Now: ', 'Jetzt: ') + (LABELS[targetKey] ? keyLabel(targetKey) : String(targetKey).toUpperCase());
       }
 
       function onKeyDown(event) {
@@ -160,7 +160,7 @@
       function markHit() {
         var dots = dotsRow.querySelectorAll('.key-progress-dot');
         if (dots[hits - 1]) { dots[hits - 1].classList.add('is-done'); }
-        progressText.textContent = hits + NS.i18n.t(' von ', ' of ') + count;
+        progressText.textContent = hits + NS.i18n.t(' of ', ' von ') + count;
       }
 
       function attempt(key, node) {
@@ -183,7 +183,7 @@
           } else {
             targetKey = normalize(pickFrom(pool, targetKey));
             highlightTarget();
-            feedback.textContent = hits + NS.i18n.t(' von ', ' of ') + count;
+            feedback.textContent = hits + NS.i18n.t(' of ', ' von ') + count;
             feedback.className = 'feedback-line is-good';
           }
           return;
@@ -201,7 +201,7 @@
         }, 340);
 
         if (wrong === 3) {
-          var hintText = config.hint || NS.i18n.t('Schau auf den gelben Ring!', 'Look at the yellow ring!');
+          var hintText = config.hint || NS.i18n.t('Look at the yellow ring!', 'Schau auf den gelben Ring!');
           feedback.textContent = hintText;
           api.speak(hintText);
         }

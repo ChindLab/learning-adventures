@@ -39,6 +39,7 @@ The deploy job creates a `_site` folder and uploads only:
 index.html
 css/
 js/          (core, content, engines, config/seed.js)
+i18n/        (de, fr, it, zh, hi, ne — translations; English is the source)
 assets/      (inline-SVG logo, favicon)
 ```
 

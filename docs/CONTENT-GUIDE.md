@@ -180,17 +180,20 @@ Liste der Fehler. Zusätzlich kurz selbst durchspielen:
 
 ---
 
-## 8. Englische Übersetzung
+## 8. Übersetzungen
 
-Englisch liegt nicht in `stage*.js`, sondern darüber in `js/content/en.js`:
+Englisch ist die Quelle in `stage*.js`. Jede weitere Sprache liegt als Übersetzung
+darüber in `i18n/de.js`, `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js` und
+`i18n/ne.js` (Deutsch als
+Beispiel):
 
 ```js
-content.en = {
-  lexicon: { 'Tastatur': 'Keyboard', 'Korb': 'Basket' },
-  stages: { 1: { title: 'My Computer', subtitle: '…' } },
-  lessons: { '1-1': { title: 'What is a computer?', goal: '…' } },
+content.translations.de = {
+  lexicon: { 'Keyboard': 'Tastatur', 'Basket': 'Korb' },
+  stages: { 1: { title: 'Mein Computer', subtitle: '…' } },
+  lessons: { '1-1': { title: 'Was ist ein Computer?', goal: '…' } },
   activities: {
-    '1-1-1': { title: 'A computer', speech: '…', prompt: '…', points: ['…'] }
+    '1-1-1': { title: 'Ein Computer', speech: '…', prompt: '…', points: ['…'] }
   }
 };
 ```
@@ -198,14 +201,18 @@ content.en = {
 Regeln:
 
 - Kurze Beschriftungen (Optionen, Ziele, Karten) laufen über `lexicon`; fehlt ein
-  Eintrag, bleibt Deutsch stehen.
-- Für jede Aktivität muss ein Eintrag existieren. Der Test
-  `tests/content-en.test.js` prüft das für alle neun Stufen.
+  Eintrag, bleibt Englisch stehen.
+- Für jede Aktivität muss ein Eintrag in **allen sechs** Overlays existieren. Die Tests
+  `tests/content-de.test.js` und `tests/i18n-languages.test.js` prüfen das für alle neun
+  Stufen.
+- UI-Texte stehen in `content.ui.<lang>`; der Schlüssel ist der englische Text aus
+  `NS.i18n.t('English', 'Deutsch')`.
+- Bobby-Sätze stehen in `content.bobbyFor.<lang>` (mit `welcomeNamed` und `stageDone`).
 - Sprechzeilen höchstens 8 Wörter, nie negativ.
-- Neue Stufe übersetzen: Stufen-, Lektions- und Aktivitäts-IDs in `en.js` ergänzen,
-  dann `npm test` und `selftest.html` (erwartet 219/219).
+- Neue Stufe übersetzen: Stufen-, Lektions- und Aktivitäts-IDs in allen sechs
+  `i18n/*.js` ergänzen, dann `npm test` und `selftest.html` (erwartet 754/754).
 - Die Sprache wird pro Kind im Elternbereich gesetzt (`profiles.p1.language`), nicht
-  im Spiel umgeschaltet.
+  im Spiel umgeschaltet. Gültig: `en`, `de`, `fr`, `it`, `zh`.
 
 ## 9. Was man nicht tun sollte
 - Keine externen Bilder, Schriften, Skripte oder Links einbauen. Die App muss offline

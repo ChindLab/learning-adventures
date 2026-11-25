@@ -20,7 +20,7 @@
       var selected = null;
 
       var wrap = ui.el('div', { className: 'activity' });
-      var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || NS.i18n.t('Setze das Bild zusammen!', 'Put the picture together!') });
+      var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || NS.i18n.t('Put the picture together!', 'Setze das Bild zusammen!') });
       var layout = ui.el('div', { className: 'puzzle-wrap' });
       var board = ui.el('div', {
         className: 'puzzle-board',
@@ -61,7 +61,7 @@
           var slot = ui.el('div', {
             className: 'puzzle-slot',
             data: { slot: index },
-            attrs: { role: 'button', tabindex: '0', 'aria-label': NS.i18n.t('Platz ', 'Slot ') + (index + 1) }
+            attrs: { role: 'button', tabindex: '0', 'aria-label': NS.i18n.t('Slot ', 'Platz ') + (index + 1) }
           });
           slot.addEventListener('click', function () {
             if (done || !selected) { return; }
@@ -78,7 +78,7 @@
       order.forEach(function (index) {
         var tile = ui.el('button', {
           className: 'puzzle-tile',
-          attrs: { type: 'button', 'aria-label': NS.i18n.t('Teil ', 'Piece ') + (index + 1) },
+          attrs: { type: 'button', 'aria-label': NS.i18n.t('Piece ', 'Teil ') + (index + 1) },
           data: { index: index },
           style: backgroundFor(index)
         });
@@ -97,7 +97,7 @@
         tray.appendChild(tile);
       });
 
-      api.speak(config.speech || config.prompt || NS.i18n.t('Setze das Bild zusammen.', 'Put the picture together.'));
+      api.speak(config.speech || config.prompt || NS.i18n.t('Put the picture together.', 'Setze das Bild zusammen.'));
 
       function tryPlace(tile, index) {
         if (done) { return; }
@@ -105,7 +105,7 @@
         var slot = board.querySelector('[data-slot="' + index + '"]');
         if (tileIndex !== index) {
           api.sfx('bump');
-          feedback.textContent = NS.i18n.t('Fast! Probier ein anderes Teil.', 'Almost! Try a different piece.');
+          feedback.textContent = NS.i18n.t('Almost! Try a different piece.', 'Fast! Probier ein anderes Teil.');
           feedback.className = 'feedback-line is-soft';
           tile.classList.remove('is-selected');
           selected = null;
@@ -125,7 +125,7 @@
         if (placedCount === total) {
           done = true;
           api.sfx('star');
-          feedback.textContent = NS.i18n.t('Fertig! Das Bild ist komplett.', 'Done! The picture is complete.');
+          feedback.textContent = NS.i18n.t('Done! The picture is complete.', 'Fertig! Das Bild ist komplett.');
           feedback.className = 'feedback-line is-good';
           board.style.transform = 'scale(1.03)';
           ui.wait(400).then(function () {

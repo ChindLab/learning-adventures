@@ -22,7 +22,7 @@ function emptyConfig() {
     version: 1,
     activeProfile: 'p1',
     settings: { sound: true, speech: true, effects: true, reducedMotion: false },
-    profiles: [{ id: 'p1', name: '', language: 'de', unlockAll: false }]
+    profiles: [{ id: 'p1', name: '', language: 'en', unlockAll: false }]
   };
 }
 
@@ -44,8 +44,13 @@ function writeConfig(children, activeIndex) {
 
 function normaliseLanguage(value) {
   const lower = String(value || '').trim().toLowerCase();
-  if (lower === 'en' || lower === 'english' || lower === 'englisch') { return 'en'; }
-  return 'de';
+  if (lower === 'de' || lower === 'deutsch' || lower === 'german') { return 'de'; }
+  if (lower === 'fr' || lower === 'français' || lower === 'francais' || lower === 'french') { return 'fr'; }
+  if (lower === 'it' || lower === 'italiano' || lower === 'italian') { return 'it'; }
+  if (lower === 'zh' || lower === '中文' || lower === 'chinese') { return 'zh'; }
+  if (lower === 'hi' || lower === 'hindi' || lower === 'हिन्दी' || lower === 'हिंदी') { return 'hi'; }
+  if (lower === 'ne' || lower === 'nepali' || lower === 'नेपाली') { return 'ne'; }
+  return 'en';
 }
 
 async function yesNo(rl, question, defaultYes) {
@@ -76,7 +81,7 @@ async function wizard() {
     const children = [];
     for (let index = 0; index < count; index += 1) {
       const name = (await rl.question('Name of child ' + (index + 1) + ' (optional): ')).trim().slice(0, 20);
-      const language = normaliseLanguage(await rl.question('Language de/en [de]: '));
+      const language = normaliseLanguage(await rl.question('Language en/de/fr/it/zh/hi/ne [en]: '));
       const unlockAll = await yesNo(rl, 'Unlock all stages for this child?', false);
       children.push({ name, language, unlockAll });
     }

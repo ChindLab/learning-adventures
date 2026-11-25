@@ -5,6 +5,8 @@ const test = require('node:test');
 const assert = require('node:assert');
 const speech = require('../js/core/speech.js');
 
+test.beforeEach(() => speech.setLanguage('de-DE'));
+
 test('Enhanced schlägt die Standardstimme', () => {
   const enhanced = speech.rankVoice({ name: 'Anna (Enhanced)', lang: 'de-DE', localService: true });
   const plain = speech.rankVoice({ name: 'Anna', lang: 'de-DE', localService: true });
@@ -34,5 +36,39 @@ test('auf Englisch gewinnt die englische Stimme', () => {
   speech.setLanguage('en-GB');
   assert.ok(speech.rankVoice({ name: 'Daniel', lang: 'en-GB' }) >
             speech.rankVoice({ name: 'Anna', lang: 'de-DE' }));
+  speech.setLanguage('de-DE');
+});
+
+test('Französisch, Italienisch und Chinesisch behalten ihre Stimme', () => {
+  [
+    ['fr-FR', 'Amelie'],
+    ['it-IT', 'Alice'],
+    ['zh-CN', 'Ting-Ting']
+  ].forEach(([tag, name]) => {
+    speech.setLanguage(tag);
+    assert.strictEqual(speech.language(), tag);
+    assert.ok(speech.rankVoice({ name: name, lang: tag }) >
+              speech.rankVoice({ name: 'Anna', lang: 'de-DE' }));
+    assert.strictEqual(speech.rankVoice({ name: 'Anna', lang: 'de-DE' }), -100);
+  });
+  speech.setLanguage('de-DE');
+});
+
+test('Sprachkürzel werden auf die Standardstimme erweitert', () => {
+  assert.strictEqual(speech.setLanguage('fr') || speech.language(), 'fr-FR');
+  assert.strictEqual(speech.setLanguage('it') || speech.language(), 'it-IT');
+  assert.strictEqual(speech.setLanguage('zh') || speech.language(), 'zh-CN');
+  assert.strictEqual(speech.setLanguage('hi') || speech.language(), 'hi-IN');
+  assert.strictEqual(speech.setLanguage('ne') || speech.language(), 'ne-NP');
+  speech.setLanguage('de-DE');
+});
+
+test('Hindi und Nepali bewerten ihre eigenen Stimmen', () => {
+  speech.setLanguage('hi-IN');
+  assert.ok(speech.rankVoice({ name: 'Lekha', lang: 'hi-IN' }) >
+            speech.rankVoice({ name: 'Anna', lang: 'de-DE' }));
+  speech.setLanguage('ne-NP');
+  assert.ok(speech.rankVoice({ name: 'Nepali', lang: 'ne-NP' }) >
+            speech.rankVoice({ name: 'Lekha', lang: 'hi-IN' }));
   speech.setLanguage('de-DE');
 });

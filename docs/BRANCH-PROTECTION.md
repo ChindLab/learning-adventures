@@ -5,8 +5,8 @@ gate is a repository setting: *require the status check `ci-success` before merg
 
 This repository ships `.github/workflows/ci.yml` with one stable job for exactly that:
 
-- `unit` → syntax check, 87 unit tests, generated seed is up to date
-- `browser` → Playwright smoke tests + `selftest.html` (219 activities/screens)
+- `unit` → syntax check, 101 unit tests, generated seed is up to date
+- `browser` → Playwright smoke tests + `selftest.html` (754 activities/screens)
 - `ci-success` → fails unless both jobs passed
 
 Require **`ci-success`**, not the individual jobs. Adding a job later never requires
@@ -79,7 +79,7 @@ gh api repos/OWNER/REPO/branches/main/protection \
 ```yaml
 unit:    npm run check        # syntax + node --test
          npm run seed         # then git diff --exit-code js/config/seed.js
-browser: npx playwright test  # 5 shell checks + selftest 219/219
+browser: npx playwright test  # 5 shell checks + selftest 754/754
 ```
 
 `npm run check` deliberately starts with a syntax pass over every JS file: the Node test

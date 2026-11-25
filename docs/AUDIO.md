@@ -41,16 +41,21 @@ Engines call `api.sfx('name')`; they never touch `AudioContext` directly.
 The browser's `speechSynthesis` API reads Bobby's lines with a voice installed in the
 operating system. It is text-to-speech, not a recording.
 
-- Language follows the child: `de-DE` or `en-GB` (`speech.setLanguage`).
+- Language follows the child: `en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN` or
+  `ne-NP` (`speech.setLanguage`).
 - Rate **0.95**, pitch **1.0** — slightly slower, no chipmunk effect.
-- The previous utterance is cancelled before a new one; children tap fast.
-- Voice selection ranks German/English voices by:
+- The previous utterance is cancelled before a new one; children tap fast. The latest line wins,
+  and a short pause after `cancel()` keeps Chrome's speech queue from wedging.
+- Voice selection ranks voices in the child's language by:
   exact language → Enhanced/Premium/Neural → Google → local; novelty voices
-  (“Grandma”, “Rocko”, …) are excluded.
+  (“Grandma”, “Rocko”, …) are excluded. A saved voice from another language is ignored.
 - If no matching voice exists, `say()` does nothing. Every line is also visible as text,
-  so the app stays fully usable.
-- The parent can pick a voice under **Einstellungen → Stimme**; the choice is stored in the
-  device settings.
+  so the app stays fully usable. This is why Nepali is silent on machines without a
+  `ne-NP` voice, while Hindi uses the `hi-IN` voice when one is installed.
+- Chrome may block the first automatic line before the child interacts with the page.
+  A tap or key press unlocks speech; the next spoken line works normally.
+- The parent can pick a voice under **Settings → Voice** (German: Einstellungen → Stimme);
+  the choice is stored in the device settings.
 
 There is no audio queue and no background speech: one line at a time.
 
@@ -119,7 +124,7 @@ Manual checklist:
 
 - Sound on: every correct/wrong/placed action is audible but not startling.
 - Sound off (system muted, or app mode `stumm`): every feedback still visible.
-- No German voice installed: app runs silently, no console error.
+- No voice for the child's language installed: app runs silently, no console error.
 - Rapid clicking: no overlapping speech, no stuck tone.
 - Tab hidden: no sound continues.
 

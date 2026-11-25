@@ -109,7 +109,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/
-          cp -R css js assets _site/
+          cp -R css js assets i18n _site/
 
       - name: Configure Pages
         uses: actions/configure-pages@v6

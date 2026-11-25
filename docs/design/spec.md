@@ -2,6 +2,11 @@
 
 **Design specification · 2026-11-21 · Status: implemented (v1.0)**
 
+> **Historical note:** the implementation now uses **English as the source language**
+> (`js/content/stage*.js`) with **German, French, Italian, Simplified Chinese, Hindi and Nepali
+> translation overlays** in `i18n/de.js`, `fr.js`, `it.js`, `zh.js`, `hi.js` and `ne.js`. Older references below to German
+> source files and `content/en.js` describe the original design.
+
 A offline learning adventure for one 5-year-old, in German, built with HTML5, CSS3 and
 vanilla JavaScript. This document is the source of truth for the implementation plan.
 It replaces the requirement list in the original briefing where the two disagree; every
@@ -837,7 +842,7 @@ export shim, so the same code the browser runs is the code under test.
 5. destroys the engine and asserts no timers/listeners remain (double `destroy()`).
 
 Then it mounts every screen (`#/`, each stage, `#/achievements`, `#/parent`) and asserts
-no uncaught error. Output is a table **Gesamt: 219/219 ok** (107 German + 107 English
+no uncaught error. Output is a table **Gesamt: 219/219 ok** (107 English + 107 German
 activities plus 5 screens); any failure prints the
 activity id and the reason. It is not linked from the child UI.
 

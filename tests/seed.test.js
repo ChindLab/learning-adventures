@@ -96,7 +96,15 @@ test('Namen werden gekürzt, Sprachen validiert', () => {
     profiles: [{ name: '  Ein sehr langer Name mit mehr Zeichen  ', language: 'fr' }]
   });
   assert.strictEqual(seed.profiles[0].name.length, 20);
-  assert.strictEqual(seed.profiles[0].language, 'de');
+  assert.strictEqual(seed.profiles[0].language, 'fr');
+
+  const invalid = normalizeSeed({ version: 1, profiles: [{ language: 'xx' }] });
+  assert.strictEqual(invalid.profiles[0].language, 'en');
+
+  const hindi = normalizeSeed({ version: 1, profiles: [{ language: 'hi' }] });
+  assert.strictEqual(hindi.profiles[0].language, 'hi');
+  const nepali = normalizeSeed({ version: 1, profiles: [{ language: 'ne' }] });
+  assert.strictEqual(nepali.profiles[0].language, 'ne');
 });
 
 test('stateFromSeed verändert den Seed nicht', () => {

@@ -90,15 +90,15 @@
       var matcher = createMatcher(sequences[0]);
 
       var wrap = ui.el('div', { className: 'activity' });
-      var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || NS.i18n.t('Lege die Finger auf die Grundreihe.', 'Rest your fingers on the home row.') });
+      var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || NS.i18n.t('Rest your fingers on the home row.', 'Lege die Finger auf die Grundreihe.') });
       var hint = ui.el('p', { className: 'finger-hint', attrs: { 'aria-live': 'polite' } });
       var boxes = ui.el('div', { className: 'type-row' });
       var hands = ui.el('div', { className: 'hands-row' });
       var keys = ui.el('div', { className: 'home-keys' });
       var feedback = ui.el('p', { className: 'feedback-line', attrs: { 'aria-live': 'polite' } });
 
-      var leftHand = handBox('hand-left', NS.i18n.t('Linke Hand', 'Left hand'));
-      var rightHand = handBox('hand-right', NS.i18n.t('Rechte Hand', 'Right hand'));
+      var leftHand = handBox('hand-left', NS.i18n.t('Left hand', 'Linke Hand'));
+      var rightHand = handBox('hand-right', NS.i18n.t('Right hand', 'Rechte Hand'));
       hands.appendChild(leftHand);
       hands.appendChild(rightHand);
 
@@ -140,7 +140,7 @@
       container.appendChild(wrap);
 
       root.document.addEventListener('keydown', onKeyDown);
-      api.speak(config.speech || config.prompt || NS.i18n.t('Lege die Finger auf die Grundreihe.', 'Rest your fingers on the home row.'));
+      api.speak(config.speech || config.prompt || NS.i18n.t('Rest your fingers on the home row.', 'Lege die Finger auf die Grundreihe.'));
       paint();
 
       function handBox(art, label) {

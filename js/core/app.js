@@ -109,37 +109,37 @@
 
       var home = ui.el('button', {
         className: 'icon-btn home-btn',
-        attrs: { type: 'button', 'aria-label': NS.i18n.t('Zur Karte', 'Back to the map') },
+        attrs: { type: 'button', 'aria-label': NS.i18n.t('Back to the map', 'Zur Karte') },
         on: { click: function () { NS.router.go('#/'); NS.audio.sfx('click'); } }
       }, [ui.el('span', { className: 'home-glyph', text: '⌂' })]);
 
       var title = ui.el('div', { className: 'topbar-title' }, [
         ui.el('span', { className: 'topbar-name', text: 'Bela' }),
-        ui.el('span', { className: 'topbar-sub', text: NS.i18n.t('Meine erste Computer-Schule', 'My First Computer School') })
+        ui.el('span', { className: 'topbar-sub', text: NS.i18n.t('My First Computer School', 'Meine erste Computer-Schule') })
       ]);
 
       var stars = ui.el('div', {
         className: 'star-count',
-        attrs: { 'aria-label': NS.i18n.t('Gesammelte Sterne', 'Stars collected') }
+        attrs: { 'aria-label': NS.i18n.t('Stars collected', 'Gesammelte Sterne') }
       }, [ui.el('span', { className: 'star-glyph', text: '★' }),
           ui.el('span', { className: 'star-value', text: '0' })]);
 
       var clock = ui.el('div', {
         className: 'clock-count',
-        attrs: { 'aria-label': NS.i18n.t('Zeit dieser Aufgabe', 'Time for this activity') }
+        attrs: { 'aria-label': NS.i18n.t('Time for this activity', 'Zeit dieser Aufgabe') }
       }, [ui.el('span', { className: 'clock-glyph', text: '⏱' }),
           ui.el('span', { className: 'clock-value', text: '0:00' })]);
       clock.hidden = true;
 
       var sound = ui.el('button', {
         className: 'icon-btn sound-btn',
-        attrs: { type: 'button', 'aria-label': NS.i18n.t('Ton umschalten', 'Change sound') },
+        attrs: { type: 'button', 'aria-label': NS.i18n.t('Change sound', 'Ton umschalten') },
         on: { click: function () { app.cycleSound(progressApi, sound); } }
       });
 
       var gear = ui.el('button', {
         className: 'icon-btn gear-btn',
-        attrs: { type: 'button', 'aria-label': NS.i18n.t('Für Erwachsene', 'For grown-ups') },
+        attrs: { type: 'button', 'aria-label': NS.i18n.t('For grown-ups', 'Für Erwachsene') },
         on: { click: function () { NS.router.go('#/parent'); } }
       }, [ui.el('span', { className: 'gear-glyph', text: '⚙' })]);
 
@@ -163,7 +163,8 @@
       // Wurde die Sprache direkt am Profil geändert (z. B. setLanguage oder
       // addProfile), zieht i18n nach. i18n.apply ruft refreshIdentity erneut
       // auf; dann stimmen die Sprachen überein und es gibt keine Rekursion.
-      var currentLang = root.document.documentElement.lang === 'en' ? 'en' : 'de';
+      var currentLang = root.document.documentElement.lang || 'en';
+      if (currentLang === 'zh-CN') { currentLang = 'zh'; }
       if (profile && profile.language && profile.language !== currentLang) {
         NS.i18n.apply();
         return;
@@ -171,10 +172,10 @@
 
       if (nameEl) { nameEl.textContent = 'Bela'; }
       if (subEl) {
-        subEl.textContent = NS.i18n.t('Meine erste Computer-Schule', 'My First Computer School');
+        subEl.textContent = NS.i18n.t('My First Computer School', 'Meine erste Computer-Schule');
       }
 
-      var title = NS.i18n.t('Bela – Meine erste Computer-Schule', 'Bela – My First Computer School');
+      var title = NS.i18n.t('Bela – My First Computer School', 'Bela – Meine erste Computer-Schule');
       if (root.document.title !== title) { root.document.title = title; }
     },
 
@@ -201,10 +202,7 @@
       NS.speech.setEnabled(mode === 'all');
       if (button) {
         button.textContent = mode === 'all' ? '🔊' : (mode === 'effects' ? '🔉' : '🔇');
-        button.setAttribute('aria-label', NS.i18n.t(
-          mode === 'all' ? 'Ton an' : (mode === 'effects' ? 'Nur Töne' : 'Ton aus'),
-          mode === 'all' ? 'Sound on' : (mode === 'effects' ? 'Effects only' : 'Sound off')
-        ));
+        button.setAttribute('aria-label', NS.i18n.t(mode === 'all' ? 'Sound on' : (mode === 'effects' ? 'Effects only' : 'Sound off'), mode === 'all' ? 'Ton an' : (mode === 'effects' ? 'Nur Töne' : 'Ton aus')));
       }
     },
 

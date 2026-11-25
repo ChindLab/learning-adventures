@@ -53,7 +53,7 @@
         cards.forEach(function (card) {
           var node = ui.el('button', {
             className: 'memory-card',
-            attrs: { type: 'button', 'aria-label': NS.i18n.t('Verdeckte Karte', 'Face-down card') },
+            attrs: { type: 'button', 'aria-label': NS.i18n.t('Face-down card', 'Verdeckte Karte') },
             data: { pair: card.pair }
           }, [
             ui.el('span', { className: 'card-back', text: '★' }),

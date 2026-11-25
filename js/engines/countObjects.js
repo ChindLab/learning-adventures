@@ -89,7 +89,7 @@
       function renderFeed() {
         var wanted = Number(config.count) || 3;
         answer = wanted;
-        expression.textContent = NS.i18n.t('Lege ' + wanted + ' auf den Teller', 'Put ' + wanted + ' on the plate');
+        expression.textContent = NS.i18n.t('Put {n} on the plate', 'Lege {n} auf den Teller', { n: wanted });
         var plate = ui.el('div', { className: 'count-board', style: { minHeight: '160px', minWidth: '240px', border: '4px dashed #9A8FB0' } });
         var tray = ui.el('div', { className: 'row' });
         var placed = 0;
@@ -113,7 +113,7 @@
           tray.appendChild(banana);
         }
 
-        var check = ui.button(NS.i18n.t('Fertig', 'Done'), {
+        var check = ui.button(NS.i18n.t('Done', 'Fertig'), {
           onClick: function () {
             if (done) { return; }
             if (placed === wanted) {

@@ -13,7 +13,7 @@ const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 
 const ROOT = path.join(__dirname, '..');
-const ROOTS = ['js', 'tools', 'tests'];
+const ROOTS = ['js', 'i18n', 'tools', 'tests'];
 const EXTRA_FILES = ['playwright.config.js'];
 
 function walk(dir, files) {

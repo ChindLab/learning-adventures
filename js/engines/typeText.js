@@ -100,13 +100,13 @@
 
       function startWord(word) {
         matcher = createMatcher(word.text);
-        prompt.textContent = NS.i18n.t('Tippe: ', 'Type: ') + word.text;
+        prompt.textContent = NS.i18n.t('Type: ', 'Tippe: ') + word.text;
         ui.clear(stage);
         if (word.art) { stage.appendChild(ui.art(word.art, 180)); }
         if (word.label) { stage.appendChild(ui.el('p', { className: 'letter-word', text: word.label })); }
         paintBoxes();
         paintHelper(matcher.expected());
-        api.speak(NS.i18n.t('Tippe ' + word.text, 'Type ' + word.text));
+        api.speak(NS.i18n.t('Type {word}', 'Tippe {word}', { word: word.text }));
       }
 
       /**
@@ -122,7 +122,7 @@
         unique.forEach(function (letter) {
           helper.appendChild(ui.el('button', {
             className: 'key',
-            attrs: { type: 'button', 'aria-label': NS.i18n.t('Buchstabe ', 'Letter ') + letter },
+            attrs: { type: 'button', 'aria-label': NS.i18n.t('Letter ', 'Buchstabe ') + letter },
             text: letter,
             on: { click: function () { pressWord(letter); } }
           }));
@@ -188,7 +188,7 @@
         ui.clear(stage);
         ui.clear(boxesRow);
         ui.clear(helper);
-        prompt.textContent = NS.i18n.t('Drücke die Taste ', 'Press the key ') + card.key;
+        prompt.textContent = NS.i18n.t('Press the key ', 'Drücke die Taste ') + card.key;
         var lowercase = String(card.key).toLowerCase();
         var layout = ui.el('div', { className: 'letter-card' }, [
           ui.el('div', {
@@ -206,11 +206,11 @@
         stage.appendChild(layout);
         helper.appendChild(ui.el('button', {
           className: 'key wide',
-          attrs: { type: 'button', 'aria-label': NS.i18n.t('Taste ', 'Key ') + card.key },
-          text: NS.i18n.t('Taste ', 'Key ') + card.key,
+          attrs: { type: 'button', 'aria-label': NS.i18n.t('Key ', 'Taste ') + card.key },
+          text: NS.i18n.t('Key ', 'Taste ') + card.key,
           on: { click: function () { pressLetter(card.key); } }
         }));
-        api.speak(card.key + NS.i18n.t(' und ', ' and ') + lowercase + NS.i18n.t(' wie ', ' for ') + (card.word || ''));
+        api.speak(card.key + NS.i18n.t(' and ', ' und ') + lowercase + NS.i18n.t(' for ', ' wie ') + (card.word || ''));
       }
 
       function pressLetter(key) {
@@ -239,13 +239,13 @@
       function renderFree() {
         ui.clear(stage);
         ui.clear(boxesRow);
-        prompt.textContent = config.prompt || NS.i18n.t('Tippe deinen Namen', 'Type your name');
+        prompt.textContent = config.prompt || NS.i18n.t('Type your name', 'Tippe deinen Namen');
         freeInput = ui.el('input', {
           className: 'type-box',
           attrs: {
             type: 'text',
             maxlength: '12',
-            'aria-label': NS.i18n.t('Dein Name', 'Your name'),
+            'aria-label': NS.i18n.t('Your name', 'Dein Name'),
             autocomplete: 'off',
             placeholder: '…'
           },
@@ -253,7 +253,7 @@
         });
         var name = NS.store ? NS.store.profile().name : '';
         if (name) { freeInput.value = name; }
-        var doneBtn = ui.button(NS.i18n.t('Fertig', 'Done'), {
+        var doneBtn = ui.button(NS.i18n.t('Done', 'Fertig'), {
           onClick: function () {
             if (done) { return; }
             done = true;
@@ -264,7 +264,7 @@
         stage.appendChild(freeInput);
         stage.appendChild(doneBtn);
         freeInput.focus();
-        api.speak(config.speech || NS.i18n.t('Tippe deinen Namen', 'Type your name'));
+        api.speak(config.speech || NS.i18n.t('Type your name', 'Tippe deinen Namen'));
       }
 
       function finish() {

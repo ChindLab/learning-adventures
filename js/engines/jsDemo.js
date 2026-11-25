@@ -239,11 +239,11 @@
       wrap.appendChild(feedback);
       container.appendChild(wrap);
 
-      controls.appendChild(ui.button(NS.i18n.t('▶ Schritt', '▶ Step'), { onClick: step }));
-      controls.appendChild(ui.button(NS.i18n.t('▶▶ Alles', '▶▶ All'), { variant: 'lemon', onClick: playAll }));
+      controls.appendChild(ui.button(NS.i18n.t('▶ Step', '▶ Schritt'), { onClick: step }));
+      controls.appendChild(ui.button(NS.i18n.t('▶▶ All', '▶▶ Alles'), { variant: 'lemon', onClick: playAll }));
 
       if (!parsed.ok) {
-        viz.appendChild(ui.el('p', { text: NS.i18n.t('Diesen Code versteht Bobby nicht.', 'Bobby does not understand this code.') }));
+        viz.appendChild(ui.el('p', { text: NS.i18n.t('Bobby does not understand this code.', 'Diesen Code versteht Bobby nicht.') }));
         controls.hidden = true;
       }
 
@@ -271,9 +271,9 @@
         } else if (event.type === 'alert') {
           viz.appendChild(ui.el('div', { className: 'alert-bubble', text: event.value }));
         } else if (event.type === 'define') {
-          viz.appendChild(ui.el('p', { className: 'muted', text: NS.i18n.t('Neue Anleitung: ', 'New instruction: ') + event.name }));
+          viz.appendChild(ui.el('p', { className: 'muted', text: NS.i18n.t('New instruction: ', 'Neue Anleitung: ') + event.name }));
         } else if (event.type === 'call') {
-          viz.appendChild(ui.el('p', { className: 'muted', text: NS.i18n.t('Führe aus: ', 'Run: ') + event.name + '()' }));
+          viz.appendChild(ui.el('p', { className: 'muted', text: NS.i18n.t('Run: ', 'Führe aus: ') + event.name + '()' }));
         }
 
         var noteIndex = config.lineNotes ? Math.min(event.line - 1, config.lineNotes.length - 1) : -1;
@@ -282,7 +282,7 @@
 
       function renderViz() {
         ui.clear(viz);
-        viz.appendChild(ui.el('p', { className: 'muted', text: NS.i18n.t('Drücke ▶ und schau zu.', 'Press ▶ and watch.') }));
+        viz.appendChild(ui.el('p', { className: 'muted', text: NS.i18n.t('Press ▶ and watch.', 'Drücke ▶ und schau zu.') }));
         highlight(0);
       }
 
@@ -310,7 +310,7 @@
         if (done) { return; }
         done = true;
         api.sfx('star');
-        feedback.textContent = NS.i18n.t('Das war JavaScript!', 'That was JavaScript!');
+        feedback.textContent = NS.i18n.t('That was JavaScript!', 'Das war JavaScript!');
         feedback.className = 'feedback-line is-good';
         ui.wait(400).then(function () {
           api.complete({ correct: 1, attempts: 0, stars: 1 });

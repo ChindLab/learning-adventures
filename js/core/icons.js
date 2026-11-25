@@ -114,6 +114,40 @@
     'block-if': 'Wenn', 'block-collect': 'Stern sammeln', frage: 'Unbekanntes Bild'
   };
 
+  var LABELS_EN = {
+    bobby: 'Bobby the robot', computer: 'Computer', monitor: 'Monitor',
+    tastatur: 'Keyboard', maus: 'Mouse', laptop: 'Laptop', lautsprecher: 'Speaker',
+    kamera: 'Camera', drucker: 'Printer', schreibtisch: 'Desk',
+    apfel: 'Apple', ball: 'Ball', katze: 'Cat', hund: 'Dog', elefant: 'Elephant',
+    ei: 'Egg', eis: 'Ice cream', drachen: 'Kite', krone: 'Crown', regenschirm: 'Umbrella',
+    vase: 'Vase', buch: 'Book', fisch: 'Fish', gitarre: 'Guitar', hut: 'Hat', igel: 'Hedgehog',
+    jacke: 'Jacket', lampe: 'Lamp', nase: 'Nose', orange: 'Orange', pferd: 'Horse',
+    qualle: 'Jellyfish', roboter: 'Robot', sonne: 'Sun', tasse: 'Cup', uhr: 'Clock',
+    vogel: 'Bird', wasser: 'Water', xylophon: 'Xylophone', yoga: 'Yoga', zebra: 'Zebra',
+    dino: 'Dinosaur', stern: 'Star', pokal: 'Trophy', schloss: 'Lock', truhe: 'Treasure chest',
+    banane: 'Banana', korb: 'Basket', blume: 'Flower', schmetterling: 'Butterfly',
+    kreis: 'Circle', quadrat: 'Square', dreieck: 'Triangle', herz: 'Heart',
+    'pfeil-oben': 'Arrow up', 'pfeil-unten': 'Arrow down',
+    'pfeil-links': 'Arrow left', 'pfeil-rechts': 'Arrow right',
+    'hand-left': 'Left hand with fingers', 'hand-right': 'Right hand with fingers',
+    rakete: 'Rocket',
+    'block-forward': 'Forward', 'block-back': 'Back', 'block-left': 'Turn left',
+    'block-right': 'Turn right', 'block-jump': 'Jump', 'block-repeat': 'Repeat',
+    'block-if': 'If', 'block-collect': 'Collect star', frage: 'Unknown picture'
+  };
+
+  function labelFor(name) {
+    var german = LABELS[name] || 'Bild';
+    var english = LABELS_EN[name] || german;
+    var language = (NS.content && NS.content.language) || 'en';
+    if (language !== 'en' && language !== 'de') {
+      var translation = NS.content.translations && NS.content.translations[language];
+      var lexicon = translation && translation.lexicon;
+      if (lexicon && lexicon[english]) { return lexicon[english]; }
+    }
+    return NS.i18n ? NS.i18n.t(english, german) : english;
+  }
+
   function markup(name) {
     return ART[name] || ART.frage;
   }
@@ -127,7 +161,7 @@
     svg.setAttribute('width', px);
     svg.setAttribute('height', px);
     svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', LABELS[name] || 'Bild');
+    svg.setAttribute('aria-label', labelFor(name));
     svg.classList.add('art');
     return svg;
   }

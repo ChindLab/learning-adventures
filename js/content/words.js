@@ -1,6 +1,6 @@
 /**
- * words.js – kurze Wörter für Lektion 6 in Stufe 4.
- * Jedes Wort hat ein Bild aus icons.js und eine deutsche Bezeichnung.
+ * words.js – short English words for Stage 4, lesson 6.
+ * Each word has an icon and a display label. German equivalents live in i18n/de.js.
  */
 (function (root) {
   'use strict';
@@ -8,12 +8,12 @@
   var content = NS.content = NS.content || {};
 
   content.words = [
-    { id: 'katze', art: 'katze', label: 'Katze', text: 'KATZE' },
-    { id: 'hund', art: 'hund', label: 'Hund', text: 'HUND' },
-    { id: 'sonne', art: 'sonne', label: 'Sonne', text: 'SONNE' },
-    { id: 'mama', art: 'blume', label: 'Mama', text: 'MAMA' },
-    { id: 'papa', art: 'hut', label: 'Papa', text: 'PAPA' },
+    { id: 'cat', art: 'katze', label: 'Cat', text: 'CAT' },
+    { id: 'dog', art: 'hund', label: 'Dog', text: 'DOG' },
+    { id: 'sun', art: 'sonne', label: 'Sun', text: 'SUN' },
+    { id: 'mom', art: 'blume', label: 'Mom', text: 'MOM' },
+    { id: 'dad', art: 'hut', label: 'Dad', text: 'DAD' },
     { id: 'ball', art: 'ball', label: 'Ball', text: 'BALL' },
-    { id: 'ei', art: 'ei', label: 'Ei', text: 'EI' }
+    { id: 'egg', art: 'ei', label: 'Egg', text: 'EGG' }
   ];
 })(typeof globalThis !== 'undefined' ? globalThis : this);

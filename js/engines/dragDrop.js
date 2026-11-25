@@ -86,7 +86,7 @@
         node.classList.add('is-selected');
         node.setAttribute('aria-pressed', 'true');
         api.sfx('click');
-        feedback.textContent = NS.i18n.t('Tippe jetzt auf das passende Ziel.', 'Now tap the matching target.');
+        feedback.textContent = NS.i18n.t('Now tap the matching target.', 'Tippe jetzt auf das passende Ziel.');
         feedback.className = 'feedback-line';
       }
 

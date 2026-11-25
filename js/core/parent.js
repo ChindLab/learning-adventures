@@ -25,14 +25,14 @@
   }
 
   function minutes(ms) {
-    return Math.round((ms || 0) / 60000) + NS.i18n.t(' Min.', ' min');
+    return Math.round((ms || 0) / 60000) + NS.i18n.t(' min', ' Min.');
   }
 
   function duration(ms) {
     var total = Math.round((ms || 0) / 1000);
-    if (total < 60) { return total + NS.i18n.t(' Sek.', ' sec'); }
+    if (total < 60) { return total + NS.i18n.t(' sec', ' Sek.'); }
     var rest = total % 60;
-    return Math.floor(total / 60) + NS.i18n.t(' Min.', ' min') + (rest ? ' ' + rest + NS.i18n.t(' Sek.', ' sec') : '');
+    return Math.floor(total / 60) + NS.i18n.t(' min', ' Min.') + (rest ? ' ' + rest + NS.i18n.t(' sec', ' Sek.') : '');
   }
 
   function countLessons() {
@@ -66,8 +66,8 @@
     if (!question) { question = newQuestion(); }
 
     var wrap = ui.el('div', { className: 'gate card' }, [
-      ui.el('h1', { className: 'screen-title', text: NS.i18n.t('Für Erwachsene', 'For grown-ups') }),
-      ui.el('p', { className: 'muted', text: NS.i18n.t('Bitte die Aufgabe lösen.', 'Please solve the task.') }),
+      ui.el('h1', { className: 'screen-title', text: NS.i18n.t('For grown-ups', 'Für Erwachsene') }),
+      ui.el('p', { className: 'muted', text: NS.i18n.t('Please solve the task.', 'Bitte die Aufgabe lösen.') }),
       ui.el('div', { className: 'count-expression', text: question.text + ' = ?' }),
       ui.el('div', { className: 'count-expression', attrs: { 'aria-live': 'polite' }, text: entry || '_' })
     ]);
@@ -102,7 +102,7 @@
     }));
 
     wrap.appendChild(pad);
-    wrap.appendChild(ui.button(NS.i18n.t('Zurück zur Karte', 'Back to the map'), { variant: 'ghost', onClick: function () {
+    wrap.appendChild(ui.button(NS.i18n.t('Back to the map', 'Zurück zur Karte'), { variant: 'ghost', onClick: function () {
       entry = ''; message = '';
       NS.router.go('#/');
     } }));
@@ -115,7 +115,7 @@
         message = '';
         NS.router.render();
       } else {
-        message = NS.i18n.t('Das war nicht richtig. Versuch es noch einmal.', 'That was not right. Try again.');
+        message = NS.i18n.t('That was not right. Try again.', 'Das war nicht richtig. Versuch es noch einmal.');
         entry = '';
         question = newQuestion();
         NS.router.render();
@@ -136,9 +136,9 @@
     var screen = ui.screen('parent-screen');
 
     var head = ui.el('div', { className: 'row' }, [
-      ui.el('h1', { className: 'screen-title', text: NS.i18n.t('Elternbereich', 'Parent area') }),
+      ui.el('h1', { className: 'screen-title', text: NS.i18n.t('Parent area', 'Elternbereich') }),
       ui.el('div', { className: 'spacer' }),
-      ui.button(NS.i18n.t('Zur Karte', 'Back to the map'), { variant: 'soft', onClick: function () { NS.router.go('#/'); } })
+      ui.button(NS.i18n.t('Back to the map', 'Zur Karte'), { variant: 'soft', onClick: function () { NS.router.go('#/'); } })
     ]);
     screen.appendChild(head);
 
@@ -152,28 +152,28 @@
         on: { click: function () { store.setActiveProfile(item.id); NS.i18n.apply(); NS.router.render(); } }
       }));
     });
-    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Wer spielt?', 'Who is playing?') }));
+    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Who is playing?', 'Wer spielt?') }));
     screen.appendChild(profiles);
 
     var addRow = ui.el('div', { className: 'row' });
     var nameInput = ui.el('input', {
-      attrs: { type: 'text', placeholder: NS.i18n.t('Name des Kindes', "Child's name"), 'aria-label': NS.i18n.t('Name des Kindes', "Child's name"), maxlength: '20' },
+      attrs: { type: 'text', placeholder: NS.i18n.t("Child's name", 'Name des Kindes'), 'aria-label': NS.i18n.t("Child's name", 'Name des Kindes'), maxlength: '20' },
       className: 'field',
       style: { fontSize: '20px', padding: '12px', borderRadius: '14px', border: '3px solid #D8D2C6', minWidth: '220px' }
     });
     addRow.appendChild(nameInput);
-    addRow.appendChild(ui.button(NS.i18n.t('Kind hinzufügen', 'Add child'), { variant: 'soft', onClick: function () {
+    addRow.appendChild(ui.button(NS.i18n.t('Add child', 'Kind hinzufügen'), { variant: 'soft', onClick: function () {
       store.addProfile(nameInput.value || '');
       NS.i18n.apply();
       NS.router.render();
     } }));
-    addRow.appendChild(ui.button(NS.i18n.t('Umbenennen', 'Rename'), { variant: 'ghost', onClick: function () {
+    addRow.appendChild(ui.button(NS.i18n.t('Rename', 'Umbenennen'), { variant: 'ghost', onClick: function () {
       store.renameProfile(profile.id, nameInput.value || profile.name);
       NS.router.render();
     } }));
-    addRow.appendChild(ui.button(NS.i18n.t('Entfernen', 'Remove'), { variant: 'ghost', className: 'danger', onClick: function () {
+    addRow.appendChild(ui.button(NS.i18n.t('Remove', 'Entfernen'), { variant: 'ghost', className: 'danger', onClick: function () {
       var result = store.removeProfile(profile.id);
-      if (!result.ok) { message = NS.i18n.t('Das letzte Profil kann nicht entfernt werden.', 'The last profile cannot be removed.'); }
+      if (!result.ok) { message = NS.i18n.t('The last profile cannot be removed.', 'Das letzte Profil kann nicht entfernt werden.'); }
       NS.i18n.apply();
       NS.router.render();
     } }));
@@ -184,23 +184,23 @@
 
     /* --- Überblick --- */
     var stats = ui.el('div', { className: 'stat-grid' }, [
-      stat(profile.stars, NS.i18n.t('Sterne', 'Stars')),
-      stat(countDone(store) + ' / ' + countLessons(), NS.i18n.t('Lektionen', 'Lessons')),
-      stat(minutes(profile.stats.playMs), NS.i18n.t('Lernzeit', 'Learning time')),
-      stat(String(profile.stats.sessions), NS.i18n.t('Sitzungen', 'Sessions'))
+      stat(profile.stars, NS.i18n.t('Stars', 'Sterne')),
+      stat(countDone(store) + ' / ' + countLessons(), NS.i18n.t('Lessons', 'Lektionen')),
+      stat(minutes(profile.stats.playMs), NS.i18n.t('Learning time', 'Lernzeit')),
+      stat(String(profile.stats.sessions), NS.i18n.t('Sessions', 'Sitzungen'))
     ]);
-    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Überblick', 'Overview') }));
+    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Overview', 'Überblick') }));
     screen.appendChild(stats);
 
     if (store.persistFailed) {
       screen.appendChild(ui.el('p', {
         className: 'feedback-line is-soft',
-        text: NS.i18n.t('Fortschritt wird nicht gespeichert. Der Browser blockiert den Speicher.', 'Progress is not being saved. The browser is blocking storage.')
+        text: NS.i18n.t('Progress is not being saved. The browser is blocking storage.', 'Fortschritt wird nicht gespeichert. Der Browser blockiert den Speicher.')
       }));
     }
 
     /* --- Stufen --- */
-    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Stufen', 'Stages') }));
+    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Stages', 'Stufen') }));
     var stageBox = ui.el('div', { className: 'card' });
     NS.content.stages.forEach(function (stage) {
       var record = profile.stages[String(stage.id)] || { lessons: {}, milestone: { done: false } };
@@ -214,13 +214,13 @@
         ui.el('div', { className: 'row' }, [
           ui.el('strong', { text: stage.id + '. ' + stage.title }),
           ui.el('span', { className: 'spacer' }),
-          ui.el('span', { className: 'muted', text: done + ' / ' + total + ' ' + NS.i18n.t('Lektionen', 'lessons') })
+          ui.el('span', { className: 'muted', text: done + ' / ' + total + ' ' + NS.i18n.t('lessons', 'Lektionen') })
         ]),
         ui.el('div', { className: 'bar' }, [ui.el('i', { style: { width: percent + '%' } })]),
         ui.el('div', { className: 'muted', style: { fontSize: '16px' }, text:
           (record.milestone && record.milestone.done
-            ? NS.i18n.t('Stufe geschafft ✓', 'Stage complete ✓')
-            : (done ? NS.i18n.t('angefangen', 'started') : NS.i18n.t('noch nicht begonnen', 'not started'))) })
+            ? NS.i18n.t('Stage complete ✓', 'Stufe geschafft ✓')
+            : (done ? NS.i18n.t('started', 'angefangen') : NS.i18n.t('not started', 'noch nicht begonnen'))) })
       ]));
 
       var lessons = ui.el('div', { style: { margin: '4px 0 16px 18px' } });
@@ -241,7 +241,7 @@
           detail.appendChild(ui.el('div', {
             className: 'muted',
             style: { fontSize: '15px', marginLeft: '18px' },
-            text: 'Noch keine Spielzeit erfasst.'
+            text: NS.i18n.t('No play time recorded yet.', 'Noch keine Spielzeit erfasst.')
           }));
         } else {
           ids.forEach(function (id) {
@@ -262,56 +262,58 @@
 
     /* --- Übungsbedarf --- */
     var weak = store.weakAreas(3);
-    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Übungsbedarf', 'Needs practice') }));
+    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Needs practice', 'Übungsbedarf') }));
     var weakBox = ui.el('div', { className: 'card' });
     if (!weak.length) {
-      weakBox.appendChild(ui.el('p', { text: NS.i18n.t('Alles im grünen Bereich. Weiter so!', 'All good. Keep it up!') }));
+      weakBox.appendChild(ui.el('p', { text: NS.i18n.t('All good. Keep it up!', 'Alles im grünen Bereich. Weiter so!') }));
     } else {
       weak.forEach(function (item) {
         var lesson = NS.content.findLesson(item.lesson);
         weakBox.appendChild(ui.el('p', { text:
-          (lesson ? lesson.lesson.title : item.lesson) + ' – ' + Math.round(item.accuracy * 100) + NS.i18n.t(' % richtig', '% correct') }));
+          (lesson ? lesson.lesson.title : item.lesson) + ' – ' + Math.round(item.accuracy * 100) + NS.i18n.t('% correct', ' % richtig') }));
       });
     }
     screen.appendChild(weakBox);
 
     /* --- Einstellungen --- */
-    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Einstellungen', 'Settings') }));
+    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Settings', 'Einstellungen') }));
     var settings = ui.el('div', { className: 'card' });
     var s = store.state().settings;
 
     var langRow = ui.el('div', { className: 'row', style: { marginBottom: '12px' } }, [
-      ui.el('span', { text: NS.i18n.t('Sprache des Kindes', "Child's language") }),
+      ui.el('span', { text: NS.i18n.t("Child's language", 'Sprache des Kindes') }),
       ui.el('span', { className: 'spacer' })
     ]);
-    langRow.appendChild(ui.button('Deutsch', {
-      variant: profile.language === 'de' ? 'soft' : 'ghost',
-      onClick: function () {
-        store.setLanguage('de');
-        NS.i18n.apply();
-        NS.router.render();
-      }
-    }));
-    langRow.appendChild(ui.button('English', {
-      variant: profile.language === 'en' ? 'soft' : 'ghost',
-      onClick: function () {
-        store.setLanguage('en');
-        NS.i18n.apply();
-        NS.router.render();
-      }
-    }));
+    [
+      ['en', 'English'],
+      ['de', 'Deutsch'],
+      ['fr', 'Français'],
+      ['it', 'Italiano'],
+      ['zh', '中文'],
+      ['hi', 'हिन्दी'],
+      ['ne', 'नेपाली']
+    ].forEach(function (entry) {
+      langRow.appendChild(ui.button(entry[1], {
+        variant: profile.language === entry[0] ? 'soft' : 'ghost',
+        onClick: function () {
+          store.setLanguage(entry[0]);
+          NS.i18n.apply();
+          NS.router.render();
+        }
+      }));
+    });
     settings.appendChild(langRow);
 
-    settings.appendChild(toggleRow(NS.i18n.t('Ton', 'Sound'), s.sound, function () {
+    settings.appendChild(toggleRow(NS.i18n.t('Sound', 'Ton'), s.sound, function () {
       store.setSetting('sound', !store.state().settings.sound);
       NS.router.render();
     }));
-    settings.appendChild(toggleRow(NS.i18n.t('Vorlesen', 'Read aloud'), s.speech, function () {
+    settings.appendChild(toggleRow(NS.i18n.t('Read aloud', 'Vorlesen'), s.speech, function () {
       store.setSetting('speech', !store.state().settings.speech);
       NS.speech.setEnabled(store.state().settings.speech && store.state().settings.sound);
       NS.router.render();
     }));
-    settings.appendChild(toggleRow(NS.i18n.t('Reduzierte Bewegung', 'Reduced motion'), s.reducedMotion, function () {
+    settings.appendChild(toggleRow(NS.i18n.t('Reduced motion', 'Reduzierte Bewegung'), s.reducedMotion, function () {
       store.setSetting('reducedMotion', !store.state().settings.reducedMotion);
       applyReducedMotion();
       NS.router.render();
@@ -319,16 +321,16 @@
 
     // Stimme in der aktuellen Sprache des Kindes.
     var voiceRow = ui.el('div', { className: 'row', style: { marginBottom: '12px' } }, [
-      ui.el('span', { text: NS.i18n.t('Stimme', 'Voice') }),
+      ui.el('span', { text: NS.i18n.t('Voice', 'Stimme') }),
       ui.el('span', { className: 'spacer' })
     ]);
     var select = ui.el('select', {
       className: 'voice-select',
-      attrs: { 'aria-label': NS.i18n.t('Stimme wählen', 'Choose voice') }
+      attrs: { 'aria-label': NS.i18n.t('Choose voice', 'Stimme wählen') }
     });
     var voices = NS.speech.listVoices();
     if (!voices.length) {
-      select.appendChild(ui.el('option', { text: NS.i18n.t('Keine Stimme gefunden', 'No voice found') }));
+      select.appendChild(ui.el('option', { text: NS.i18n.t('No voice found', 'Keine Stimme gefunden') }));
       select.disabled = true;
     } else {
       voices.forEach(function (candidate) {
@@ -338,52 +340,56 @@
         select.appendChild(option);
       });
       var current = NS.speech.currentVoice();
-      select.value = s.voiceURI || (current && current.voiceURI) || voices[0].voiceURI;
+      var stored = voices.filter(function (candidate) { return candidate.voiceURI === s.voiceURI; })[0];
+      select.value = (current && current.voiceURI) || (stored && stored.voiceURI) || voices[0].voiceURI;
     }
     select.addEventListener('change', function () {
       store.setSetting('voiceURI', select.value);
       NS.speech.setVoice(select.value);
-      NS.speech.say(NS.i18n.t('Hallo! So klinge ich.', 'Hello! This is how I sound.'));
+      NS.speech.say(NS.i18n.t('Hello! This is how I sound.', 'Hallo! So klinge ich.'));
     });
     voiceRow.appendChild(select);
-    voiceRow.appendChild(ui.button(NS.i18n.t('Anhören', 'Listen'), { variant: 'ghost', onClick: function () {
-      NS.speech.setVoice(select.value);
-      NS.speech.say(NS.i18n.t('Hallo! So klinge ich.', 'Hello! This is how I sound.'));
-    } }));
+    voiceRow.appendChild(ui.button(NS.i18n.t('Listen', 'Anhören'), {
+      variant: 'ghost',
+      disabled: !voices.length,
+      onClick: function () {
+        NS.speech.setVoice(select.value);
+        NS.speech.say(NS.i18n.t('Hello! This is how I sound.', 'Hallo! So klinge ich.'));
+      }
+    }));
     settings.appendChild(voiceRow);
 
-    settings.appendChild(toggleRow(NS.i18n.t('Alle Stufen freischalten', 'Unlock all stages'), profile.unlockAll, function () {
+    settings.appendChild(toggleRow(NS.i18n.t('Unlock all stages', 'Alle Stufen freischalten'), profile.unlockAll, function () {
       store.setUnlockAll(!profile.unlockAll);
       NS.router.render();
     }));
     screen.appendChild(settings);
 
     /* --- Zurücksetzen --- */
-    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Fortschritt zurücksetzen', 'Reset progress') }));
+    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Reset progress', 'Fortschritt zurücksetzen') }));
     var danger = ui.el('div', { className: 'danger-zone' });
     if (!confirmReset) {
-      danger.appendChild(ui.el('p', { text: NS.i18n.t('Welchen Fortschritt möchtest du löschen?', 'Which progress do you want to delete?') }));
+      danger.appendChild(ui.el('p', { text: NS.i18n.t('Which progress do you want to delete?', 'Welchen Fortschritt möchtest du löschen?') }));
       danger.appendChild(ui.el('div', { className: 'row' }, [
-        ui.button(NS.i18n.t('Dieses Kind', 'This child'), { variant: 'ghost', className: 'danger', onClick: function () {
+        ui.button(NS.i18n.t('This child', 'Dieses Kind'), { variant: 'ghost', className: 'danger', onClick: function () {
           confirmReset = 'active'; NS.router.render();
         } }),
-        ui.button(NS.i18n.t('Alle Kinder', 'All children'), { variant: 'ghost', className: 'danger', onClick: function () {
+        ui.button(NS.i18n.t('All children', 'Alle Kinder'), { variant: 'ghost', className: 'danger', onClick: function () {
           confirmReset = 'all'; NS.router.render();
         } })
       ]));
     } else {
       danger.appendChild(ui.el('p', { text: confirmReset === 'all'
-        ? NS.i18n.t('Wirklich den Fortschritt aller Kinder löschen?', "Really delete every child's progress?")
-        : NS.i18n.t('Wirklich den Fortschritt von ' + (profile.name || 'diesem Kind') + ' löschen?',
-                    'Really delete the progress of ' + (profile.name || 'this child') + '?') }));
+        ? NS.i18n.t("Really delete every child's progress?", 'Wirklich den Fortschritt aller Kinder löschen?')
+        : NS.i18n.t('Really delete the progress of {name}?', 'Wirklich den Fortschritt von {name} löschen?', { name: profile.name || NS.i18n.t('this child', 'diesem Kind') }) }));
       danger.appendChild(ui.el('div', { className: 'row' }, [
-        ui.button(NS.i18n.t('Ja, löschen', 'Yes, delete'), { variant: 'ghost', className: 'danger', onClick: function () {
+        ui.button(NS.i18n.t('Yes, delete', 'Ja, löschen'), { variant: 'ghost', className: 'danger', onClick: function () {
           if (confirmReset === 'all') { store.resetAll(); } else { store.resetActiveProfile(); }
           confirmReset = null;
-          message = NS.i18n.t('Der Fortschritt wurde zurückgesetzt.', 'Progress has been reset.');
+          message = NS.i18n.t('Progress has been reset.', 'Der Fortschritt wurde zurückgesetzt.');
           NS.router.go('#/');
         } }),
-        ui.button(NS.i18n.t('Abbrechen', 'Cancel'), { variant: 'soft', onClick: function () {
+        ui.button(NS.i18n.t('Cancel', 'Abbrechen'), { variant: 'soft', onClick: function () {
           confirmReset = null; NS.router.render();
         } })
       ]));
@@ -391,16 +397,13 @@
     screen.appendChild(danger);
 
     /* --- Sicherung --- */
-    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Sicherung', 'Backup') }));
+    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Backup', 'Sicherung') }));
     var backup = ui.el('div', { className: 'card' });
-    backup.appendChild(ui.el('p', { text: NS.i18n.t(
-      'Der Fortschritt bleibt auf diesem Gerät. Eine Sicherungsdatei hilft beim Rechnerwechsel.',
-      'Progress stays on this device. A backup file helps when changing computers.'
-    ) }));
+    backup.appendChild(ui.el('p', { text: NS.i18n.t('Progress stays on this device. A backup file helps when changing computers.', 'Der Fortschritt bleibt auf diesem Gerät. Eine Sicherungsdatei hilft beim Rechnerwechsel.') }));
     backup.appendChild(ui.el('div', { className: 'row' }, [
-      ui.button(NS.i18n.t('Fortschritt sichern', 'Save progress'), { variant: 'soft', onClick: download }),
+      ui.button(NS.i18n.t('Save progress', 'Fortschritt sichern'), { variant: 'soft', onClick: download }),
       (function () {
-        var label = ui.button(NS.i18n.t('Sicherung laden', 'Load backup'), { variant: 'ghost', onClick: function () { input.click(); } });
+        var label = ui.button(NS.i18n.t('Load backup', 'Sicherung laden'), { variant: 'ghost', onClick: function () { input.click(); } });
         var input = ui.el('input', {
           attrs: { type: 'file', accept: '.json,application/json' },
           style: { display: 'none' },
@@ -411,7 +414,7 @@
               var parsed = null;
               try { parsed = JSON.parse(text); } catch (e) { parsed = null; }
               if (!parsed) {
-                importError = NS.i18n.t('Das ist keine Bela-Sicherung.', 'This is not a Bela backup.');
+                importError = NS.i18n.t('This is not a Bela backup.', 'Das ist keine Bela-Sicherung.');
                 importPreview = null; NS.router.render(); return;
               }
               importPreview = { text: text, name: file.name, profiles: Object.keys(parsed.profiles || {}).length };
@@ -429,18 +432,15 @@
       backup.appendChild(ui.el('p', { className: 'feedback-line is-soft', text: importError }));
     }
     if (importPreview) {
-      backup.appendChild(ui.el('p', { text: NS.i18n.t(
-        'Sicherung „' + importPreview.name + '" mit ' + importPreview.profiles + ' Kind(ern).',
-        'Backup "' + importPreview.name + '" with ' + importPreview.profiles + ' child(ren).'
-      ) }));
+      backup.appendChild(ui.el('p', { text: NS.i18n.t('Backup "{name}" with {count} child(ren).', 'Sicherung „{name}“ mit {count} Kind(ern).', { name: importPreview.name, count: importPreview.profiles }) }));
       backup.appendChild(ui.el('div', { className: 'row' }, [
-        ui.button(NS.i18n.t('Diese Sicherung laden', 'Load this backup'), { onClick: function () {
+        ui.button(NS.i18n.t('Load this backup', 'Diese Sicherung laden'), { onClick: function () {
           var result = store.importJSON(importPreview.text);
           importPreview = null;
           if (result.ok) { NS.i18n.apply(); NS.router.render(); }
-          else { importError = NS.i18n.t('Das ist keine Bela-Sicherung.', 'This is not a Bela backup.'); NS.router.render(); }
+          else { importError = NS.i18n.t('This is not a Bela backup.', 'Das ist keine Bela-Sicherung.'); NS.router.render(); }
         } }),
-        ui.button(NS.i18n.t('Abbrechen', 'Cancel'), { variant: 'ghost', onClick: function () {
+        ui.button(NS.i18n.t('Cancel', 'Abbrechen'), { variant: 'ghost', onClick: function () {
           importPreview = null; importError = ''; NS.router.render();
         } })
       ]));
@@ -448,20 +448,11 @@
     screen.appendChild(backup);
 
     /* --- Über --- */
-    screen.appendChild(ui.el('h2', { text: NS.i18n.t('Über diese App', 'About this app') }));
+    screen.appendChild(ui.el('h2', { text: NS.i18n.t('About this app', 'Über diese App') }));
     screen.appendChild(ui.el('div', { className: 'card' }, [
-      ui.el('p', { text: NS.i18n.t(
-        'Bela Learning läuft vollständig offline. Es werden keine Daten an einen Server geschickt.',
-        'Bobby\'s Computer School runs completely offline. No data is sent to a server.'
-      ) }),
-      ui.el('p', { text: NS.i18n.t(
-        'Gespeichert werden nur Lernfortschritt und Einstellungen auf diesem Gerät.',
-        'Only learning progress and settings are stored on this device.'
-      ) }),
-      ui.el('p', { className: 'muted', text: NS.i18n.t(
-        'Version 1.0 · Keine Werbung · Keine externen Links',
-        'Version 1.0 · No ads · No external links'
-      ) })
+      ui.el('p', { text: NS.i18n.t('Bobby\'s Computer School runs completely offline. No data is sent to a server.', 'Bela Learning läuft vollständig offline. Es werden keine Daten an einen Server geschickt.') }),
+      ui.el('p', { text: NS.i18n.t('Only learning progress and settings are stored on this device.', 'Gespeichert werden nur Lernfortschritt und Einstellungen auf diesem Gerät.') }),
+      ui.el('p', { className: 'muted', text: NS.i18n.t('Version 1.0 · No ads · No external links', 'Version 1.0 · Keine Werbung · Keine externen Links') })
     ]));
 
     return screen;
@@ -477,7 +468,7 @@
       return ui.el('div', { className: 'row', style: { marginBottom: '12px' } }, [
         ui.el('span', { text: label }),
         ui.el('span', { className: 'spacer' }),
-        ui.button(value ? NS.i18n.t('An', 'On') : NS.i18n.t('Aus', 'Off'), {
+        ui.button(value ? NS.i18n.t('On', 'An') : NS.i18n.t('Off', 'Aus'), {
           variant: value ? 'soft' : 'ghost',
           onClick: onToggle
         })

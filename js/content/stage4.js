@@ -1,215 +1,528 @@
 /**
- * stage4.js – Buchstaben und Tippen. 12 Aktivitäten.
+ * stage4.js – English source content. German lives in i18n/de.js.
  */
 (function (root) {
   'use strict';
   var NS = root.BelaSchool = root.BelaSchool || {};
   var content = NS.content = NS.content || {};
 
-  var ALPHABET = [
-    { key: 'A', art: 'apfel', word: 'Apfel' },
-    { key: 'B', art: 'ball', word: 'Ball' },
-    { key: 'C', art: 'computer', word: 'Computer' },
-    { key: 'D', art: 'dino', word: 'Dino' },
-    { key: 'E', art: 'elefant', word: 'Elefant' },
-    { key: 'F', art: 'fisch', word: 'Fisch' },
-    { key: 'G', art: 'gitarre', word: 'Gitarre' },
-    { key: 'H', art: 'hut', word: 'Hut' },
-    { key: 'I', art: 'igel', word: 'Igel' },
-    { key: 'J', art: 'jacke', word: 'Jacke' },
-    { key: 'K', art: 'katze', word: 'Katze' },
-    { key: 'L', art: 'lampe', word: 'Lampe' },
-    { key: 'M', art: 'maus', word: 'Maus' },
-    { key: 'N', art: 'nase', word: 'Nase' },
-    { key: 'O', art: 'orange', word: 'Orange' },
-    { key: 'P', art: 'pferd', word: 'Pferd' },
-    { key: 'Q', art: 'qualle', word: 'Qualle' },
-    { key: 'R', art: 'roboter', word: 'Roboter' },
-    { key: 'S', art: 'sonne', word: 'Sonne' },
-    { key: 'T', art: 'tasse', word: 'Tasse' },
-    { key: 'U', art: 'uhr', word: 'Uhr' },
-    { key: 'V', art: 'vogel', word: 'Vogel' },
-    { key: 'W', art: 'wasser', word: 'Wasser' },
-    { key: 'X', art: 'xylophon', word: 'Xylophon' },
-    { key: 'Y', art: 'yoga', word: 'Yoga' },
-    { key: 'Z', art: 'zebra', word: 'Zebra' }
-  ];
-
-  function letters(from, to) {
-    return ALPHABET.filter(function (entry) {
-      return entry.key >= from && entry.key <= to;
-    });
-  }
-
   var stage = {
-    id: 4,
-    title: 'Buchstaben & Tippen',
-    subtitle: 'Von A bis Z und die ersten Wörter.',
-    icon: 'buch',
-    achievement: { id: 's4', title: 'Kleiner Tipp-Star', art: 'pokal' },
-    lessons: [
-      {
-        id: '4-1',
-        title: 'A bis H',
-        goal: 'Acht Buchstaben mit Bildern.',
-        activities: [
-          {
-            id: '4-1-1', type: 'typeText', title: 'A bis H',
-            speech: 'Drücke immer den Buchstaben.',
-            prompt: 'Drücke den Buchstaben, den du siehst.',
-            mode: 'alphabet',
-            letters: letters('A', 'H')
-          }
-        ]
-      },
-      {
-        id: '4-2',
-        title: 'I bis P',
-        goal: 'Acht weitere Buchstaben.',
-        activities: [
-          {
-            id: '4-2-1', type: 'typeText', title: 'I bis P',
-            speech: 'Drücke immer den Buchstaben.',
-            prompt: 'Drücke den Buchstaben, den du siehst.',
-            mode: 'alphabet',
-            letters: letters('I', 'P')
-          }
-        ]
-      },
-      {
-        id: '4-3',
-        title: 'Q bis Z',
-        goal: 'Die letzten Buchstaben.',
-        activities: [
-          {
-            id: '4-3-1', type: 'typeText', title: 'Q bis Z',
-            speech: 'Drücke immer den Buchstaben.',
-            prompt: 'Drücke den Buchstaben, den du siehst.',
-            mode: 'alphabet',
-            letters: letters('Q', 'Z')
-          }
-        ]
-      },
-      {
-        id: '4-4',
-        title: 'Groß und klein',
-        goal: 'A und a gehören zusammen.',
-        activities: [
-          {
-            id: '4-4-1', type: 'matchPairs', title: 'A bis F verbinden',
-            speech: 'Verbinde jeden großen mit dem kleinen Buchstaben.',
-            prompt: 'Verbinde A mit a und so weiter.',
-            mode: 'columns', seed: 12,
-            pairs: ['a', 'b', 'c', 'd', 'e', 'f'].map(function (letter, index) {
-              var upper = letter.toUpperCase();
-              return {
-                a: { art: 'kreis', label: upper },
-                b: { art: 'kreis', label: letter }
-              };
-            })
-          },
-          {
-            id: '4-4-2', type: 'matchPairs', title: 'G bis L verbinden',
-            speech: 'Verbinde jeden großen mit dem kleinen Buchstaben.',
-            prompt: 'Verbinde G mit g und so weiter.',
-            mode: 'columns', seed: 14,
-            pairs: ['g', 'h', 'i', 'j', 'k', 'l'].map(function (letter) {
-              return {
-                a: { art: 'quadrat', label: letter.toUpperCase() },
-                b: { art: 'quadrat', label: letter }
-              };
-            })
-          }
-        ]
-      },
-      {
-        id: '4-5',
-        title: 'Finde den Buchstaben',
-        goal: 'Vier Buchstaben auf der Tastatur.',
-        activities: [
-          {
-            id: '4-5-1', type: 'keyPress', title: 'A bis F',
-            speech: 'Drücke die markierten Buchstaben.',
-            prompt: 'Drücke den Buchstaben, der leuchtet.',
-            pool: ['a', 'b', 'c', 'd', 'e', 'f'],
-            layout: 'letters', count: 8,
-            hint: 'Die Buchstaben stehen auf der Tastatur.'
-          },
-          {
-            id: '4-5-2', type: 'keyPress', title: 'G bis L',
-            speech: 'Drücke die markierten Buchstaben.',
-            prompt: 'Drücke den Buchstaben, der leuchtet.',
-            pool: ['g', 'h', 'i', 'j', 'k', 'l'],
-            layout: 'letters', count: 8,
-            hint: 'Die Buchstaben stehen auf der Tastatur.'
-          },
-          {
-            id: '4-5-3', type: 'keyPress', title: 'M bis R',
-            speech: 'Drücke die markierten Buchstaben.',
-            prompt: 'Drücke den Buchstaben, der leuchtet.',
-            pool: ['m', 'n', 'o', 'p', 'q', 'r'],
-            layout: 'letters', count: 8,
-            hint: 'Die Buchstaben stehen auf der Tastatur.'
-          },
-          {
-            id: '4-5-4', type: 'keyPress', title: 'S bis Z',
-            speech: 'Drücke die markierten Buchstaben.',
-            prompt: 'Drücke den Buchstaben, der leuchtet.',
-            pool: ['s', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
-            layout: 'letters', count: 8,
-            hint: 'Die Buchstaben stehen auf der Tastatur.'
-          }
-        ]
-      },
-      {
-        id: '4-6',
-        title: 'Tippe ein Wort',
-        goal: 'Sieben kleine Wörter und dein Name.',
-        activities: [
-          {
-            id: '4-6-1', type: 'typeText', title: 'Wörter tippen',
-            speech: 'Tippe das Wort Buchstabe für Buchstabe.',
-            prompt: 'Tippe das Wort.',
-            mode: 'words',
-            words: [
-              { text: 'KATZE', art: 'katze', label: 'Katze' },
-              { text: 'HUND', art: 'hund', label: 'Hund' },
-              { text: 'SONNE', art: 'sonne', label: 'Sonne' },
-              { text: 'MAMA', art: 'blume', label: 'Mama' },
-              { text: 'PAPA', art: 'hut', label: 'Papa' },
-              { text: 'BALL', art: 'ball', label: 'Ball' },
-              { text: 'EI', art: 'ei', label: 'Ei' }
-            ]
-          },
-          {
-            id: '4-6-2', type: 'typeText', title: 'Dein Name',
-            speech: 'Tippe deinen Namen.',
-            prompt: 'Tippe deinen Namen in das Kästchen.',
-            mode: 'free'
-          }
-        ]
-      },
-      {
-        id: '4-m',
-        title: 'Stufen-Abschluss',
-        goal: 'Drei Wörter ohne Hilfe.',
-        milestone: true,
-        activities: [
-          {
-            id: '4-m-1', type: 'typeText', title: 'Drei Wörter',
-            speech: 'Tippe die drei Wörter.',
-            prompt: 'Tippe die drei Wörter.',
-            mode: 'words',
-            words: [
-              { text: 'MAMA', art: 'blume', label: 'Mama' },
-              { text: 'PAPA', art: 'hut', label: 'Papa' },
-              { text: 'EI', art: 'ei', label: 'Ei' }
-            ]
-          }
-        ]
-      }
-    ]
-  };
+  "id": 4,
+  "title": "Letters & Typing",
+  "subtitle": "From A to Z and the first words.",
+  "icon": "buch",
+  "achievement": {
+    "id": "s4",
+    "title": "Little Typing Star",
+    "art": "pokal"
+  },
+  "lessons": [
+    {
+      "id": "4-1",
+      "title": "A to H",
+      "goal": "Eight letters with pictures.",
+      "activities": [
+        {
+          "id": "4-1-1",
+          "type": "typeText",
+          "title": "A to H",
+          "speech": "Always press the letter.",
+          "prompt": "Press the letter you see.",
+          "mode": "alphabet",
+          "letters": [
+            {
+              "key": "A",
+              "art": "apfel",
+              "word": "Apple"
+            },
+            {
+              "key": "B",
+              "art": "ball",
+              "word": "Ball"
+            },
+            {
+              "key": "C",
+              "art": "katze",
+              "word": "Cat"
+            },
+            {
+              "key": "D",
+              "art": "hund",
+              "word": "Dog"
+            },
+            {
+              "key": "E",
+              "art": "elefant",
+              "word": "Elephant"
+            },
+            {
+              "key": "F",
+              "art": "fisch",
+              "word": "Fish"
+            },
+            {
+              "key": "G",
+              "art": "gitarre",
+              "word": "Guitar"
+            },
+            {
+              "key": "H",
+              "art": "hut",
+              "word": "Hat"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4-2",
+      "title": "I to P",
+      "goal": "Eight more letters.",
+      "activities": [
+        {
+          "id": "4-2-1",
+          "type": "typeText",
+          "title": "I to P",
+          "speech": "Always press the letter.",
+          "prompt": "Press the letter you see.",
+          "mode": "alphabet",
+          "letters": [
+            {
+              "key": "I",
+              "art": "eis",
+              "word": "Ice cream"
+            },
+            {
+              "key": "J",
+              "art": "jacke",
+              "word": "Jacket"
+            },
+            {
+              "key": "K",
+              "art": "drachen",
+              "word": "Kite"
+            },
+            {
+              "key": "L",
+              "art": "lampe",
+              "word": "Lamp"
+            },
+            {
+              "key": "M",
+              "art": "maus",
+              "word": "Mouse"
+            },
+            {
+              "key": "N",
+              "art": "nase",
+              "word": "Nose"
+            },
+            {
+              "key": "O",
+              "art": "orange",
+              "word": "Orange"
+            },
+            {
+              "key": "P",
+              "art": "pferd",
+              "word": "Pony"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4-3",
+      "title": "Q to Z",
+      "goal": "The last letters.",
+      "activities": [
+        {
+          "id": "4-3-1",
+          "type": "typeText",
+          "title": "Q to Z",
+          "speech": "Always press the letter.",
+          "prompt": "Press the letter you see.",
+          "mode": "alphabet",
+          "letters": [
+            {
+              "key": "Q",
+              "art": "krone",
+              "word": "Queen"
+            },
+            {
+              "key": "R",
+              "art": "roboter",
+              "word": "Robot"
+            },
+            {
+              "key": "S",
+              "art": "sonne",
+              "word": "Sun"
+            },
+            {
+              "key": "T",
+              "art": "tasse",
+              "word": "Tea"
+            },
+            {
+              "key": "U",
+              "art": "regenschirm",
+              "word": "Umbrella"
+            },
+            {
+              "key": "V",
+              "art": "vase",
+              "word": "Vase"
+            },
+            {
+              "key": "W",
+              "art": "wasser",
+              "word": "Water"
+            },
+            {
+              "key": "X",
+              "art": "xylophon",
+              "word": "Xylophone"
+            },
+            {
+              "key": "Y",
+              "art": "yoga",
+              "word": "Yoga"
+            },
+            {
+              "key": "Z",
+              "art": "zebra",
+              "word": "Zebra"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4-4",
+      "title": "Big and small",
+      "goal": "A and a belong together.",
+      "activities": [
+        {
+          "id": "4-4-1",
+          "type": "matchPairs",
+          "title": "Connect A to F",
+          "speech": "Connect each capital with the small letter.",
+          "prompt": "Connect A with a and so on.",
+          "mode": "columns",
+          "seed": 12,
+          "pairs": [
+            {
+              "a": {
+                "art": "kreis",
+                "label": "A"
+              },
+              "b": {
+                "art": "kreis",
+                "label": "a"
+              }
+            },
+            {
+              "a": {
+                "art": "kreis",
+                "label": "B"
+              },
+              "b": {
+                "art": "kreis",
+                "label": "b"
+              }
+            },
+            {
+              "a": {
+                "art": "kreis",
+                "label": "C"
+              },
+              "b": {
+                "art": "kreis",
+                "label": "c"
+              }
+            },
+            {
+              "a": {
+                "art": "kreis",
+                "label": "D"
+              },
+              "b": {
+                "art": "kreis",
+                "label": "d"
+              }
+            },
+            {
+              "a": {
+                "art": "kreis",
+                "label": "E"
+              },
+              "b": {
+                "art": "kreis",
+                "label": "e"
+              }
+            },
+            {
+              "a": {
+                "art": "kreis",
+                "label": "F"
+              },
+              "b": {
+                "art": "kreis",
+                "label": "f"
+              }
+            }
+          ]
+        },
+        {
+          "id": "4-4-2",
+          "type": "matchPairs",
+          "title": "Connect G to L",
+          "speech": "Connect each capital with the small letter.",
+          "prompt": "Connect G with g and so on.",
+          "mode": "columns",
+          "seed": 14,
+          "pairs": [
+            {
+              "a": {
+                "art": "quadrat",
+                "label": "G"
+              },
+              "b": {
+                "art": "quadrat",
+                "label": "g"
+              }
+            },
+            {
+              "a": {
+                "art": "quadrat",
+                "label": "H"
+              },
+              "b": {
+                "art": "quadrat",
+                "label": "h"
+              }
+            },
+            {
+              "a": {
+                "art": "quadrat",
+                "label": "I"
+              },
+              "b": {
+                "art": "quadrat",
+                "label": "i"
+              }
+            },
+            {
+              "a": {
+                "art": "quadrat",
+                "label": "J"
+              },
+              "b": {
+                "art": "quadrat",
+                "label": "j"
+              }
+            },
+            {
+              "a": {
+                "art": "quadrat",
+                "label": "K"
+              },
+              "b": {
+                "art": "quadrat",
+                "label": "k"
+              }
+            },
+            {
+              "a": {
+                "art": "quadrat",
+                "label": "L"
+              },
+              "b": {
+                "art": "quadrat",
+                "label": "l"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4-5",
+      "title": "Find the letter",
+      "goal": "Four letters on the keyboard.",
+      "activities": [
+        {
+          "id": "4-5-1",
+          "type": "keyPress",
+          "title": "A to F",
+          "speech": "Press the highlighted letters.",
+          "prompt": "Press the letter that glows.",
+          "pool": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f"
+          ],
+          "layout": "letters",
+          "count": 8,
+          "hint": "The letters are on the keyboard."
+        },
+        {
+          "id": "4-5-2",
+          "type": "keyPress",
+          "title": "G to L",
+          "speech": "Press the highlighted letters.",
+          "prompt": "Press the letter that glows.",
+          "pool": [
+            "g",
+            "h",
+            "i",
+            "j",
+            "k",
+            "l"
+          ],
+          "layout": "letters",
+          "count": 8,
+          "hint": "The letters are on the keyboard."
+        },
+        {
+          "id": "4-5-3",
+          "type": "keyPress",
+          "title": "M to R",
+          "speech": "Press the highlighted letters.",
+          "prompt": "Press the letter that glows.",
+          "pool": [
+            "m",
+            "n",
+            "o",
+            "p",
+            "q",
+            "r"
+          ],
+          "layout": "letters",
+          "count": 8,
+          "hint": "The letters are on the keyboard."
+        },
+        {
+          "id": "4-5-4",
+          "type": "keyPress",
+          "title": "S to Z",
+          "speech": "Press the highlighted letters.",
+          "prompt": "Press the letter that glows.",
+          "pool": [
+            "s",
+            "t",
+            "u",
+            "v",
+            "w",
+            "x",
+            "y",
+            "z"
+          ],
+          "layout": "letters",
+          "count": 8,
+          "hint": "The letters are on the keyboard."
+        }
+      ]
+    },
+    {
+      "id": "4-6",
+      "title": "Type a word",
+      "goal": "Seven little words and your name.",
+      "activities": [
+        {
+          "id": "4-6-1",
+          "type": "typeText",
+          "title": "Type words",
+          "speech": "Type the word letter by letter.",
+          "prompt": "Type the word.",
+          "mode": "words",
+          "words": [
+            {
+              "text": "CAT",
+              "art": "katze",
+              "label": "Cat"
+            },
+            {
+              "text": "DOG",
+              "art": "hund",
+              "label": "Dog"
+            },
+            {
+              "text": "SUN",
+              "art": "sonne",
+              "label": "Sun"
+            },
+            {
+              "text": "MOM",
+              "art": "blume",
+              "label": "Mom"
+            },
+            {
+              "text": "DAD",
+              "art": "hut",
+              "label": "Dad"
+            },
+            {
+              "text": "BALL",
+              "art": "ball",
+              "label": "Ball"
+            },
+            {
+              "text": "EGG",
+              "art": "ei",
+              "label": "Egg"
+            }
+          ]
+        },
+        {
+          "id": "4-6-2",
+          "type": "typeText",
+          "title": "Your name",
+          "speech": "Type your name.",
+          "prompt": "Type your name in the box.",
+          "mode": "free"
+        }
+      ]
+    },
+    {
+      "id": "4-m",
+      "title": "Stage finale",
+      "goal": "Three words without help.",
+      "milestone": true,
+      "activities": [
+        {
+          "id": "4-m-1",
+          "type": "typeText",
+          "title": "Three words",
+          "speech": "Type the three words.",
+          "prompt": "Type the three words.",
+          "mode": "words",
+          "words": [
+            {
+              "text": "MOM",
+              "art": "blume",
+              "label": "Mom"
+            },
+            {
+              "text": "DAD",
+              "art": "hut",
+              "label": "Dad"
+            },
+            {
+              "text": "EGG",
+              "art": "ei",
+              "label": "Egg"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
 
   if (content.register) { content.register(stage); }
   else { content.stages = (content.stages || []); content.stages.push(stage); }

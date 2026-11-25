@@ -17,14 +17,14 @@ Open `js/content/stage6.js`. Inside the `lessons` array, after the `6-10` lesson
 ```js
 {
   id: '6-11',
-  title: 'Was ist schwerer?',
-  goal: 'Vergleiche zwei Dinge.',
+  title: 'What is heavier?',
+  goal: 'Compare two things.',
   activities: [
     {
-      id: '6-11-1', type: 'pickOne', title: 'Schwer oder leicht?',
-      speech: 'Was ist schwerer?', prompt: 'Was ist schwerer?',
+      id: '6-11-1', type: 'pickOne', title: 'Heavy or light?',
+      speech: 'What is heavier?', prompt: 'What is heavier?',
       options: [
-        { id: 'elefant', art: 'elefant', label: 'Elefant' },
+        { id: 'elefant', art: 'elefant', label: 'Elephant' },
         { id: 'ball', art: 'ball', label: 'Ball' }
       ],
       answer: 'elefant'
@@ -40,30 +40,33 @@ Rules the validator enforces:
 - `speech` has at most 8 words.
 - `type` is one of the registered engines.
 
-### 2. Add English
+### 2. Add translations
 
-Open `js/content/en.js` and add, under `lessons`:
+Open `i18n/de.js` and add, under `lessons` (repeat for `fr.js`, `it.js`, `zh.js`, `hi.js`, `ne.js`):
 
 ```js
-'6-11': { title: 'What is heavier?', goal: 'Compare two things.' },
+'6-11': { title: 'Was ist schwerer?', goal: 'Vergleiche zwei Dinge.' },
 ```
 
 and under `activities`:
 
 ```js
 '6-11-1': {
-  title: 'Heavy or light?',
-  speech: 'What is heavier?',
-  prompt: 'What is heavier?'
+  title: 'Schwer oder leicht?',
+  speech: 'Was ist schwerer?',
+  prompt: 'Was ist schwerer?'
 }
 ```
 
-Option labels go through the lexicon: `Elefant` and `Ball` are already there. If yours
+Option labels go through the lexicon: `Elephant` and `Ball` are already there. If yours
 are not, add them under `lexicon`:
 
 ```js
-'Elefant': 'Elephant',
+'Elephant': 'Elefant',
 ```
+
+Then add the same activity in `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js` and `i18n/ne.js`.
+`tests/i18n-languages.test.js` fails if any overlay misses a stage, lesson or activity.
 
 ### 3. Run it
 
@@ -72,7 +75,7 @@ npm test
 ```
 
 Open `selftest.html`; the new activity appears and must solve. Play it once yourself —
-German **and** English.
+English and at least two other languages.
 
 ### 4. If you added a whole stage
 
@@ -82,7 +85,7 @@ Only then you need:
 - a `<script defer>` line in `index.html` **and** `selftest.html`,
 - an entry in `tests/content.test.js` (activity counts),
 - an achievement and a milestone lesson,
-- stage/achievement translations in `en.js`.
+- stage/achievement translations in all six `i18n/*.js` overlays.
 
 ---
 
@@ -158,12 +161,12 @@ test('counts a pair correctly', () => {
 });
 ```
 
-### 6. Add English
+### 6. Add translations
 
-Add the activity's texts to `js/content/en.js`. Engine UI strings use:
+Add the activity's texts to every `i18n/*.js` overlay. Engine UI strings use:
 
 ```js
-NS.i18n.t('Deutsch', 'English')
+NS.i18n.t('English', 'Deutsch')
 ```
 
 ### 7. Check the rules
@@ -188,7 +191,7 @@ Open `selftest.html`. Expected format:
 ```
 
 Then run the browser smoke tests (Playwright MCP or `npx playwright test`) and play the
-activity once in German and once in English. The full policy is in [TESTING.md](TESTING.md).
+activity in English and at least two other languages. The full policy is in [TESTING.md](TESTING.md).
 
 ---
 

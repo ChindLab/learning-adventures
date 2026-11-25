@@ -52,7 +52,7 @@ edited by hand.
 ```json
 {
   "version": 1,
-  "activeProfile": "p2",
+  "activeProfile": "p1",
   "settings": {
     "sound": true,
     "speech": true,
@@ -60,8 +60,8 @@ edited by hand.
     "reducedMotion": false
   },
   "profiles": [
-    { "id": "p1", "name": "Mia", "language": "de", "unlockAll": false },
-    { "id": "p2", "name": "Ben", "language": "en", "unlockAll": true }
+    { "id": "p1", "name": "Mia", "language": "en", "unlockAll": false },
+    { "id": "p2", "name": "Ben", "language": "de", "unlockAll": true }
   ]
 }
 ```
@@ -71,7 +71,7 @@ Rules:
 - `version` must be `1`.
 - 1–8 profiles. More are ignored with a warning from the seed builder.
 - `name` is optional, trimmed to 20 characters.
-- `language` is `"de"` or `"en"`; anything else becomes `"de"`.
+- `language` is `"en"` (default), `"de"`, `"fr"`, `"it"`, `"zh"`, `"hi"` or `"ne"`; anything else becomes `"en"`.
 - `id` values are normalised to `p1`, `p2`, … in array order.
 - `activeProfile` must be one of the normalised ids; otherwise the first child starts.
 - `unlockAll` is per child. Use it for a child who should skip the linear progression.
@@ -109,7 +109,7 @@ profile on that device, not a factory reset from the file.
 
 ```bash
 ./setup.sh            # interactive wizard
-./setup.sh --reset    # one unnamed child, German, regenerate the seed
+./setup.sh --reset    # one unnamed child, English, regenerate the seed
 ./setup.sh --help     # usage
 npm run seed          # regenerate js/config/seed.js after editing the JSON
 ```
@@ -141,7 +141,7 @@ requires Node.
 | `Seed error: bela.config.json is not valid JSON` | Fix the comma/quote, run `npm run seed` again. |
 | `Setup failed: Interactive setup needs a terminal` | Run `./setup.sh` from a real terminal, not a pipe/CI. |
 | No `index.html` opens automatically | Open it manually; the script only tries to help. |
-| Children appear in the wrong language | `language` must be `"de"` or `"en"`; anything else falls back to German. |
+| Children appear in the wrong language | `language` must be `"en"`, `"de"`, `"fr"`, `"it"`, `"zh"`, `"hi"` or `"ne"`; anything else falls back to English. |
 | More than 8 children in JSON | Only the first 8 are used; split across devices. |
 
 ---

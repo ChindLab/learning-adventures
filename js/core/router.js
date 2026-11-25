@@ -37,9 +37,9 @@
   function errorScreen(message) {
     var ui = NS.ui;
     var box = ui.screen('error-screen');
-    box.appendChild(ui.el('h1', { className: 'screen-title', text: 'Ups, hier ist nichts.' }));
-    box.appendChild(ui.el('p', { text: message || 'Wir gehen zurück zur Karte.' }));
-    box.appendChild(ui.button('Zur Karte', { onClick: function () { router.go('#/'); } }));
+    box.appendChild(ui.el('h1', { className: 'screen-title', text: NS.i18n.t('Oops, nothing here.', 'Ups, hier ist nichts.') }));
+    box.appendChild(ui.el('p', { text: message || NS.i18n.t('We are going back to the map.', 'Wir gehen zurück zur Karte.') }));
+    box.appendChild(ui.button(NS.i18n.t('Back to the map', 'Zur Karte'), { onClick: function () { router.go('#/'); } }));
     return box;
   }
 
@@ -85,7 +85,7 @@
       }
     } catch (e) {
       if (root.console) { root.console.error(e); }
-      app.appendChild(errorScreen('Bobby hat sich vertippt.'));
+      app.appendChild(errorScreen(NS.i18n.t('Bobby got confused.', 'Bobby hat sich vertippt.')));
     }
   }
 

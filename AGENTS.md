@@ -13,7 +13,7 @@ with plain HTML, CSS and JavaScript. A robot named Bobby guides the child throug
 stages: computer, mouse, keyboard, letters & typing, numbers, logic, block programming,
 first JavaScript, finger training.
 
-- 107 activities, 15 game engines, two languages (German source, English overlay).
+- 107 activities, 15 game engines, seven languages (English source; German, French, Italian, Simplified Chinese, Hindi and Nepali overlays).
 - No framework, no build step, no dependencies, no backend, no network.
 - It must run by **double-clicking `index.html`** (`file://`).
 - Progress lives in `localStorage` under `belaschule.v1`.
@@ -52,9 +52,10 @@ index.html                  manifest: core → content → engines (script order
 selftest.html               development page; not linked from the child UI
 css/style.css               tokens and all components
 js/core/                    app shell, router, progress, audio, speech, i18n, UI helpers
-js/content/                 lessons as data (German) + English overlay + Bobby's lines
+js/content/                 lessons as data (English source) + Bobby's lines
+i18n/de.js, fr.js, it.js, zh.js, hi.js, ne.js  translation overlays (English is the source)
 js/engines/                 one file per game type, shared mount() contract
-js/dev/selftest.js          auto-plays every activity in both languages
+js/dev/selftest.js          auto-plays every activity in every language
 tests/                      Node test runner (no dependencies)
 docs/                       contributor guides
 docs/design/                historical design spec + plan — do not update for new features
@@ -67,21 +68,21 @@ tools/build-seed.js         validates the JSON and writes the seed
 Important files:
 
 - `js/core/progress.js` — state shape, migration, stars, profiles, backup.
-- `js/core/i18n.js` — `lang()`, `t(de, en)`, `apply()`.
-- `js/content/index.js` — registry, `ENGINES` list, validator, English localization.
+- `js/core/i18n.js` — `lang()`, `t(english, german)` + overlay dictionary, `speechLang()`, `apply()`.
+- `js/content/index.js` — registry, `ENGINES` list, validator, overlay localization.
 - `js/core/lesson.js` — activity lifecycle, timer, celebration, **disposes the previous
   engine**. Do not remove that call; engines keep listeners.
 - `js/engines/gridRun.js` — block interpreter. It **stops successfully when the goal is
   reached**; trailing blocks are ignored on purpose.
 - `tests/content.test.js` — hardcoded per-stage activity counts.
-- `js/dev/selftest.js` — German pass, English pass, screens.
+- `js/dev/selftest.js` — English pass, then one pass per translation overlay, then screens.
 
 ---
 
 ## 4. Commands
 
 ```bash
-npm test                 # 87 unit tests, Node 18+
+npm test                 # 101 unit tests, Node 18+
 npm run check            # syntax check + unit tests (what CI runs)
 npm run hooks             # enable the pre-commit hook (once per clone)
 npm run serve            # http://localhost:8080 (optional, for development)
@@ -92,10 +93,10 @@ npm run seed             # regenerate js/config/seed.js after editing the JSON
 Then open **`selftest.html`** in a real browser. Expected today:
 
 ```
-Alles gut – Gesamt: 219/219 ok
+Alles gut – Gesamt: 754/754 ok
 ```
 
-`219 = 107 German activities + 107 English activities + 5 screens.`
+`754 = 107 English activities + 6 × 107 translated activities + 5 screens.`
 
 If you cannot run a browser, you are **not done**. Use Playwright or ask the human to run
 `selftest.html`; a red row names the activity id and the reason.
@@ -158,7 +159,7 @@ A change is complete only if **all** of these are true:
 - [ ] `selftest.html` says `Alles gut – Gesamt: n/n ok` with the correct new total.
 - [ ] Browser smoke via Playwright MCP or CLI; exact summary + console result recorded.
 - [ ] CI `ci-success` is green (or the PR states why it could not run).
-- [ ] German **and** English text exist for every new child-facing string.
+- [ ] Every new child-facing string exists in English and in all six overlays.
 - [ ] Works with keyboard only; drag has a click fallback.
 - [ ] Works with sound off and with reduced motion.
 - [ ] No network, no new dependency, no build step.
@@ -183,14 +184,14 @@ Do not update `docs/design/*` for new features; they are historical. Update
 ```js
 {
   id: '6-11',
-  title: 'Was ist schwerer?',
-  goal: 'Vergleiche zwei Dinge.',
+  title: 'What is heavier?',
+  goal: 'Compare two things.',
   activities: [
     {
-      id: '6-11-1', type: 'pickOne', title: 'Schwer oder leicht?',
-      speech: 'Was ist schwerer?', prompt: 'Was ist schwerer?',
+      id: '6-11-1', type: 'pickOne', title: 'Heavy or light?',
+      speech: 'What is heavier?', prompt: 'What is heavier?',
       options: [
-        { id: 'elefant', art: 'elefant', label: 'Elefant' },
+        { id: 'elefant', art: 'elefant', label: 'Elephant' },
         { id: 'ball', art: 'ball', label: 'Ball' }
       ],
       answer: 'elefant'
@@ -199,19 +200,22 @@ Do not update `docs/design/*` for new features; they are historical. Update
 }
 ```
 
-3. Add English to `js/content/en.js`:
+3. Add translations (German shown; repeat for fr/it/zh/hi/ne):
 
 ```js
-lessons: { '6-11': { title: 'What is heavier?', goal: 'Compare two things.' } },
-activities: { '6-11-1': { title: 'Heavy or light?', speech: 'What is heavier?', prompt: 'What is heavier?' } }
+lessons: { '6-11': { title: 'Was ist schwerer?', goal: 'Vergleiche zwei Dinge.' } },
+activities: { '6-11-1': { title: 'Schwer oder leicht?', speech: 'Was ist schwerer?', prompt: 'Was ist schwerer?' } }
 ```
 
-Option/item/target/card labels are translated by `content.en.lexicon`. If your label is
-new, add it there.
+Option/item/target/card labels are translated by `content.translations.<lang>.lexicon`. If
+your label is new, add it there.
+
+Then repeat the same entries in `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js` and `i18n/ne.js`. `npm test`
+requires all six overlays to cover every activity.
 
 4. Update the hardcoded counts in `tests/content.test.js` (per-stage array and total).
 5. Update numbers in `README.md`, `README.de.md` (activity count, selftest total).
-6. Run everything; the new selftest total is `219 + 2` for one German+English activity.
+6. Run everything; the new selftest total is `754 + 7` for one activity in seven languages.
 
 Content rules:
 
@@ -220,7 +224,7 @@ Content rules:
 - `answer` must be inside `options`; drag targets must accept existing item ids.
 - New lesson must be reachable from the stage's `lessons` array (validator checks).
 - A new stage also needs an achievement, a milestone lesson, a script tag in **both**
-  HTML files, an entry in `en.stages`, and the counts test.
+  HTML files, entries in all six `i18n/*.js` files (`translations.<lang>.stages`), and the counts test.
 
 ---
 
@@ -233,7 +237,7 @@ Content rules:
    - `index.html` → `<script defer src="js/engines/myGame.js"></script>`,
    - `selftest.html` → same script tag,
    - content: an activity with `type: 'myGame'`.
-4. Add the English text to `en.js`.
+4. Add the engine UI text to every `i18n/*.js` overlay.
 5. Add a unit test for any pure logic (`tests/myGame.test.js`).
 6. Run tests and selftest.
 
@@ -253,14 +257,19 @@ Hard requirements for engines (details in `docs/ENGINE-GUIDE.md`):
 
 ## 8. Translation rules
 
-- German is the source. English is an overlay keyed by IDs.
-- UI strings: `NS.i18n.t('Deutsch', 'English')` at the call site.
-- Content: `js/content/en.js` for titles/speech/prompts/points/decks/lineNotes; `lexicon`
-  for short labels.
-- `tests/content-en.test.js` fails if any activity or lesson lacks an English entry.
+- English is the source. German, French, Italian, Chinese, Hindi and Nepali are overlays keyed by IDs.
+- UI strings: `NS.i18n.t('English', 'Deutsch')` at the call site; for fr/it/zh/hi/ne the same
+  English key is looked up in `content.ui.<lang>`. Dynamic values use placeholders:
+  `t('Put {n} on the plate', 'Lege {n} auf den Teller', { n: 4 })`.
+- Content: `i18n/<lang>.js` for titles/speech/prompts/points/decks/lineNotes; `lexicon`
+  for short labels; `content.ui.<lang>` for UI strings.
+- `tests/content-de.test.js` and `tests/i18n-languages.test.js` fail if any activity or
+  lesson lacks an entry in an overlay.
+- New profiles default to English (`language: 'en'`). Valid values: `en`, `de`, `fr`,
+  `it`, `zh`.
 - Never add a language toggle inside an activity. Language is per child
   (`profiles.p.language`) and applied by `NS.i18n.apply()`.
-- Speech language follows `speech.setLanguage('de-DE' | 'en-GB')`.
+- Speech language: `en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`.
 
 ---
 
@@ -299,7 +308,7 @@ State key: `belaschule.v1`. Shape is documented in `js/core/progress.js` and
 | Reading `document` at require time | Node tests crash. Wrap in `mount()`/functions. |
 | Using raw `setTimeout` for game delays | Selftest becomes slow/flaky. Use `ui.wait`. |
 | Forgetting `destroy()` | Listener/rAF leaks, mascot stays hidden, double completions. |
-| Hardcoding German in an engine | English mode shows German. Use `t(de, en)`. |
+| Hardcoding German in an engine | English/French/Italian/Chinese modes show German. Use `t(english, german)` plus overlays. |
 | Changing an activity id | Stars and time records detach. Never do it. |
 | Adding a stage file without script tags | Silently not loaded; tests may still pass. Add to both HTML files. |
 | Updating counts in only one doc | README/CONTRIBUTING/tests drift. Grep for the old number. |
@@ -318,7 +327,7 @@ State key: `belaschule.v1`. Shape is documented in `js/core/progress.js` and
 3. Make the smallest change that satisfies the task. Data over code.
 4. Run `npm test`; fix every failure.
 5. Serve locally and run `selftest.html`; fix every red row.
-6. Manually play the new path in German and English (or automate with Playwright).
+6. Manually play the new path in English, German and one other language (or automate with Playwright).
 7. Update counts/docs.
 8. Report: what changed, what a child learns, test totals, and any open question.
 

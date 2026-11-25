@@ -126,15 +126,23 @@ test('Uhr zählt nur bei laufender Zeit', () => {
 
 test('Sprache pro Profil', () => {
   const store = createStore(mem());
-  assert.strictEqual(store.profile().language, 'de');
-  store.setLanguage('en');
   assert.strictEqual(store.profile().language, 'en');
+  store.setLanguage('de');
+  assert.strictEqual(store.profile().language, 'de');
   store.addProfile('Ben');
-  assert.strictEqual(store.profile().language, 'de');
-  store.setActiveProfile('p1');
   assert.strictEqual(store.profile().language, 'en');
-  store.setLanguage('klingon');
+  store.setActiveProfile('p1');
   assert.strictEqual(store.profile().language, 'de');
+  store.setLanguage('fr');
+  assert.strictEqual(store.profile().language, 'fr');
+  store.setLanguage('zh');
+  assert.strictEqual(store.profile().language, 'zh');
+  store.setLanguage('hi');
+  assert.strictEqual(store.profile().language, 'hi');
+  store.setLanguage('ne');
+  assert.strictEqual(store.profile().language, 'ne');
+  store.setLanguage('klingon');
+  assert.strictEqual(store.profile().language, 'en');
 });
 
 test('Spielzeit wird pro Aufgabe gesammelt', () => {

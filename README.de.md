@@ -12,8 +12,9 @@ kein Tracking.
 Die App heißt **Bela**. Der Name des Kindes wird in Begrüßungen und im Elternbereich
 verwendet, nicht als Produktname.
 
-> **English: [README.md](README.md)** · Die App ist vollständig **deutsch und englisch**,
-> die Sprache wird pro Kind gewählt.
+> **English: [README.md](README.md)** · Die App ist vollständig in **Englisch, Deutsch,
+> Französisch, Italienisch, Chinesisch (vereinfacht), Hindi und Nepali** verfügbar; die
+> Sprache wird pro Kind gewählt.
 
 ---
 
@@ -93,7 +94,7 @@ npm run seed
 
 **https://chindlab.github.io/learning-adventures/**
 
-Der `deploy`-Job veröffentlicht nur `index.html`, `css/`, `js/` und `assets/`, und erst
+Der `deploy`-Job veröffentlicht nur `index.html`, `css/`, `js/`, `i18n/` und `assets/`, und erst
 nachdem die CI (`ci-success`) auf `main` grün ist. Einrichtung und Fehlersuche:
 **[docs/DEPLOY.md](docs/DEPLOY.md)**.
 
@@ -106,7 +107,7 @@ nachdem die CI (`ci-success`) auf `main` grün ist. Einrichtung und Fehlersuche:
 | **9 Stufen** | Computer, Maus, Tastatur, Buchstaben & Tippen, Zahlen, Logik, Blockprogrammierung, erstes JavaScript, Finger-Training |
 | **107 Aktivitäten** | jede spielbar, keine Platzhalter |
 | **15 Spielarten** | Erklären, Auswahl, Memory, Ziehen, Ziel, Taste, Tippen, Grundreihe, Rakete, Zählen, Muster, Reihenfolge, Blockläufer, Puzzle, JS-Demo |
-| **2 Sprachen** | Deutsch und Englisch, pro Kind |
+| **7 Sprachen** | Englisch (Quelle) + Deutsch, Französisch, Italienisch, Chinesisch (zh-CN), Hindi, Nepali, pro Kind |
 | **Elternbereich** | Fortschritt, Übungsbedarf, Zeit pro Aufgabe, Profile, Sicherung, Zurücksetzen |
 | **Keine Abhängigkeiten** | kein npm install zum Spielen oder Testen |
 
@@ -118,8 +119,8 @@ Stufe 9 (Finger-Training) ist absichtlich immer offen — Tippen übt man, wann 
 
 ### 1. Lektion ergänzen (ohne JavaScript)
 
-Lektionen sind Daten in `js/content/stageN.js`. Englische Fassung in
-`js/content/en.js` ergänzen, `npm test`, fertig.
+Lektionen sind Daten in `js/content/stageN.js`. Übersetzungen in `i18n/de.js`, `fr.js`,
+`it.js`, `zh.js`, `hi.js` und `ne.js` ergänzen, `npm test`, fertig.
 
 → **[docs/CONTENT-GUIDE.md](docs/CONTENT-GUIDE.md)**
 
@@ -144,9 +145,10 @@ js/config/seed.js     daraus erzeugt (file:// kann kein JSON laden)
 tools/                Setup-Assistent + Seed-Builder
 css/style.css         Design-Tokens + alle Komponenten
 js/core/              App, Router, Fortschritt, Ton, Sprache, i18n, UI-Helfer
-js/content/           Lektionen als Daten (deutsch) + englische Schicht + Bobby-Sätze
+js/content/           Lektionen als Daten (englische Quelle) + Bobby-Sätze
+i18n/                 Übersetzungen: de, fr, it, zh, hi, ne (Englisch ist die Quelle)
 js/engines/           eine Datei pro Spielart, gleicher mount()-Vertrag
-js/dev/selftest.js    spielt jede Aufgabe in beiden Sprachen automatisch
+js/dev/selftest.js    spielt jede Aufgabe in allen Sprachen automatisch
 tests/                Node-Testrunner, keine Abhängigkeiten
 docs/                 Leitfäden und die ursprüngliche Design-Spezifikation
 ```
@@ -165,14 +167,14 @@ JSON-Sicherung im Elternbereich.
 vollständige Richtlinie steht in **[docs/TESTING.md](docs/TESTING.md)**.
 
 ```bash
-npm test          # 87 Unit-Tests, Node 18+
+npm test          # 101 Unit-Tests, Node 18+
 ```
 
 Danach **`selftest.html`** im Browser öffnen (oder über Playwright MCP, siehe Anleitung).
-Es spielt jede Aufgabe in beiden Sprachen automatisch durch und baut jeden Bildschirm:
+Es spielt jede Aufgabe in allen sieben Sprachen automatisch durch und baut jeden Bildschirm:
 
 ```
-Alles gut – Gesamt: 219/219 ok
+Alles gut – Gesamt: 754/754 ok
 ```
 
 Ein Beitrag ist erst fertig, wenn beides grün ist und die exakten Ergebnisse im Pull
@@ -201,9 +203,9 @@ Es gibt keine Audiodateien. Zwei lokale Quellen:
   Klick, richtig, falsch, Stern, Meilenstein, Pop, Bump), über einen Master-Gain von 0,25.
   Der Audio-Kontext wird beim ersten Tippen entsperrt.
 - **Bobbys Stimme** kommt aus der `speechSynthesis` des Browsers mit einer Stimme des
-  Betriebssystems, `de-DE` oder `en-GB` je nach Kind, Rate 0,95, Pitch 1,0. Fehlt eine
-  Stimme, ist die App stumm, aber vollständig nutzbar – jeder Satz steht auch auf dem
-  Bildschirm.
+  Betriebssystems, `en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN` oder `ne-NP` je
+  nach Kind, Rate 0,95, Pitch 1,0. Fehlt eine Stimme, ist die App stumm, aber vollständig
+  nutzbar – jeder Satz steht auch auf dem Bildschirm.
 
 Der Lautsprecher-Knopf schaltet **an → nur Töne → stumm**; im Elternbereich lassen sich
 Geräusche und Vorlesen getrennt schalten und eine Stimme wählen. Die visuelle Rückmeldung
@@ -215,13 +217,14 @@ hängt nie vom Ton ab.
 
 ## Sprachen
 
-- Deutsch ist die Quellsprache in `content/stage*.js`.
-- Englisch liegt als Schicht in `content/en.js`, nach Stufen-/Lektions-/Aktivitäts-ID,
-  plus ein kleines Wörterbuch für Beschriftungen.
-- Die Sprache ist eine **Einstellung pro Kind** (`profiles.p1.language`), kein Umschalter
-  mitten im Spiel.
-- Die Stimme kommt vom Betriebssystem (`de-DE` / `en-GB`); fehlt sie, ist die App stumm,
-  aber vollständig nutzbar.
+- Englisch ist die Quellsprache in `content/stage*.js`.
+- Übersetzungen liegen in `i18n/de.js`, `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js`
+  und `i18n/ne.js`, nach
+  Stufen-/Lektions-/Aktivitäts-ID, plus Wörterbuch für Beschriftungen und Oberfläche.
+- Neue Profile starten auf **Englisch**; die Sprache ist eine **Einstellung pro Kind**
+  (`profiles.p1.language`), kein Umschalter mitten im Spiel.
+- Die Stimme kommt vom Betriebssystem (`en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`, `ne-NP`); fehlt
+  sie, ist die App stumm, aber vollständig nutzbar.
 
 Eine dritte Sprache braucht nur eine weitere Übersetzungsdatei und ein Wörterbuch.
 

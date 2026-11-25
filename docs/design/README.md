@@ -10,7 +10,7 @@ addition.
   first version.
 
 They are kept in English because they were written for the implementation. The app itself
-is German and English.
+is English, German, French, Italian, Simplified Chinese, Hindi and Nepali.
 
 For contributing, the current guides are more useful:
 

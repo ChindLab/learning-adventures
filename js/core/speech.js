@@ -1,8 +1,8 @@
 /**
  * speech.js – Sprachausgabe über die Browser-Stimme.
  *
- * Wenn das Gerät keine deutsche Stimme hat, bleibt alles still; die Sätze
- * stehen ohnehin als Text da. Es wird nie ein Fehler angezeigt.
+ * Wenn das Gerät keine Stimme für die Sprache des Kindes hat, bleibt alles
+ * still; die Sätze stehen ohnehin als Text da. Es wird nie ein Fehler angezeigt.
  */
 (function (root) {
   'use strict';
@@ -12,7 +12,10 @@
   var voice = null;
   var voicesLoaded = false;
   var preferredURI = '';
-  var language = 'de-DE';
+  var language = 'en-GB';
+  var speakTimer = null;
+  var speakToken = 0;
+  var pendingCancel = false;
 
   // Spaß-Stimmen ("Grandma", "Rocko", …) klingen für ein Lernspiel unpassend.
   var NOVELTY = /eddy|flo|grandma|grandpa|rocko|sandy|shelley|reed|bells|boing|bubbles|jester|organ|superstar|trinoids|whisper|zarvox|albert|bad news|bahh|cellos|good news|wobble|jingle|kathy|ralph|fred|junior|princess|deranged|hysterical|pipe organ/i;
@@ -35,14 +38,14 @@
   }
 
   /**
-   * Höher ist besser. Erkennt Premium-/Neural-Stimmen, bevorzugt de-DE und
-   * sortiert Spaß-Stimmen nach unten.
+   * Höher ist besser. Erkennt Premium-/Neural-Stimmen, bevorzugt die exakte
+   * Sprache und sortiert Spaß-Stimmen nach unten.
    */
   function rankVoice(candidate) {
-    if (!isGerman(candidate) && !isEnglish(candidate)) { return -100; }
     var score = 0;
     var tag = (candidate.lang || '').toLowerCase();
     var base = language.slice(0, 2).toLowerCase();
+    if (tag.indexOf(base) !== 0) { return -100; }
     if (tag === language.toLowerCase()) { score += 6; }
     else if (tag.indexOf(base) === 0) { score += 3; }
     if (/enhanced|premium|neural|natural|siri/i.test(candidate.name || '')) { score += 8; }
@@ -77,14 +80,16 @@
     voicesLoaded = true;
 
     if (preferredURI) {
-      var chosen = voices.filter(function (candidate) { return candidate.voiceURI === preferredURI; })[0];
+      var chosen = voices.filter(function (candidate) {
+        return candidate.voiceURI === preferredURI && matchesLanguage(candidate) && !isNovelty(candidate);
+      })[0];
       if (chosen) { voice = chosen; return; }
     }
 
     var best = listVoices()[0];
     if (!best) {
       var matching = voices.filter(matchesLanguage);
-      best = matching[0] || voices[0];
+      best = matching[0] || null;
     }
     voice = best || null;
   }
@@ -100,7 +105,11 @@
     rankVoice: rankVoice,
 
     setLanguage: function (tag) {
-      language = /^en/i.test(tag || '') ? 'en-GB' : 'de-DE';
+      var base = String(tag || '').slice(0, 2).toLowerCase();
+      language = {
+        en: 'en-GB', de: 'de-DE', fr: 'fr-FR', it: 'it-IT', zh: 'zh-CN',
+        hi: 'hi-IN', ne: 'ne-NP'
+      }[base] || 'en-GB';
       voice = null;
       preferredURI = '';
       voicesLoaded = false;
@@ -122,17 +131,46 @@
       if (!enabled || !supported() || !text) { return; }
       try {
         pickVoice();
-        root.speechSynthesis.cancel();
-        var utterance = new root.SpeechSynthesisUtterance(String(text));
-        utterance.lang = language;
-        utterance.rate = 0.95;
-        utterance.pitch = 1;
-        if (voice) { utterance.voice = voice; }
-        root.speechSynthesis.speak(utterance);
+        if (!voice) { return; }
+
+        var token = ++speakToken;
+        if (speakTimer) { root.clearTimeout(speakTimer); speakTimer = null; }
+
+        // Chrome can wedge when cancel() and speak() run back-to-back.
+        // Cancel first, then give the engine a moment before the new line.
+        if (root.speechSynthesis.speaking || root.speechSynthesis.pending) {
+          root.speechSynthesis.cancel();
+          pendingCancel = true;
+        }
+
+        function speakNow() {
+          if (token !== speakToken) { return; }
+          try {
+            var utterance = new root.SpeechSynthesisUtterance(String(text));
+            utterance.lang = language;
+            utterance.rate = 0.95;
+            utterance.pitch = 1;
+            if (voice) { utterance.voice = voice; }
+            root.speechSynthesis.speak(utterance);
+          } catch (e) { /* Sprachausgabe ist nie kritisch */ }
+        }
+
+        if (pendingCancel) {
+          speakTimer = root.setTimeout(function () {
+            speakTimer = null;
+            pendingCancel = false;
+            speakNow();
+          }, 80);
+        } else {
+          speakNow();
+        }
       } catch (e) { /* Sprachausgabe ist nie kritisch */ }
     },
 
     cancel: function () {
+      speakToken += 1;
+      pendingCancel = false;
+      if (speakTimer) { root.clearTimeout(speakTimer); speakTimer = null; }
       if (!supported()) { return; }
       try { root.speechSynthesis.cancel(); } catch (e) { /* egal */ }
     }

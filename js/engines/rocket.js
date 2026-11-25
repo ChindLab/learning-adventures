@@ -59,7 +59,7 @@
       if (bobbyLayer) { bobbyLayer.classList.add('is-hidden'); }
 
       var wrap = ui.el('div', { className: 'activity' });
-      var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || NS.i18n.t('Triff die Buchstaben mit der Rakete.', 'Hit the letters with the rocket.') });
+      var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || NS.i18n.t('Hit the letters with the rocket.', 'Triff die Buchstaben mit der Rakete.') });
       var progress = ui.el('div', { className: 'key-progress', attrs: { 'aria-live': 'polite' } });
       var progressText = ui.el('span', { className: 'key-progress-text', text: '0 / ' + count });
       var dotsRow = ui.el('div', { className: 'key-progress-dots' });
@@ -85,7 +85,7 @@
       wrap.appendChild(feedback);
       container.appendChild(wrap);
 
-      api.speak(config.speech || config.prompt || NS.i18n.t('Triff die Buchstaben mit der Rakete.', 'Hit the letters with the rocket.'));
+      api.speak(config.speech || config.prompt || NS.i18n.t('Hit the letters with the rocket.', 'Triff die Buchstaben mit der Rakete.'));
       root.document.addEventListener('keydown', onKeyDown);
 
       if (chooseLevel) {
@@ -96,11 +96,11 @@
 
       function showSetup() {
         var overlay = ui.el('div', { className: 'game-setup' });
-        overlay.appendChild(ui.el('h3', { text: NS.i18n.t('Level und Tempo', 'Level and tempo') }));
+        overlay.appendChild(ui.el('h3', { text: NS.i18n.t('Level and tempo', 'Level und Tempo') }));
 
         var levelRow = ui.el('div', { className: 'setup-row' });
         levels.forEach(function (level, index) {
-          var display = NS.i18n.t(level.label, { Leicht: 'Easy', Mittel: 'Medium', Schwer: 'Hard' }[level.label] || level.label);
+          var display = NS.i18n.t({ Leicht: 'Easy', Mittel: 'Medium', Schwer: 'Hard' }[level.label] || level.label, level.label);
           var button = ui.el('button', {
             className: 'setup-btn' + (index === levelIndex ? ' is-selected' : ''),
             attrs: { type: 'button' },
@@ -117,9 +117,9 @@
         overlay.appendChild(levelRow);
 
         var speeds = [
-          { label: 'Langsam', display: NS.i18n.t('Langsam', 'Slow'), factor: 0.75 },
+          { label: 'Langsam', display: NS.i18n.t('Slow', 'Langsam'), factor: 0.75 },
           { label: 'Normal', display: NS.i18n.t('Normal', 'Normal'), factor: 1 },
-          { label: 'Schnell', display: NS.i18n.t('Schnell', 'Fast'), factor: 1.35 }
+          { label: 'Schnell', display: NS.i18n.t('Fast', 'Schnell'), factor: 1.35 }
         ];
         var speedRow = ui.el('div', { className: 'setup-row' });
         speeds.forEach(function (entry) {
@@ -138,7 +138,7 @@
         });
         overlay.appendChild(speedRow);
 
-        overlay.appendChild(ui.button(NS.i18n.t('Los', 'Go'), { className: 'lemon', onClick: function () {
+        overlay.appendChild(ui.button(NS.i18n.t('Go', 'Los'), { className: 'lemon', onClick: function () {
           if (started) { return; }
           if (NS.store) {
             NS.store.setSetting('typingLevel', levelIndex + 1);
@@ -191,7 +191,7 @@
 
         var element = ui.el('button', {
           className: 'falling-letter len-' + Math.min(3, String(group).length),
-          attrs: { type: 'button', 'aria-label': NS.i18n.t('Buchstaben ', 'Letters ') + String(group).toUpperCase() },
+          attrs: { type: 'button', 'aria-label': NS.i18n.t('Letters ', 'Buchstaben ') + String(group).toUpperCase() },
           data: { group: group },
           style: { left: ((chosenLane * 100 / laneCount) + (100 / laneCount / 2)) + '%', top: '0%' }
         }, spanNodes);
@@ -324,7 +324,7 @@
         if (spawnTimer) { root.clearInterval(spawnTimer); spawnTimer = null; }
         if (raf) { root.cancelAnimationFrame(raf); raf = null; }
         api.sfx('star');
-        feedback.textContent = NS.i18n.t('Alle Buchstaben getroffen!', 'All letters hit!');
+        feedback.textContent = NS.i18n.t('All letters hit!', 'Alle Buchstaben getroffen!');
         feedback.className = 'feedback-line is-good';
         ui.confetti();
         ui.wait(400).then(function () {

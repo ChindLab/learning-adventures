@@ -137,7 +137,7 @@
   };
 
   function blockLabel(type) {
-    return NS.i18n.t(BLOCK_LABELS_DE[type] || type, BLOCK_LABELS_EN[type] || type);
+    return NS.i18n.t(BLOCK_LABELS_EN[type] || type, BLOCK_LABELS_DE[type] || type);
   }
 
   engines.gridRun = {
@@ -152,7 +152,7 @@
       var resolveRun = null;
 
       var wrap = ui.el('div', { className: 'activity' });
-      var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || 'Bringe Bobby zum Stern!' });
+      var prompt = ui.el('h2', { className: 'prompt', text: config.prompt || NS.i18n.t('Get Bobby to the star!', 'Bringe Bobby zum Stern!') });
       var layout = ui.el('div', { className: 'grid-layout' });
       var board = ui.el('div', {
         className: 'grid-board',
@@ -183,7 +183,7 @@
         program = JSON.parse(JSON.stringify(config.prefill));
       }
       renderProgram();
-      api.speak(config.speech || config.prompt || 'Bringe Bobby zum Stern.');
+      api.speak(config.speech || config.prompt || NS.i18n.t('Get Bobby to the star.', 'Bringe Bobby zum Stern.'));
 
       function buildBoard() {
         for (var y = 0; y < config.grid.h; y++) {
@@ -245,7 +245,7 @@
         if (done) { return; }
         api.sfx('click');
         if ((program.length >= (config.maxBlocks || 8)) && !pending) {
-          feedback.textContent = NS.i18n.t('Mehr Blöcke brauchen wir nicht.', 'We do not need more blocks.');
+          feedback.textContent = NS.i18n.t('We do not need more blocks.', 'Mehr Blöcke brauchen wir nicht.');
           feedback.className = 'feedback-line is-soft';
           return;
         }
@@ -290,21 +290,21 @@
       function renderProgram() {
         ui.clear(programEl);
         if (!program.length) {
-          programEl.appendChild(ui.el('div', { className: 'program-empty', text: NS.i18n.t('Noch keine Blöcke. Tippe unten auf einen Block.', 'No blocks yet. Tap a block below.') }));
+          programEl.appendChild(ui.el('div', { className: 'program-empty', text: NS.i18n.t('No blocks yet. Tap a block below.', 'Noch keine Blöcke. Tippe unten auf einen Block.') }));
         } else {
           program.forEach(function (block) { programEl.appendChild(renderBlock(block)); });
         }
         ui.clear(controls);
-        controls.appendChild(ui.button(NS.i18n.t('▶ Los', '▶ Go'), { className: 'lemon', onClick: play }));
-        controls.appendChild(ui.button(NS.i18n.t('↺ Neu', '↺ Clear'), { variant: 'ghost', onClick: function () {
+        controls.appendChild(ui.button(NS.i18n.t('▶ Go', '▶ Los'), { className: 'lemon', onClick: play }));
+        controls.appendChild(ui.button(NS.i18n.t('↺ Clear', '↺ Neu'), { variant: 'ghost', onClick: function () {
           program = []; pending = null; renderProgram(); resetBobby(); feedback.textContent = '';
         } }));
       }
 
       function renderBlock(block) {
         var label = blockLabel(block.type);
-        if (block.type === 'repeat') { label = NS.i18n.t('Wiederholen ×', 'Repeat ×') + block.times; }
-        if (block.type === 'if') { label = NS.i18n.t('Wenn Wand', 'If wall'); }
+        if (block.type === 'repeat') { label = NS.i18n.t('Repeat ×', 'Wiederholen ×') + block.times; }
+        if (block.type === 'if') { label = NS.i18n.t('If wall', 'Wenn Wand'); }
 
         var row = ui.el('div', { className: 'block-row' }, [
           ui.el('span', { className: 'block ' + block.type }, [
@@ -314,7 +314,7 @@
         ]);
         var remove = ui.el('button', {
           className: 'block-remove',
-          attrs: { type: 'button', 'aria-label': NS.i18n.t('Block entfernen', 'Remove block') },
+          attrs: { type: 'button', 'aria-label': NS.i18n.t('Remove block', 'Block entfernen') },
           text: '✕'
         });
         remove.addEventListener('click', function () { removeBlock(block); });
@@ -323,7 +323,7 @@
         if (block.body) {
           var nested = ui.el('div', { className: 'block-nested' });
           if (!block.body.length) {
-            nested.appendChild(ui.el('div', { className: 'program-empty', text: NS.i18n.t('Nächster Block kommt hierhin.', 'The next block goes here.') }));
+            nested.appendChild(ui.el('div', { className: 'program-empty', text: NS.i18n.t('The next block goes here.', 'Nächster Block kommt hierhin.') }));
           } else {
             block.body.forEach(function (child) { nested.appendChild(renderBlock(child)); });
           }
@@ -395,17 +395,17 @@
         if (result.ok) {
           done = true;
           api.sfx('star');
-          feedback.textContent = NS.i18n.t('Bobby ist am Ziel!', 'Bobby reached the star!');
+          feedback.textContent = NS.i18n.t('Bobby reached the star!', 'Bobby ist am Ziel!');
           feedback.className = 'feedback-line is-good';
           ui.confetti();
           api.complete({ correct: 1, attempts: 0, stars: 1 });
         } else {
           api.sfx('bump');
           feedback.textContent = result.reason === 'cap'
-            ? NS.i18n.t('Das ist eine ganz schöne lange Reise!', 'That is quite a long journey!')
+            ? NS.i18n.t('That is quite a long journey!', 'Das ist eine ganz schöne lange Reise!')
             : (result.reason === 'wall'
-              ? NS.i18n.t('Da ist eine Wand. Ändere den Weg!', 'There is a wall. Change the path!')
-              : NS.i18n.t('Noch nicht am Ziel. Gleich nochmal!', 'Not at the star yet. Try again!'));
+              ? NS.i18n.t('There is a wall. Change the path!', 'Da ist eine Wand. Ändere den Weg!')
+              : NS.i18n.t('Not at the star yet. Try again!', 'Noch nicht am Ziel. Gleich nochmal!'));
           feedback.className = 'feedback-line is-soft';
         }
       }

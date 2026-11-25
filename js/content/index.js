@@ -52,6 +52,11 @@
         return copy;
       });
     }
+    if (Array.isArray(activity.levels)) {
+      activity.levels = activity.levels.map(function (level) {
+        return level && level.label ? Object.assign({}, level, { label: label(level.label) }) : level;
+      });
+    }
     return activity;
   }
 
@@ -83,12 +88,25 @@
           return tr.words[index] ? Object.assign({}, word, tr.words[index]) : word;
         });
       }
+      if (tr.sequences && Array.isArray(activity.sequences)) {
+        copy.sequences = tr.sequences.slice();
+      }
+      if (tr.levels && Array.isArray(activity.levels)) {
+        copy.levels = activity.levels.map(function (level, index) {
+          var translated = tr.levels[index];
+          if (!translated) { return level; }
+          var next = Object.assign({}, level);
+          if (translated.label) { next.label = translated.label; }
+          if (translated.pool) { next.pool = translated.pool.slice(); }
+          return next;
+        });
+      }
     }
     return applyLabels(copy, lexicon);
   }
 
   function localize(stages, lang, translation) {
-    if (lang !== 'en' || !translation) { return stages; }
+    if (lang === 'en' || !translation) { return stages; }
     var lexicon = translation.lexicon || {};
     return stages.map(function (stage) {
       var next = clone(stage);
@@ -116,13 +134,17 @@
   }
 
   /**
-   * Setzt die Sprache für alle Inhalte. Deutsch bleibt die Quelle; Englisch
-   * wird als Übersetzungsschicht darübergelegt.
+   * Sets the language. English is the source; German is an overlay from
+   * i18n/de.js. Any other value falls back to English.
    */
   content.applyLanguage = function (lang) {
-    content.stages = localize(content.baseStages, lang, content.en);
-    content.bobby = (lang === 'en' && content.bobbyEn) ? content.bobbyEn : content.bobbyDe;
-    content.language = lang;
+    var translations = content.translations || {};
+    var selected = (lang !== 'en' && translations[lang]) ? lang : 'en';
+    content.stages = selected === 'en'
+      ? content.baseStages
+      : localize(content.baseStages, selected, translations[selected]);
+    content.bobby = (content.bobbyFor && content.bobbyFor[selected]) || content.bobbyEn;
+    content.language = selected;
   };
 
   content.findStage = function (id) {
