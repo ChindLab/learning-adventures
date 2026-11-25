@@ -13,6 +13,7 @@
   content.translations.de = {
   "lexicon": {
     "Mouse": "Maus",
+    "Star": "Stern",
     "Speaker": "Lautsprecher",
     "Keyboard": "Tastatur",
     "Camera": "Kamera",
@@ -33,6 +34,13 @@
     "Basket": "Korb",
     "Space bar": "Leertaste",
     "Turn right": "Rechts drehen",
+    "Forward": "Vorwärts",
+    "Back": "Zurück",
+    "Turn left": "Links drehen",
+    "Jump": "Springen",
+    "Repeat": "Wiederholen",
+    "If": "Wenn",
+    "Collect": "Sammeln",
     "To the star": "Zum Stern",
     "Cat": "Katze",
     "Dog": "Hund",
@@ -317,6 +325,10 @@
       "title": "Was gehört zusammen?",
       "goal": "Dinge miteinander verbinden."
     },
+    "6-11": {
+      "title": "Memory-Werkstatt",
+      "goal": "Merk dir die Karten und finde alle Paare."
+    },
     "6-m": {
       "title": "Stufen-Abschluss",
       "goal": "Drehen, laufen, ankommen."
@@ -562,6 +574,11 @@
       "speech": "Klicke die Sterne an.",
       "prompt": "Klicke auf jeden Stern."
     },
+    "2-3-2": {
+      "title": "Maus-Memory",
+      "speech": "Finde die gleichen Bilder.",
+      "prompt": "Klicke zwei gleiche Karten an."
+    },
     "2-4-1": {
       "title": "Truhe öffnen",
       "speech": "Klicke zweimal schnell auf die Truhe.",
@@ -621,6 +638,11 @@
       "speech": "Drücke immer die markierte Taste.",
       "prompt": "Drücke die Taste, die leuchtet.",
       "hint": "Schau auf den gelben Ring!"
+    },
+    "3-1-2": {
+      "title": "Tasten-Memory",
+      "speech": "Finde die gleichen Tasten.",
+      "prompt": "Finde zwei Karten mit der gleichen Taste."
     },
     "3-2-1": {
       "title": "Zahlen finden",
@@ -1058,6 +1080,21 @@
           "prompt": "Was wächst auf der Wiese?"
         }
       ]
+    },
+    "6-11-1": {
+      "title": "Tier-Memory",
+      "speech": "Finde die gleichen Tierkarten.",
+      "prompt": "Decke zwei gleiche Karten auf."
+    },
+    "6-11-2": {
+      "title": "Zahlen-Memory",
+      "speech": "Finde die gleichen Zahlenkarten.",
+      "prompt": "Decke zwei gleiche Zahlen auf."
+    },
+    "6-11-3": {
+      "title": "Code-Memory",
+      "speech": "Finde die gleichen Befehlsblöcke.",
+      "prompt": "Merk dir jeden Befehlsblock."
     },
     "6-m-1": {
       "title": "Die letzte Ecke",

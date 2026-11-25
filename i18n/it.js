@@ -13,6 +13,7 @@
   content.translations.it = {
   "lexicon": {
     "Mouse": "Topo",
+    "Star": "Stella",
     "Speaker": "Altoparlante",
     "Keyboard": "Tastiera",
     "Camera": "Fotocamera",
@@ -46,6 +47,13 @@
     "Shift": "Maiusc",
     "Start": "Inizio",
     "Turn right": "Gira a destra",
+    "Forward": "Avanti",
+    "Back": "Indietro",
+    "Turn left": "Gira a sinistra",
+    "Jump": "Salta",
+    "Repeat": "Ripeti",
+    "If": "Se",
+    "Collect": "Raccogli",
     "To the star": "Verso la stella",
     "Cat": "Gatto",
     "Dog": "Cane",
@@ -367,6 +375,10 @@
       "title": "Cosa va insieme?",
       "goal": "Collega le cose."
     },
+    "6-11": {
+      "title": "Laboratorio della memoria",
+      "goal": "Ricorda le carte e trova tutte le coppie."
+    },
     "6-m": {
       "title": "Finale della tappa",
       "goal": "Gira, cammina, arriva."
@@ -602,6 +614,11 @@
       "speech": "Clicca le stelle.",
       "prompt": "Clicca ogni stella."
     },
+    "2-3-2": {
+      "title": "Memory del topo",
+      "speech": "Trova le immagini uguali.",
+      "prompt": "Clicca due carte uguali."
+    },
     "2-4-1": {
       "title": "Apri il baule",
       "speech": "Clicca il baule due volte, veloce.",
@@ -661,6 +678,11 @@
       "speech": "Premi sempre il tasto illuminato.",
       "prompt": "Premi il tasto che si illumina.",
       "hint": "Guarda l'anello giallo!"
+    },
+    "3-1-2": {
+      "title": "Memory dei tasti",
+      "speech": "Trova i tasti uguali.",
+      "prompt": "Trova due carte con lo stesso tasto."
     },
     "3-2-1": {
       "title": "Trova i numeri",
@@ -908,6 +930,21 @@
         { "prompt": "Chi fa miao?" },
         { "prompt": "Cosa cresce nel prato?" }
       ]
+    },
+    "6-11-1": {
+      "title": "Memory degli animali",
+      "speech": "Trova le carte degli animali uguali.",
+      "prompt": "Gira due carte uguali."
+    },
+    "6-11-2": {
+      "title": "Memory dei numeri",
+      "speech": "Trova le carte dei numeri uguali.",
+      "prompt": "Gira due numeri uguali."
+    },
+    "6-11-3": {
+      "title": "Memory del codice",
+      "speech": "Trova i blocchi di comando uguali.",
+      "prompt": "Ricorda ogni blocco di comando."
     },
     "6-m-1": {
       "title": "L'ultimo angolo",

@@ -42,6 +42,57 @@
           "layout": "letters",
           "count": 10,
           "hint": "Look at the yellow ring!"
+        },
+        {
+          "id": "3-1-2",
+          "type": "matchPairs",
+          "title": "Key memory",
+          "speech": "Find the matching keys.",
+          "prompt": "Find two cards with the same key.",
+          "mode": "memory",
+          "seed": 9,
+          "pairs": [
+            {
+              "a": {
+                "art": "kreis",
+                "label": "A"
+              },
+              "b": {
+                "art": "kreis",
+                "label": "A"
+              }
+            },
+            {
+              "a": {
+                "art": "kreis",
+                "label": "S"
+              },
+              "b": {
+                "art": "kreis",
+                "label": "S"
+              }
+            },
+            {
+              "a": {
+                "art": "kreis",
+                "label": "D"
+              },
+              "b": {
+                "art": "kreis",
+                "label": "D"
+              }
+            },
+            {
+              "a": {
+                "art": "kreis",
+                "label": "F"
+              },
+              "b": {
+                "art": "kreis",
+                "label": "F"
+              }
+            }
+          ]
         }
       ]
     },

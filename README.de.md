@@ -105,7 +105,7 @@ nachdem die CI (`ci-success`) auf `main` grün ist. Einrichtung und Fehlersuche:
 | | |
 |---|---|
 | **9 Stufen** | Computer, Maus, Tastatur, Buchstaben & Tippen, Zahlen, Logik, Blockprogrammierung, erstes JavaScript, Finger-Training |
-| **107 Aktivitäten** | jede spielbar, keine Platzhalter |
+| **112 Aktivitäten** | jede spielbar, keine Platzhalter |
 | **15 Spielarten** | Erklären, Auswahl, Memory, Ziehen, Ziel, Taste, Tippen, Grundreihe, Rakete, Zählen, Muster, Reihenfolge, Blockläufer, Puzzle, JS-Demo |
 | **7 Sprachen** | Englisch (Quelle) + Deutsch, Französisch, Italienisch, Chinesisch (zh-CN), Hindi, Nepali, pro Kind |
 | **Elternbereich** | Fortschritt, Übungsbedarf, Zeit pro Aufgabe, Profile, Sicherung, Zurücksetzen |
@@ -174,7 +174,7 @@ Danach **`selftest.html`** im Browser öffnen (oder über Playwright MCP, siehe 
 Es spielt jede Aufgabe in allen sieben Sprachen automatisch durch und baut jeden Bildschirm:
 
 ```
-Alles gut – Gesamt: 754/754 ok
+Alles gut – Gesamt: 789/789 ok
 ```
 
 Ein Beitrag ist erst fertig, wenn beides grün ist und die exakten Ergebnisse im Pull

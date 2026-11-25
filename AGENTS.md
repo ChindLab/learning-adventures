@@ -13,7 +13,7 @@ with plain HTML, CSS and JavaScript. A robot named Bobby guides the child throug
 stages: computer, mouse, keyboard, letters & typing, numbers, logic, block programming,
 first JavaScript, finger training.
 
-- 107 activities, 15 game engines, seven languages (English source; German, French, Italian, Simplified Chinese, Hindi and Nepali overlays).
+- 112 activities, 15 game engines, seven languages (English source; German, French, Italian, Simplified Chinese, Hindi and Nepali overlays).
 - No framework, no build step, no dependencies, no backend, no network.
 - It must run by **double-clicking `index.html`** (`file://`).
 - Progress lives in `localStorage` under `belaschule.v1`.
@@ -82,7 +82,7 @@ Important files:
 ## 4. Commands
 
 ```bash
-npm test                 # 101 unit tests, Node 18+
+npm test                 # 104 unit tests, Node 18+
 npm run check            # syntax check + unit tests (what CI runs)
 npm run hooks             # enable the pre-commit hook (once per clone)
 npm run serve            # http://localhost:8080 (optional, for development)
@@ -93,10 +93,10 @@ npm run seed             # regenerate js/config/seed.js after editing the JSON
 Then open **`selftest.html`** in a real browser. Expected today:
 
 ```
-Alles gut – Gesamt: 754/754 ok
+Alles gut – Gesamt: 789/789 ok
 ```
 
-`754 = 107 English activities + 6 × 107 translated activities + 5 screens.`
+`789 = 112 English activities + 6 × 112 translated activities + 5 screens.`
 
 If you cannot run a browser, you are **not done**. Use Playwright or ask the human to run
 `selftest.html`; a red row names the activity id and the reason.
@@ -215,7 +215,7 @@ requires all six overlays to cover every activity.
 
 4. Update the hardcoded counts in `tests/content.test.js` (per-stage array and total).
 5. Update numbers in `README.md`, `README.de.md` (activity count, selftest total).
-6. Run everything; the new selftest total is `754 + 7` for one activity in seven languages.
+6. Run everything; the new selftest total is `789 + 7` for one activity in seven languages.
 
 Content rules:
 

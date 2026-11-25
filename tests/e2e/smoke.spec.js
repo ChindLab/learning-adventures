@@ -12,7 +12,7 @@ const { test, expect } = require('@playwright/test');
 
 test('self-test is completely green', async ({ page }) => {
   await page.goto('/selftest.html');
-  await expect(page.locator('#summary')).toContainText('Gesamt: 754/754 ok', { timeout: 240000 });
+  await expect(page.locator('#summary')).toContainText('Gesamt: 789/789 ok', { timeout: 240000 });
   await expect(page.locator('#failures li')).toHaveCount(0);
 });
 

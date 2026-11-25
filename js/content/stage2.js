@@ -75,6 +75,57 @@
           "art": "stern",
           "size": "xl",
           "count": 6
+        },
+        {
+          "id": "2-3-2",
+          "type": "matchPairs",
+          "title": "Mouse memory",
+          "speech": "Find the matching pictures.",
+          "prompt": "Click two matching cards.",
+          "mode": "memory",
+          "seed": 8,
+          "pairs": [
+            {
+              "a": {
+                "art": "maus",
+                "label": "Mouse"
+              },
+              "b": {
+                "art": "maus",
+                "label": "Mouse"
+              }
+            },
+            {
+              "a": {
+                "art": "stern",
+                "label": "Star"
+              },
+              "b": {
+                "art": "stern",
+                "label": "Star"
+              }
+            },
+            {
+              "a": {
+                "art": "schmetterling",
+                "label": "Butterfly"
+              },
+              "b": {
+                "art": "schmetterling",
+                "label": "Butterfly"
+              }
+            },
+            {
+              "a": {
+                "art": "blume",
+                "label": "Flower"
+              },
+              "b": {
+                "art": "blume",
+                "label": "Flower"
+              }
+            }
+          ]
         }
       ]
     },
