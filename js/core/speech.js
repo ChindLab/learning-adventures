@@ -16,6 +16,17 @@
   var speakTimer = null;
   var speakToken = 0;
   var pendingCancel = false;
+  var LANGUAGE_TAGS = {
+    'en-gb': 'en-GB', 'de-de': 'de-DE', 'de-ch': 'de-CH', 'fr-fr': 'fr-FR',
+    'it-it': 'it-IT', 'zh-cn': 'zh-CN', 'hi-in': 'hi-IN', 'ne-np': 'ne-NP',
+    en: 'en-GB', de: 'de-DE', fr: 'fr-FR', it: 'it-IT', zh: 'zh-CN',
+    hi: 'hi-IN', ne: 'ne-NP', gsw: 'de-CH', 'gsw-ch': 'de-CH'
+  };
+
+  function normalizeTag(tag) {
+    var raw = String(tag || '').trim().toLowerCase();
+    return LANGUAGE_TAGS[raw] || LANGUAGE_TAGS[raw.slice(0, 2)] || 'en-GB';
+  }
 
   // Spaß-Stimmen ("Grandma", "Rocko", …) klingen für ein Lernspiel unpassend.
   var NOVELTY = /eddy|flo|grandma|grandpa|rocko|sandy|shelley|reed|bells|boing|bubbles|jester|organ|superstar|trinoids|whisper|zarvox|albert|bad news|bahh|cellos|good news|wobble|jingle|kathy|ralph|fred|junior|princess|deranged|hysterical|pipe organ/i;
@@ -105,11 +116,7 @@
     rankVoice: rankVoice,
 
     setLanguage: function (tag) {
-      var base = String(tag || '').slice(0, 2).toLowerCase();
-      language = {
-        en: 'en-GB', de: 'de-DE', fr: 'fr-FR', it: 'it-IT', zh: 'zh-CN',
-        hi: 'hi-IN', ne: 'ne-NP'
-      }[base] || 'en-GB';
+      language = normalizeTag(tag);
       voice = null;
       preferredURI = '';
       voicesLoaded = false;

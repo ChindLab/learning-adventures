@@ -126,23 +126,37 @@ test('Uhr zählt nur bei laufender Zeit', () => {
 
 test('Sprache pro Profil', () => {
   const store = createStore(mem());
-  assert.strictEqual(store.profile().language, 'en');
+  assert.strictEqual(store.profile().language, 'en-GB');
   store.setLanguage('de');
-  assert.strictEqual(store.profile().language, 'de');
+  assert.strictEqual(store.profile().language, 'de-DE');
   store.addProfile('Ben');
-  assert.strictEqual(store.profile().language, 'en');
+  assert.strictEqual(store.profile().language, 'en-GB');
   store.setActiveProfile('p1');
-  assert.strictEqual(store.profile().language, 'de');
+  assert.strictEqual(store.profile().language, 'de-DE');
   store.setLanguage('fr');
-  assert.strictEqual(store.profile().language, 'fr');
+  assert.strictEqual(store.profile().language, 'fr-FR');
   store.setLanguage('zh');
-  assert.strictEqual(store.profile().language, 'zh');
+  assert.strictEqual(store.profile().language, 'zh-CN');
   store.setLanguage('hi');
-  assert.strictEqual(store.profile().language, 'hi');
+  assert.strictEqual(store.profile().language, 'hi-IN');
   store.setLanguage('ne');
-  assert.strictEqual(store.profile().language, 'ne');
+  assert.strictEqual(store.profile().language, 'ne-NP');
+  store.setLanguage('gsw');
+  assert.strictEqual(store.profile().language, 'de-CH');
   store.setLanguage('klingon');
-  assert.strictEqual(store.profile().language, 'en');
+  assert.strictEqual(store.profile().language, 'en-GB');
+});
+
+test('alte Sprachkürzel werden migriert', () => {
+  const st = mem();
+  st.setItem('belaschule.v1', JSON.stringify({
+    version: 1,
+    activeProfile: 'p1',
+    settings: {},
+    profiles: { p1: { language: 'de', stages: {}, stars: 0, achievements: [], unlocked: [1, 2] } }
+  }));
+  const store = createStore(st);
+  assert.strictEqual(store.profile().language, 'de-DE');
 });
 
 test('Spielzeit wird pro Aufgabe gesammelt', () => {

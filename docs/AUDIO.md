@@ -41,8 +41,9 @@ Engines call `api.sfx('name')`; they never touch `AudioContext` directly.
 The browser's `speechSynthesis` API reads Bobby's lines with a voice installed in the
 operating system. It is text-to-speech, not a recording.
 
-- Language follows the child: `en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN` or
-  `ne-NP` (`speech.setLanguage`).
+- Language follows the child: `en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`, `ne-NP` or
+  `de-CH` (`speech.setLanguage`). Swiss German is experimental; without a `de-CH` voice it
+  falls back to a German `de-DE` voice.
 - Rate **0.95**, pitch **1.0** — slightly slower, no chipmunk effect.
 - The previous utterance is cancelled before a new one; children tap fast. The latest line wins,
   and a short pause after `cancel()` keeps Chrome's speech queue from wedging.

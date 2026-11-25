@@ -29,9 +29,9 @@ test('Seed erzeugt Profile beim allerersten Start', () => {
   const state = store.state();
   assert.deepStrictEqual(Object.keys(state.profiles), ['p1', 'p2']);
   assert.strictEqual(state.profiles.p1.name, 'Mia');
-  assert.strictEqual(state.profiles.p1.language, 'de');
+  assert.strictEqual(state.profiles.p1.language, 'de-DE');
   assert.strictEqual(state.profiles.p2.name, 'Ben');
-  assert.strictEqual(state.profiles.p2.language, 'en');
+  assert.strictEqual(state.profiles.p2.language, 'en-GB');
   assert.strictEqual(state.profiles.p2.unlockAll, true);
   assert.strictEqual(state.activeProfile, 'p2');
   assert.strictEqual(state.settings.sound, false);
@@ -96,15 +96,17 @@ test('Namen werden gekürzt, Sprachen validiert', () => {
     profiles: [{ name: '  Ein sehr langer Name mit mehr Zeichen  ', language: 'fr' }]
   });
   assert.strictEqual(seed.profiles[0].name.length, 20);
-  assert.strictEqual(seed.profiles[0].language, 'fr');
+  assert.strictEqual(seed.profiles[0].language, 'fr-FR');
 
   const invalid = normalizeSeed({ version: 1, profiles: [{ language: 'xx' }] });
-  assert.strictEqual(invalid.profiles[0].language, 'en');
+  assert.strictEqual(invalid.profiles[0].language, 'en-GB');
 
   const hindi = normalizeSeed({ version: 1, profiles: [{ language: 'hi' }] });
-  assert.strictEqual(hindi.profiles[0].language, 'hi');
+  assert.strictEqual(hindi.profiles[0].language, 'hi-IN');
   const nepali = normalizeSeed({ version: 1, profiles: [{ language: 'ne' }] });
-  assert.strictEqual(nepali.profiles[0].language, 'ne');
+  assert.strictEqual(nepali.profiles[0].language, 'ne-NP');
+  const swiss = normalizeSeed({ version: 1, profiles: [{ language: 'gsw' }] });
+  assert.strictEqual(swiss.profiles[0].language, 'de-CH');
 });
 
 test('stateFromSeed verändert den Seed nicht', () => {

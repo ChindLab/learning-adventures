@@ -10,7 +10,7 @@
   var content = NS.content = NS.content || {};
 
   content.translations = content.translations || {};
-  content.translations.ne = {
+  content.translations['ne-NP'] = {
   "lexicon": {
     "Mouse": "माउस",
     "Star": "तारा",
@@ -1145,7 +1145,7 @@
 };
 
   content.ui = content.ui || {};
-  content.ui.ne = {
+  content.ui['ne-NP'] = {
     " and ": " र ",
     " for ": " अर्थात् ",
     " min": " मिनेट",
@@ -1303,7 +1303,7 @@
   };
 
   content.bobbyFor = content.bobbyFor || {};
-  content.bobbyFor.ne = {
+  content.bobbyFor['ne-NP'] = {
     "welcome": "नमस्ते सानो खोजी! म बबी हुँ।",
     "lessonStart": "ल, हेरौं है!",
     "correct": [
@@ -1329,5 +1329,5 @@
     "welcomeNamed": function (name) { return "नमस्ते, " + name + "! म बबी हुँ।"; },
     "stageDone": function (title) { return "तिमीले " + title + " सक्यौ!"; }
   };
-  content.bobbyNe = content.bobbyFor.ne;
+  content.bobbyNe = content.bobbyFor['ne-NP'];
 })(typeof globalThis !== 'undefined' ? globalThis : this);

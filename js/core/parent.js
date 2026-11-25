@@ -285,13 +285,14 @@
       ui.el('span', { className: 'spacer' })
     ]);
     [
-      ['en', 'English'],
-      ['de', 'Deutsch'],
-      ['fr', 'Français'],
-      ['it', 'Italiano'],
-      ['zh', '中文'],
-      ['hi', 'हिन्दी'],
-      ['ne', 'नेपाली']
+      ['en-GB', 'English'],
+      ['de-DE', 'Deutsch'],
+      ['de-CH', 'Schwiizerdütsch'],
+      ['fr-FR', 'Français'],
+      ['it-IT', 'Italiano'],
+      ['zh-CN', '中文'],
+      ['hi-IN', 'हिन्दी'],
+      ['ne-NP', 'नेपाली']
     ].forEach(function (entry) {
       langRow.appendChild(ui.button(entry[1], {
         variant: profile.language === entry[0] ? 'soft' : 'ghost',

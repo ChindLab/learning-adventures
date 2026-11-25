@@ -106,7 +106,7 @@
   }
 
   function localize(stages, lang, translation) {
-    if (lang === 'en' || !translation) { return stages; }
+    if (lang === 'en-GB' || !translation) { return stages; }
     var lexicon = translation.lexicon || {};
     return stages.map(function (stage) {
       var next = clone(stage);
@@ -135,12 +135,12 @@
 
   /**
    * Sets the language. English is the source; German is an overlay from
-   * i18n/de.js. Any other value falls back to English.
+   * i18n/de-DE.js. Any other value falls back to English.
    */
   content.applyLanguage = function (lang) {
     var translations = content.translations || {};
-    var selected = (lang !== 'en' && translations[lang]) ? lang : 'en';
-    content.stages = selected === 'en'
+    var selected = (lang !== 'en-GB' && translations[lang]) ? lang : 'en-GB';
+    content.stages = selected === 'en-GB'
       ? content.baseStages
       : localize(content.baseStages, selected, translations[selected]);
     content.bobby = (content.bobbyFor && content.bobbyFor[selected]) || content.bobbyEn;

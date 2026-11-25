@@ -6,7 +6,7 @@ window.BELA_SEED = {
     {
       "id": "p1",
       "name": "",
-      "language": "en",
+      "language": "en-GB",
       "unlockAll": false
     }
   ],

@@ -11,7 +11,23 @@
 (function (root) {
   'use strict';
 
-  var LANGUAGES = ['en', 'de', 'fr', 'it', 'zh', 'hi', 'ne'];
+  var LANGUAGES = ['en-GB', 'de-DE', 'de-CH', 'fr-FR', 'it-IT', 'zh-CN', 'hi-IN', 'ne-NP'];
+  var LANGUAGE_ALIASES = {
+    en: 'en-GB', 'en-gb': 'en-GB', 'en-us': 'en-GB',
+    de: 'de-DE', 'de-de': 'de-DE', 'de-ch': 'de-CH',
+    gsw: 'de-CH', 'gsw-ch': 'de-CH',
+    fr: 'fr-FR', 'fr-fr': 'fr-FR',
+    it: 'it-IT', 'it-it': 'it-IT',
+    zh: 'zh-CN', 'zh-cn': 'zh-CN',
+    hi: 'hi-IN', 'hi-in': 'hi-IN',
+    ne: 'ne-NP', 'ne-np': 'ne-NP'
+  };
+
+  function normalizeLanguage(value) {
+    var key = String(value || '').trim().toLowerCase();
+    var tag = LANGUAGE_ALIASES[key] || value;
+    return LANGUAGES.indexOf(tag) !== -1 ? tag : 'en-GB';
+  }
   var KEY = 'belaschule.v1';
   var LEGACY = 'bobbyschule.v1';
   var BROKEN = 'belaschule.broken';
@@ -22,7 +38,7 @@
     return {
       id: id,
       name: '',
-      language: 'en',
+      language: 'en-GB',
       createdAt: stamp,
       stages: {},
       stars: 0,
@@ -57,7 +73,7 @@
       return {
         id: 'p' + (index + 1),
         name: typeof entry.name === 'string' ? entry.name.trim().slice(0, 20) : '',
-        language: LANGUAGES.indexOf(entry.language) !== -1 ? entry.language : 'en',
+        language: normalizeLanguage(entry.language),
         unlockAll: !!entry.unlockAll
       };
     });
@@ -143,7 +159,7 @@
       p.unlockAll = !!p.unlockAll;
       p.stats = Object.assign({}, base.stats, p.stats || {});
       p.name = typeof p.name === 'string' ? p.name : '';
-      p.language = LANGUAGES.indexOf(p.language) !== -1 ? p.language : 'en';
+      p.language = normalizeLanguage(p.language);
       raw.profiles[id] = p;
     });
 
@@ -312,7 +328,7 @@
       },
 
       setLanguage: function (lang) {
-        active().language = LANGUAGES.indexOf(lang) !== -1 ? lang : 'en';
+        active().language = normalizeLanguage(lang);
         commit();
       },
 

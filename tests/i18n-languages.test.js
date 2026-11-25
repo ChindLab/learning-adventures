@@ -1,5 +1,5 @@
 /**
- * i18n-languages.test.js – French, Italian, Chinese, Hindi and Nepali overlays.
+ * i18n-languages.test.js – full BCP-47 overlays: fr-FR, it-IT, zh-CN, hi-IN, ne-NP, de-CH.
  * English is the source; each file must cover every stage/lesson/activity.
  */
 const test = require('node:test');
@@ -12,7 +12,7 @@ const { content } = require('../js/content/index.js');
   .forEach((name) => require(path.join(__dirname, '..', 'js', 'content', name + '.js')));
 require('../js/content/bobby-lines.js');
 
-const CODES = ['fr', 'it', 'zh', 'hi', 'ne'];
+const CODES = ['fr-FR', 'it-IT', 'zh-CN', 'hi-IN', 'ne-NP', 'de-CH'];
 
 CODES.forEach((code) => {
   test(code + ' translation file exists and covers every activity', () => {

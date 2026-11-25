@@ -60,8 +60,8 @@ edited by hand.
     "reducedMotion": false
   },
   "profiles": [
-    { "id": "p1", "name": "Mia", "language": "en", "unlockAll": false },
-    { "id": "p2", "name": "Ben", "language": "de", "unlockAll": true }
+    { "id": "p1", "name": "Mia", "language": "en-GB", "unlockAll": false },
+    { "id": "p2", "name": "Ben", "language": "de-DE", "unlockAll": true }
   ]
 }
 ```
@@ -71,7 +71,7 @@ Rules:
 - `version` must be `1`.
 - 1–8 profiles. More are ignored with a warning from the seed builder.
 - `name` is optional, trimmed to 20 characters.
-- `language` is `"en"` (default), `"de"`, `"fr"`, `"it"`, `"zh"`, `"hi"` or `"ne"`; anything else becomes `"en"`.
+- `language` is `"en-GB"` (default), `"de-DE"`, `"de-CH"`, `"fr-FR"`, `"it-IT"`, `"zh-CN"`, `"hi-IN"` or `"ne-NP"`; anything else becomes `"en-GB"`.
 - `id` values are normalised to `p1`, `p2`, … in array order.
 - `activeProfile` must be one of the normalised ids; otherwise the first child starts.
 - `unlockAll` is per child. Use it for a child who should skip the linear progression.
@@ -141,7 +141,7 @@ requires Node.
 | `Seed error: bela.config.json is not valid JSON` | Fix the comma/quote, run `npm run seed` again. |
 | `Setup failed: Interactive setup needs a terminal` | Run `./setup.sh` from a real terminal, not a pipe/CI. |
 | No `index.html` opens automatically | Open it manually; the script only tries to help. |
-| Children appear in the wrong language | `language` must be `"en"`, `"de"`, `"fr"`, `"it"`, `"zh"`, `"hi"` or `"ne"`; anything else falls back to English. |
+| Children appear in the wrong language | `language` must be `"en-GB"`, `"de-DE"`, `"de-CH"`, `"fr-FR"`, `"it-IT"`, `"zh-CN"`, `"hi-IN"` or `"ne-NP"`; anything else falls back to English. |
 | More than 8 children in JSON | Only the first 8 are used; split across devices. |
 
 ---

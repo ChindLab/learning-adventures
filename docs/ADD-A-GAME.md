@@ -42,7 +42,7 @@ Rules the validator enforces:
 
 ### 2. Add translations
 
-Open `i18n/de.js` and add, under `lessons` (repeat for `fr.js`, `it.js`, `zh.js`, `hi.js`, `ne.js`):
+Open `i18n/de-DE.js` and add, under `lessons` (repeat for `fr-FR.js`, `it-IT.js`, `zh-CN.js`, `hi-IN.js`, `ne-NP.js`, `de-CH.js`):
 
 ```js
 '6-11': { title: 'Was ist schwerer?', goal: 'Vergleiche zwei Dinge.' },
@@ -65,7 +65,7 @@ are not, add them under `lexicon`:
 'Elephant': 'Elefant',
 ```
 
-Then add the same activity in `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js` and `i18n/ne.js`.
+Then add the same activity in `i18n/fr-FR.js`, `i18n/it-IT.js`, `i18n/zh-CN.js`, `i18n/hi-IN.js`, `i18n/ne-NP.js` and `i18n/de-CH.js`.
 `tests/i18n-languages.test.js` fails if any overlay misses a stage, lesson or activity.
 
 ### 3. Run it
@@ -85,7 +85,7 @@ Only then you need:
 - a `<script defer>` line in `index.html` **and** `selftest.html`,
 - an entry in `tests/content.test.js` (activity counts),
 - an achievement and a milestone lesson,
-- stage/achievement translations in all six `i18n/*.js` overlays.
+- stage/achievement translations in all seven `i18n/*.js` overlays.
 
 ---
 

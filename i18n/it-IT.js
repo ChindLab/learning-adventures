@@ -10,7 +10,7 @@
   var content = NS.content = NS.content || {};
 
   content.translations = content.translations || {};
-  content.translations.it = {
+  content.translations['it-IT'] = {
   "lexicon": {
     "Mouse": "Topo",
     "Star": "Stella",
@@ -1183,7 +1183,7 @@
 };
 
   content.ui = content.ui || {};
-  content.ui.it = {
+  content.ui['it-IT'] = {
     " and ": " e ",
     " for ": " per ",
     " min": " min",
@@ -1341,7 +1341,7 @@
   };
 
   content.bobbyFor = content.bobbyFor || {};
-  content.bobbyFor.it = {
+  content.bobbyFor['it-IT'] = {
     "welcome": "Ciao, piccolo esploratore! Sono Bobby.",
     "lessonStart": "Dai, andiamo a vedere!",
     "correct": [

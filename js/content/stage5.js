@@ -1,5 +1,5 @@
 /**
- * stage5.js – English source content. German lives in i18n/de.js.
+ * stage5.js – English source content. German lives in i18n/de-DE.js.
  */
 (function (root) {
   'use strict';

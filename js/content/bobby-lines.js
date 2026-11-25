@@ -1,5 +1,5 @@
 /**
- * bobby-lines.js – English source lines. German lives in i18n/de.js.
+ * bobby-lines.js – English source lines. German lives in i18n/de-DE.js.
  * Rules: ≤ 8 words, never negative, always encouraging.
  */
 (function (root) {
@@ -34,7 +34,7 @@
     allDone: 'You are a real computer explorer!'
   };
 
-  content.bobbyFor = { en: content.bobbyEn };
+  content.bobbyFor = { 'en-GB': content.bobbyEn };
   content.bobby = content.bobbyEn;
 
   content.pick = function (list, seed) {

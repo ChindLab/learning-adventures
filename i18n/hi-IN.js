@@ -10,7 +10,7 @@
   var content = NS.content = NS.content || {};
 
   content.translations = content.translations || {};
-  content.translations.hi = {
+  content.translations['hi-IN'] = {
   "lexicon": {
     "Mouse": "माउस",
     "Star": "तारा",
@@ -1223,7 +1223,7 @@
 };
 
   content.ui = content.ui || {};
-  content.ui.hi = {
+  content.ui['hi-IN'] = {
     " and ": " और ",
     " for ": " के लिए ",
     " min": " मिनट",
@@ -1381,7 +1381,7 @@
   };
 
   content.bobbyFor = content.bobbyFor || {};
-  content.bobbyFor.hi = {
+  content.bobbyFor['hi-IN'] = {
   "welcome": "नमस्ते, छोटे खोजी! मैं बॉबी हूँ।",
   "lessonStart": "चलो, ज़रा देखें!",
   "correct": [
@@ -1407,5 +1407,5 @@
   "welcomeNamed": function (name) { return "नमस्ते, " + name + "! मैं बॉबी हूँ।"; },
   "stageDone": function (title) { return "तुमने ‘" + title + "’ पूरा किया!"; }
 };
-  content.bobbyHi = content.bobbyFor.hi;
+  content.bobbyHi = content.bobbyFor['hi-IN'];
 })(typeof globalThis !== 'undefined' ? globalThis : this);

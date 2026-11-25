@@ -13,7 +13,8 @@ with plain HTML, CSS and JavaScript. A robot named Bobby guides the child throug
 stages: computer, mouse, keyboard, letters & typing, numbers, logic, block programming,
 first JavaScript, finger training.
 
-- 112 activities, 15 game engines, seven languages (English source; German, French, Italian, Simplified Chinese, Hindi and Nepali overlays).
+- 112 activities, 15 game engines, eight languages (English source; German, French,
+  Italian, Simplified Chinese, Hindi, Nepali and Swiss German experimental overlays).
 - No framework, no build step, no dependencies, no backend, no network.
 - It must run by **double-clicking `index.html`** (`file://`).
 - Progress lives in `localStorage` under `belaschule.v1`.
@@ -53,7 +54,7 @@ selftest.html               development page; not linked from the child UI
 css/style.css               tokens and all components
 js/core/                    app shell, router, progress, audio, speech, i18n, UI helpers
 js/content/                 lessons as data (English source) + Bobby's lines
-i18n/de.js, fr.js, it.js, zh.js, hi.js, ne.js  translation overlays (English is the source)
+i18n/de-DE.js, fr-FR.js, it-IT.js, zh-CN.js, hi-IN.js, ne-NP.js, de-CH.js  translation overlays (English is the source)
 js/engines/                 one file per game type, shared mount() contract
 js/dev/selftest.js          auto-plays every activity in every language
 tests/                      Node test runner (no dependencies)
@@ -82,7 +83,7 @@ Important files:
 ## 4. Commands
 
 ```bash
-npm test                 # 104 unit tests, Node 18+
+npm test                 # 107 unit tests, Node 18+
 npm run check            # syntax check + unit tests (what CI runs)
 npm run hooks             # enable the pre-commit hook (once per clone)
 npm run serve            # http://localhost:8080 (optional, for development)
@@ -93,10 +94,10 @@ npm run seed             # regenerate js/config/seed.js after editing the JSON
 Then open **`selftest.html`** in a real browser. Expected today:
 
 ```
-Alles gut – Gesamt: 789/789 ok
+Alles gut – Gesamt: 901/901 ok
 ```
 
-`789 = 112 English activities + 6 × 112 translated activities + 5 screens.`
+`901 = 112 English activities + 7 × 112 translated activities + 5 screens.`
 
 If you cannot run a browser, you are **not done**. Use Playwright or ask the human to run
 `selftest.html`; a red row names the activity id and the reason.
@@ -159,7 +160,7 @@ A change is complete only if **all** of these are true:
 - [ ] `selftest.html` says `Alles gut – Gesamt: n/n ok` with the correct new total.
 - [ ] Browser smoke via Playwright MCP or CLI; exact summary + console result recorded.
 - [ ] CI `ci-success` is green (or the PR states why it could not run).
-- [ ] Every new child-facing string exists in English and in all six overlays.
+- [ ] Every new child-facing string exists in English and in all seven overlays.
 - [ ] Works with keyboard only; drag has a click fallback.
 - [ ] Works with sound off and with reduced motion.
 - [ ] No network, no new dependency, no build step.
@@ -200,7 +201,7 @@ Do not update `docs/design/*` for new features; they are historical. Update
 }
 ```
 
-3. Add translations (German shown; repeat for fr/it/zh/hi/ne):
+3. Add translations (German shown; repeat for fr-FR/it-IT/zh-CN/hi-IN/ne-NP/de-CH):
 
 ```js
 lessons: { '6-11': { title: 'Was ist schwerer?', goal: 'Vergleiche zwei Dinge.' } },
@@ -210,12 +211,12 @@ activities: { '6-11-1': { title: 'Schwer oder leicht?', speech: 'Was ist schwere
 Option/item/target/card labels are translated by `content.translations.<lang>.lexicon`. If
 your label is new, add it there.
 
-Then repeat the same entries in `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js` and `i18n/ne.js`. `npm test`
-requires all six overlays to cover every activity.
+Then repeat the same entries in `i18n/fr-FR.js`, `i18n/it-IT.js`, `i18n/zh-CN.js`, `i18n/hi-IN.js`, `i18n/ne-NP.js` and `i18n/de-CH.js`. `npm test`
+requires all seven overlays to cover every activity.
 
 4. Update the hardcoded counts in `tests/content.test.js` (per-stage array and total).
 5. Update numbers in `README.md`, `README.de.md` (activity count, selftest total).
-6. Run everything; the new selftest total is `789 + 7` for one activity in seven languages.
+6. Run everything; the new selftest total is `901 + 8` for one activity in eight languages.
 
 Content rules:
 
@@ -224,7 +225,7 @@ Content rules:
 - `answer` must be inside `options`; drag targets must accept existing item ids.
 - New lesson must be reachable from the stage's `lessons` array (validator checks).
 - A new stage also needs an achievement, a milestone lesson, a script tag in **both**
-  HTML files, entries in all six `i18n/*.js` files (`translations.<lang>.stages`), and the counts test.
+  HTML files, entries in all seven `i18n/*.js` files (`translations.<lang>.stages`), and the counts test.
 
 ---
 
@@ -258,18 +259,18 @@ Hard requirements for engines (details in `docs/ENGINE-GUIDE.md`):
 ## 8. Translation rules
 
 - English is the source. German, French, Italian, Chinese, Hindi and Nepali are overlays keyed by IDs.
-- UI strings: `NS.i18n.t('English', 'Deutsch')` at the call site; for fr/it/zh/hi/ne the same
+- UI strings: `NS.i18n.t('English', 'Deutsch')` at the call site; for fr-FR/it-IT/zh-CN/hi-IN/ne-NP/de-CH the same
   English key is looked up in `content.ui.<lang>`. Dynamic values use placeholders:
   `t('Put {n} on the plate', 'Lege {n} auf den Teller', { n: 4 })`.
 - Content: `i18n/<lang>.js` for titles/speech/prompts/points/decks/lineNotes; `lexicon`
   for short labels; `content.ui.<lang>` for UI strings.
 - `tests/content-de.test.js` and `tests/i18n-languages.test.js` fail if any activity or
   lesson lacks an entry in an overlay.
-- New profiles default to English (`language: 'en'`). Valid values: `en`, `de`, `fr`,
-  `it`, `zh`.
+- New profiles default to English (`language: 'en-GB'`). Valid values: `en-GB`, `de-DE`,
+  `de-CH`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`, `ne-NP`.
 - Never add a language toggle inside an activity. Language is per child
   (`profiles.p.language`) and applied by `NS.i18n.apply()`.
-- Speech language: `en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`.
+- Speech language: `en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`, `ne-NP`, `de-CH`.
 
 ---
 

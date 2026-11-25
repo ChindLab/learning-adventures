@@ -60,15 +60,19 @@ test('Sprachkürzel werden auf die Standardstimme erweitert', () => {
   assert.strictEqual(speech.setLanguage('zh') || speech.language(), 'zh-CN');
   assert.strictEqual(speech.setLanguage('hi') || speech.language(), 'hi-IN');
   assert.strictEqual(speech.setLanguage('ne') || speech.language(), 'ne-NP');
+  assert.strictEqual(speech.setLanguage('gsw') || speech.language(), 'de-CH');
   speech.setLanguage('de-DE');
 });
 
-test('Hindi und Nepali bewerten ihre eigenen Stimmen', () => {
+test('Hindi, Nepali und Schweizerdeutsch bewerten ihre eigenen Stimmen', () => {
   speech.setLanguage('hi-IN');
   assert.ok(speech.rankVoice({ name: 'Lekha', lang: 'hi-IN' }) >
             speech.rankVoice({ name: 'Anna', lang: 'de-DE' }));
   speech.setLanguage('ne-NP');
   assert.ok(speech.rankVoice({ name: 'Nepali', lang: 'ne-NP' }) >
             speech.rankVoice({ name: 'Lekha', lang: 'hi-IN' }));
+  speech.setLanguage('de-CH');
+  assert.ok(speech.rankVoice({ name: 'Swiss', lang: 'de-CH' }) >
+            speech.rankVoice({ name: 'Anna', lang: 'de-DE' }));
   speech.setLanguage('de-DE');
 });
