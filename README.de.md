@@ -2,6 +2,8 @@
 
 **Eine erste Computer-Schule für Kinder — von Eltern gebaut, für Eltern offen.**
 
+> **Live-Demo:** **[Bela Learning im Browser](https://chindlab.github.io/learning-adventures/)** — ohne Installation, ohne Konto.
+
 Bela Learning ist eine kleine Offline-Lernplattform für Kinder ab etwa 5 Jahren:
 Computer, Maus, Tastatur, Buchstaben, Zahlen, Logik, Programmieren mit Blöcken und ein
 vorsichtiger erster Blick auf JavaScript. Bobby, der Roboter, begleitet durch neun Stufen.
