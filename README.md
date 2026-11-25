@@ -231,10 +231,9 @@ No audio files exist. Two local sources:
   click, correct, wrong, star, milestone, pop, bump), through one master gain at 0.25.
   The audio context is unlocked on the first tap.
 - **Bobby's voice** uses the browser's `speechSynthesis` with an operating-system voice,
-  `en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN` or `ne-NP` depending on the child,
-  rate 0.95,
-  pitch 1.0. If no voice is
-  installed, the app is silent but fully usable — every line is also on screen.
+  `en-GB`, `de-DE`, `de-CH`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN` or `ne-NP` depending on the
+  child, rate 0.95, pitch 1.0. If no voice is installed, the app is silent but fully
+  usable — every line is also on screen.
 
 The speaker button cycles **an → nur Töne → stumm**; the parent area can switch effects
 and speech separately and pick a voice. Visual feedback never depends on sound.
