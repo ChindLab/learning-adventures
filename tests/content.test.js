@@ -23,8 +23,8 @@ test('Inhalte sind fehlerfrei', () => {
 test('Aktivitätszahlen entsprechen der Spezifikation', () => {
   const counts = content.stages.map((stage) =>
     stage.lessons.reduce((sum, lesson) => sum + lesson.activities.length, 0));
-  assert.deepStrictEqual(counts, [17, 13, 9, 12, 9, 12, 16, 7, 12]);
-  assert.strictEqual(counts.reduce((a, b) => a + b, 0), 107);
+  assert.deepStrictEqual(counts, [17, 14, 10, 12, 9, 12, 16, 7, 12]);
+  assert.strictEqual(counts.reduce((a, b) => a + b, 0), 109);
 });
 
 test('jede Stufe hat genau einen Meilenstein', () => {

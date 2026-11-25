@@ -210,7 +210,7 @@ Regeln:
 - Bobby-Sätze stehen in `content.bobbyFor.<lang>` (mit `welcomeNamed` und `stageDone`).
 - Sprechzeilen höchstens 8 Wörter, nie negativ.
 - Neue Stufe übersetzen: Stufen-, Lektions- und Aktivitäts-IDs in allen sechs
-  `i18n/*.js` ergänzen, dann `npm test` und `selftest.html` (erwartet 754/754).
+  `i18n/*.js` ergänzen, dann `npm test` und `selftest.html` (erwartet 768/768).
 - Die Sprache wird pro Kind im Elternbereich gesetzt (`profiles.p1.language`), nicht
   im Spiel umgeschaltet. Gültig: `en`, `de`, `fr`, `it`, `zh`.
 

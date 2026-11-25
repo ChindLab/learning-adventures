@@ -13,6 +13,7 @@
   content.translations.de = {
   "lexicon": {
     "Mouse": "Maus",
+    "Star": "Stern",
     "Speaker": "Lautsprecher",
     "Keyboard": "Tastatur",
     "Camera": "Kamera",
@@ -562,6 +563,11 @@
       "speech": "Klicke die Sterne an.",
       "prompt": "Klicke auf jeden Stern."
     },
+    "2-3-2": {
+      "title": "Maus-Memory",
+      "speech": "Finde die gleichen Bilder.",
+      "prompt": "Klicke zwei gleiche Karten an."
+    },
     "2-4-1": {
       "title": "Truhe öffnen",
       "speech": "Klicke zweimal schnell auf die Truhe.",
@@ -621,6 +627,11 @@
       "speech": "Drücke immer die markierte Taste.",
       "prompt": "Drücke die Taste, die leuchtet.",
       "hint": "Schau auf den gelben Ring!"
+    },
+    "3-1-2": {
+      "title": "Tasten-Memory",
+      "speech": "Finde die gleichen Tasten.",
+      "prompt": "Finde zwei Karten mit der gleichen Taste."
     },
     "3-2-1": {
       "title": "Zahlen finden",

@@ -67,10 +67,10 @@ and the browser self-test:
 
 ```
 http://localhost:8080/selftest.html
-Alles gut – Gesamt: 754/754 ok
+Alles gut – Gesamt: 768/768 ok
 ```
 
-`754 = 107 English activities + 6 × 107 translated activities + 5 screens.` The total grows with
+`768 = 109 English activities + 6 × 109 translated activities + 5 screens.` The total grows with
 every activity or screen you add; a wrong total means something is not being played.
 
 The self-test mounts every activity, finds its controls, solves it the way a child would,

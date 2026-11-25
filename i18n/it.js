@@ -13,6 +13,7 @@
   content.translations.it = {
   "lexicon": {
     "Mouse": "Topo",
+    "Star": "Stella",
     "Speaker": "Altoparlante",
     "Keyboard": "Tastiera",
     "Camera": "Fotocamera",
@@ -602,6 +603,11 @@
       "speech": "Clicca le stelle.",
       "prompt": "Clicca ogni stella."
     },
+    "2-3-2": {
+      "title": "Memory del topo",
+      "speech": "Trova le immagini uguali.",
+      "prompt": "Clicca due carte uguali."
+    },
     "2-4-1": {
       "title": "Apri il baule",
       "speech": "Clicca il baule due volte, veloce.",
@@ -661,6 +667,11 @@
       "speech": "Premi sempre il tasto illuminato.",
       "prompt": "Premi il tasto che si illumina.",
       "hint": "Guarda l'anello giallo!"
+    },
+    "3-1-2": {
+      "title": "Memory dei tasti",
+      "speech": "Trova i tasti uguali.",
+      "prompt": "Trova due carte con lo stesso tasto."
     },
     "3-2-1": {
       "title": "Trova i numeri",

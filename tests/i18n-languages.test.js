@@ -25,7 +25,7 @@ CODES.forEach((code) => {
     assert.ok(Object.keys(translation.stages).length === 9, 'nine stages');
     const expectedLessons = content.baseStages.reduce((sum, stage) => sum + stage.lessons.length, 0);
     assert.strictEqual(Object.keys(translation.lessons).length, expectedLessons, 'every lesson');
-    assert.ok(Object.keys(translation.activities).length === 107, '107 activities');
+    assert.ok(Object.keys(translation.activities).length === 109, '109 activities');
     assert.ok(Object.keys(translation.lexicon).length >= 30, 'label lexicon');
 
     content.baseStages.forEach((stage) => {

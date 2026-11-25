@@ -54,7 +54,7 @@ test('every activity and lesson has a German translation', () => {
     });
   });
   assert.ok(content.translations.de.stages[1]);
-  assert.strictEqual(Object.keys(content.translations.de.activities).length, 107);
+  assert.strictEqual(Object.keys(content.translations.de.activities).length, 109);
 });
 
 test('Bobby speaks German in German mode', () => {

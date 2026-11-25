@@ -102,7 +102,7 @@ CI (`ci-success`) has passed on `main`. One-time setup and troubleshooting:
 | | |
 |---|---|
 | **9 stages** | computer, mouse, keyboard, letters & typing, numbers, logic, block programming, first JavaScript, finger training |
-| **107 activities** | every one playable, no placeholders |
+| **109 activities** | every one playable, no placeholders |
 | **15 game engines** | explain, pick-one, memory, drag & drop, target, key press, typing, home row, rocket typing, counting, patterns, sequences, block runner, puzzle, JS demo |
 | **7 languages** | English source + German, French, Italian, Chinese (zh-CN), Hindi, Nepali, chosen per child |
 | **Parent area** | progress, weak spots, time per activity, profiles, backup file, reset |
@@ -197,7 +197,7 @@ Then open **`selftest.html`** in a browser (or via Playwright MCP; see the testi
 It mounts and auto-solves every activity in all seven languages, then builds every screen:
 
 ```
-Alles gut – Gesamt: 754/754 ok
+Alles gut – Gesamt: 768/768 ok
 ```
 
 A contribution is not ready until both are green, and the exact results are pasted into
@@ -213,7 +213,7 @@ Every **pushed commit on every branch** runs `.github/workflows/ci.yml` (pull re
 it against their head commit):
 
 - **unit** — syntax check, unit tests, and “generated seed is up to date”
-- **browser** — Playwright smoke tests and the full self-test (754/754)
+- **browser** — Playwright smoke tests and the full self-test (768/768)
 - **ci-success** — the only check branch protection needs
 
 To actually block merges, require **`ci-success`** in the repository settings:

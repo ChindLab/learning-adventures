@@ -10,7 +10,7 @@ The short version:
 npm test                       # 101 unit tests
 # then, in a browser:
 open http://localhost:8080/selftest.html
-# expect: Alles gut – Gesamt: 754/754 ok
+# expect: Alles gut – Gesamt: 768/768 ok
 ```
 
 A pull request without both results is not reviewable.
@@ -89,12 +89,12 @@ npm run serve          # http://localhost:8080
 
 Open **`http://localhost:8080/selftest.html`**.
 
-- Green: `Alles gut – Gesamt: 754/754 ok`.
+- Green: `Alles gut – Gesamt: 768/768 ok`.
 - Red: a table row names the activity id, engine and reason
   (`completions=2`, `no-solver`, `no-controls`, `stars=undefined`).
 - A favicon 404 in the console is harmless. Any other console error is not.
 
-`754 = 107 English activities + 6 × 107 translated activities + 5 screens.`
+`768 = 109 English activities + 6 × 109 translated activities + 5 screens.`
 
 Why `localhost` and not `file://`: the app works from `file://`, but Playwright and most
 automation block it. The self-test is the same either way.
@@ -196,7 +196,7 @@ Paste into the PR description:
 
 ```
 npm test:               101/101 pass
-selftest.html:          Alles gut – Gesamt: 754/754 ok
+selftest.html:          Alles gut – Gesamt: 768/768 ok
 console (app):          0 errors
 manual:                 all seven languages, 1024×600, keyboard only
 ```
@@ -212,7 +212,7 @@ Every **pushed commit on every branch** runs `.github/workflows/ci.yml` (and eve
 request runs it against the head commit):
 
 - **unit** — `npm run check` (syntax + 101 unit tests) plus “generated seed is up to date”
-- **browser** — `npx playwright test` (5 smoke checks + self-test 754/754)
+- **browser** — `npx playwright test` (5 smoke checks + self-test 768/768)
 - **ci-success** — a single aggregating job
 
 Runs are grouped per commit and **not cancelled**, so pushing three commits produces three

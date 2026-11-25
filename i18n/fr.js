@@ -13,6 +13,7 @@
   content.translations.fr = {
   "lexicon": {
     "Mouse": "Souris",
+    "Star": "Étoile",
     "Speaker": "Haut-parleur",
     "Keyboard": "Clavier",
     "Camera": "Caméra",
@@ -561,6 +562,11 @@
       "speech": "Clique sur les étoiles.",
       "prompt": "Clique sur chaque étoile."
     },
+    "2-3-2": {
+      "title": "Memory de la souris",
+      "speech": "Trouve les images identiques.",
+      "prompt": "Clique sur deux cartes identiques."
+    },
     "2-4-1": {
       "title": "Ouvre le coffre",
       "speech": "Clique deux fois vite sur le coffre.",
@@ -620,6 +626,11 @@
       "speech": "Appuie sur la touche qui brille.",
       "prompt": "Appuie sur la touche qui brille.",
       "hint": "Regarde l'anneau jaune !"
+    },
+    "3-1-2": {
+      "title": "Memory des touches",
+      "speech": "Trouve les touches identiques.",
+      "prompt": "Trouve deux cartes avec la même touche."
     },
     "3-2-1": {
       "title": "Trouve les chiffres",
