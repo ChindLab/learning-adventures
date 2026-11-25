@@ -10,7 +10,7 @@
   var content = NS.content = NS.content || {};
 
   content.translations = content.translations || {};
-  content.translations.de = {
+  content.translations['de-DE'] = {
   "lexicon": {
     "Mouse": "Maus",
     "Star": "Stern",
@@ -1389,7 +1389,7 @@
 };
 
   content.bobbyFor = content.bobbyFor || {};
-  content.bobbyFor.de = {
+  content.bobbyFor['de-DE'] = {
   "welcome": "Hallo, kleine Entdeckerin! Ich bin Bobby.",
   "lessonStart": "Komm, wir schauen uns das an!",
   "correct": [
@@ -1415,5 +1415,5 @@
   "welcomeNamed": function (name) { return "Hallo, " + name + "! Ich bin Bobby."; },
   "stageDone": function (title) { return "Du hast „" + title + "“ geschafft!"; }
 };
-  content.bobbyDe = content.bobbyFor.de;
+  content.bobbyDe = content.bobbyFor['de-DE'];
 })(typeof globalThis !== 'undefined' ? globalThis : this);

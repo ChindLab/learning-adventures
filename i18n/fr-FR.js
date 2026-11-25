@@ -10,7 +10,7 @@
   var content = NS.content = NS.content || {};
 
   content.translations = content.translations || {};
-  content.translations.fr = {
+  content.translations['fr-FR'] = {
   "lexicon": {
     "Mouse": "Souris",
     "Star": "Étoile",
@@ -1142,7 +1142,7 @@
 };
 
   content.ui = content.ui || {};
-  content.ui.fr = {
+  content.ui['fr-FR'] = {
     " and ": " et ",
     " for ": " pour ",
     " min": " min",
@@ -1300,7 +1300,7 @@
   };
 
   content.bobbyFor = content.bobbyFor || {};
-  content.bobbyFor.fr = {
+  content.bobbyFor['fr-FR'] = {
   "welcome": "Bonjour, petit explorateur ! Je suis Bobby.",
   "lessonStart": "Viens, on va regarder !",
   "correct": [
@@ -1326,5 +1326,5 @@
   "welcomeNamed": function (name) { return "Bonjour, " + name + " ! Je suis Bobby."; },
   "stageDone": function (title) { return "Tu as fini « " + title + " » !"; }
 };
-  content.bobbyFr = content.bobbyFor.fr;
+  content.bobbyFr = content.bobbyFor['fr-FR'];
 })(typeof globalThis !== 'undefined' ? globalThis : this);

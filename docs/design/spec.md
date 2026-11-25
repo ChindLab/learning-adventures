@@ -3,9 +3,10 @@
 **Design specification · 2026-11-21 · Status: implemented (v1.0)**
 
 > **Historical note:** the implementation now uses **English as the source language**
-> (`js/content/stage*.js`) with **German, French, Italian, Simplified Chinese, Hindi and Nepali
-> translation overlays** in `i18n/de.js`, `fr.js`, `it.js`, `zh.js`, `hi.js` and `ne.js`. Older references below to German
-> source files and `content/en.js` describe the original design.
+> (`js/content/stage*.js`) with **German, French, Italian, Simplified Chinese, Hindi, Nepali
+> and Swiss German translation overlays** in `i18n/de-DE.js`, `fr-FR.js`, `it-IT.js`, `zh-CN.js`, `hi-IN.js`,
+> `ne-NP.js` and `de-CH.js`. Older references below to German source files and `content/en.js`
+> describe the original design.
 
 A offline learning adventure for one 5-year-old, in German, built with HTML5, CSS3 and
 vanilla JavaScript. This document is the source of truth for the implementation plan.

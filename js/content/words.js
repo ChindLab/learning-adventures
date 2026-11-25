@@ -1,6 +1,6 @@
 /**
  * words.js – short English words for Stage 4, lesson 6.
- * Each word has an icon and a display label. German equivalents live in i18n/de.js.
+ * Each word has an icon and a display label. German equivalents live in i18n/de-DE.js.
  */
 (function (root) {
   'use strict';

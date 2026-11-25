@@ -163,8 +163,7 @@
       // Wurde die Sprache direkt am Profil geändert (z. B. setLanguage oder
       // addProfile), zieht i18n nach. i18n.apply ruft refreshIdentity erneut
       // auf; dann stimmen die Sprachen überein und es gibt keine Rekursion.
-      var currentLang = root.document.documentElement.lang || 'en';
-      if (currentLang === 'zh-CN') { currentLang = 'zh'; }
+      var currentLang = root.document.documentElement.lang || 'en-GB';
       if (profile && profile.language && profile.language !== currentLang) {
         NS.i18n.apply();
         return;

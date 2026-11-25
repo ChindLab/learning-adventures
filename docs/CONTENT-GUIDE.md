@@ -183,8 +183,8 @@ Liste der Fehler. Zusätzlich kurz selbst durchspielen:
 ## 8. Übersetzungen
 
 Englisch ist die Quelle in `stage*.js`. Jede weitere Sprache liegt als Übersetzung
-darüber in `i18n/de.js`, `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js` und
-`i18n/ne.js` (Deutsch als
+darüber in `i18n/de-DE.js`, `i18n/fr-FR.js`, `i18n/it-IT.js`, `i18n/zh-CN.js`, `i18n/hi-IN.js`,
+`i18n/ne-NP.js` und `i18n/de-CH.js` (Deutsch als
 Beispiel):
 
 ```js
@@ -202,17 +202,17 @@ Regeln:
 
 - Kurze Beschriftungen (Optionen, Ziele, Karten) laufen über `lexicon`; fehlt ein
   Eintrag, bleibt Englisch stehen.
-- Für jede Aktivität muss ein Eintrag in **allen sechs** Overlays existieren. Die Tests
+- Für jede Aktivität muss ein Eintrag in **allen sieben** Overlays existieren. Die Tests
   `tests/content-de.test.js` und `tests/i18n-languages.test.js` prüfen das für alle neun
   Stufen.
 - UI-Texte stehen in `content.ui.<lang>`; der Schlüssel ist der englische Text aus
   `NS.i18n.t('English', 'Deutsch')`.
 - Bobby-Sätze stehen in `content.bobbyFor.<lang>` (mit `welcomeNamed` und `stageDone`).
 - Sprechzeilen höchstens 8 Wörter, nie negativ.
-- Neue Stufe übersetzen: Stufen-, Lektions- und Aktivitäts-IDs in allen sechs
-  `i18n/*.js` ergänzen, dann `npm test` und `selftest.html` (erwartet 789/789).
+- Neue Stufe übersetzen: Stufen-, Lektions- und Aktivitäts-IDs in allen sieben
+  `i18n/*.js` ergänzen, dann `npm test` und `selftest.html` (erwartet 901/901).
 - Die Sprache wird pro Kind im Elternbereich gesetzt (`profiles.p1.language`), nicht
-  im Spiel umgeschaltet. Gültig: `en`, `de`, `fr`, `it`, `zh`.
+  im Spiel umgeschaltet. Gültig: `en-GB`, `de-DE`, `de-CH`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`, `ne-NP`.
 
 ## 9. Was man nicht tun sollte
 - Keine externen Bilder, Schriften, Skripte oder Links einbauen. Die App muss offline

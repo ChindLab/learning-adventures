@@ -90,7 +90,7 @@
         try { if (handle && handle.destroy) { handle.destroy(); } } catch (e) { /* egal */ }
       }
       container.remove();
-      table.appendChild(makeRow(activity.id + (languageTag === 'en' ? ' [en]' : ' [' + languageTag + ']'), activity.type, reason ? 'fehlt' : 'ok', reason));
+      table.appendChild(makeRow(activity.id + ' [' + languageTag + ']', activity.type, reason ? 'fehlt' : 'ok', reason));
     }
 
     function uiItem(id, type, reason) {
@@ -113,13 +113,13 @@
     }
 
     // 1. English is the source.
-    store.setLanguage('en');
-    NS.content.applyLanguage('en');
-    await eachActivity(null, 'en');
+    store.setLanguage('en-GB');
+    NS.content.applyLanguage('en-GB');
+    await eachActivity(null, 'en-GB');
 
     // 2. Every translation overlay (German, French, Italian, Chinese).
     var translations = NS.content.translations || {};
-    var codes = Object.keys(translations).filter(function (code) { return code !== 'en'; });
+    var codes = Object.keys(translations).filter(function (code) { return code !== 'en-GB'; });
     for (var i = 0; i < codes.length; i += 1) {
       var code = codes[i];
       var stagesForLanguage = Object.keys(translations[code].stages).map(Number);
@@ -127,8 +127,8 @@
       NS.content.applyLanguage(code);
       await eachActivity(stagesForLanguage, code);
     }
-    store.setLanguage('en');
-    NS.content.applyLanguage('en');
+    store.setLanguage('en-GB');
+    NS.content.applyLanguage('en-GB');
 
     // 3. Bildschirme bauen.
     var screens = [

@@ -139,8 +139,8 @@
   function labelFor(name) {
     var german = LABELS[name] || 'Bild';
     var english = LABELS_EN[name] || german;
-    var language = (NS.content && NS.content.language) || 'en';
-    if (language !== 'en' && language !== 'de') {
+    var language = (NS.content && NS.content.language) || 'en-GB';
+    if (language !== 'en-GB' && language !== 'de-DE') {
       var translation = NS.content.translations && NS.content.translations[language];
       var lexicon = translation && translation.lexicon;
       if (lexicon && lexicon[english]) { return lexicon[english]; }

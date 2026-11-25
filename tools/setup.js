@@ -22,7 +22,7 @@ function emptyConfig() {
     version: 1,
     activeProfile: 'p1',
     settings: { sound: true, speech: true, effects: true, reducedMotion: false },
-    profiles: [{ id: 'p1', name: '', language: 'en', unlockAll: false }]
+    profiles: [{ id: 'p1', name: '', language: 'en-GB', unlockAll: false }]
   };
 }
 
@@ -44,13 +44,18 @@ function writeConfig(children, activeIndex) {
 
 function normaliseLanguage(value) {
   const lower = String(value || '').trim().toLowerCase();
-  if (lower === 'de' || lower === 'deutsch' || lower === 'german') { return 'de'; }
-  if (lower === 'fr' || lower === 'français' || lower === 'francais' || lower === 'french') { return 'fr'; }
-  if (lower === 'it' || lower === 'italiano' || lower === 'italian') { return 'it'; }
-  if (lower === 'zh' || lower === '中文' || lower === 'chinese') { return 'zh'; }
-  if (lower === 'hi' || lower === 'hindi' || lower === 'हिन्दी' || lower === 'हिंदी') { return 'hi'; }
-  if (lower === 'ne' || lower === 'nepali' || lower === 'नेपाली') { return 'ne'; }
-  return 'en';
+  const aliases = {
+    en: 'en-GB', 'en-gb': 'en-GB', english: 'en-GB',
+    de: 'de-DE', 'de-de': 'de-DE', deutsch: 'de-DE', german: 'de-DE',
+    'de-ch': 'de-CH', gsw: 'de-CH', 'swiss german': 'de-CH',
+    schwiizerdütsch: 'de-CH', schwiizerduetsch: 'de-CH',
+    fr: 'fr-FR', 'fr-fr': 'fr-FR', français: 'fr-FR', francais: 'fr-FR', french: 'fr-FR',
+    it: 'it-IT', 'it-it': 'it-IT', italiano: 'it-IT', italian: 'it-IT',
+    zh: 'zh-CN', 'zh-cn': 'zh-CN', '中文': 'zh-CN', chinese: 'zh-CN',
+    hi: 'hi-IN', 'hi-in': 'hi-IN', hindi: 'hi-IN', 'हिन्दी': 'hi-IN', 'हिंदी': 'hi-IN',
+    ne: 'ne-NP', 'ne-np': 'ne-NP', nepali: 'ne-NP', 'नेपाली': 'ne-NP'
+  };
+  return aliases[lower] || 'en-GB';
 }
 
 async function yesNo(rl, question, defaultYes) {
@@ -81,7 +86,7 @@ async function wizard() {
     const children = [];
     for (let index = 0; index < count; index += 1) {
       const name = (await rl.question('Name of child ' + (index + 1) + ' (optional): ')).trim().slice(0, 20);
-      const language = normaliseLanguage(await rl.question('Language en/de/fr/it/zh/hi/ne [en]: '));
+      const language = normaliseLanguage(await rl.question('Language en-GB/de-DE/de-CH/fr-FR/it-IT/zh-CN/hi-IN/ne-NP [en-GB]: '));
       const unlockAll = await yesNo(rl, 'Unlock all stages for this child?', false);
       children.push({ name, language, unlockAll });
     }

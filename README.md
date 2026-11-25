@@ -2,6 +2,8 @@
 
 **A first computer school for children — built by parents, open for parents.**
 
+> **Live demo:** **[Bela Learning in your browser](https://chindlab.github.io/learning-adventures/)** — no installation, no account.
+
 Bela Learning is a small, offline learning platform for children around 5 years old.
 It teaches the computer, mouse, keyboard, letters, numbers and logic, and ends with
 visual block programming and a gentle first look at JavaScript. A friendly robot,
@@ -13,7 +15,8 @@ The app is called **Bela**. The child's name is used in greetings and in the par
 not as the product name.
 
 > **German: [README.de.md](README.de.md)** · The app itself is fully available in
-> **English, German, French, Italian, Simplified Chinese, Hindi and Nepali**, per child.
+> **English, German, French, Italian, Simplified Chinese, Hindi, Nepali and Swiss German
+> (experimental)**, per child.
 
 ---
 
@@ -65,8 +68,8 @@ The wizard writes **`bela.config.json`** and regenerates **`js/config/seed.js`**
   "version": 1,
   "activeProfile": "p1",
   "profiles": [
-    { "id": "p1", "name": "Mia", "language": "en", "unlockAll": false },
-    { "id": "p2", "name": "Ben", "language": "de", "unlockAll": true }
+    { "id": "p1", "name": "Mia", "language": "en-GB", "unlockAll": false },
+    { "id": "p2", "name": "Ben", "language": "de-DE", "unlockAll": true }
   ]
 }
 ```
@@ -104,7 +107,7 @@ CI (`ci-success`) has passed on `main`. One-time setup and troubleshooting:
 | **9 stages** | computer, mouse, keyboard, letters & typing, numbers, logic, block programming, first JavaScript, finger training |
 | **112 activities** | every one playable, no placeholders |
 | **15 game engines** | explain, pick-one, memory, drag & drop, target, key press, typing, home row, rocket typing, counting, patterns, sequences, block runner, puzzle, JS demo |
-| **7 languages** | English source + German, French, Italian, Chinese (zh-CN), Hindi, Nepali, chosen per child |
+| **8 languages** | English source + German, French, Italian, Chinese (zh-CN), Hindi, Nepali, Swiss German (experimental), chosen per child |
 | **Parent area** | progress, weak spots, time per activity, profiles, backup file, reset |
 | **Zero dependencies** | no npm install needed to play or to run the tests |
 
@@ -140,7 +143,7 @@ Lessons are data in `js/content/stageN.js`:
 }
 ```
 
-Add the six translations in `i18n/de.js`, `fr.js`, `it.js`, `zh.js`, `hi.js` and `ne.js`, run `npm test`,
+Add the seven translations in `i18n/de-DE.js`, `fr-FR.js`, `it-IT.js`, `zh-CN.js`, `hi-IN.js`, `ne-NP.js` and `de-CH.js`, run `npm test`,
 done.
 
 → Full walkthrough: **[docs/CONTENT-GUIDE.md](docs/CONTENT-GUIDE.md)** (German)
@@ -169,7 +172,7 @@ tools/                setup wizard + seed builder
 css/style.css         design tokens + all components
 js/core/              app shell, router, progress, audio, speech, i18n, UI helpers
 js/content/           lessons as data (English source) + Bobby's lines
-i18n/                 translation overlays: de, fr, it, zh, hi, ne (English is the source)
+i18n/                 translation overlays: de-DE, fr-FR, it-IT, zh-CN, hi-IN, ne-NP, de-CH (English is the source)
 js/engines/           one file per game type; all speak the same mount() contract
 js/dev/selftest.js    plays every activity in every language, automatically
 tests/                Node's built-in test runner, no dependencies
@@ -190,14 +193,14 @@ JSON backup/restore in the parent area.
 policy is in **[docs/TESTING.md](docs/TESTING.md)**.
 
 ```bash
-npm run check     # syntax check + 104 unit tests, Node 18+
+npm run check     # syntax check + 107 unit tests, Node 18+
 ```
 
 Then open **`selftest.html`** in a browser (or via Playwright MCP; see the testing guide).
-It mounts and auto-solves every activity in all seven languages, then builds every screen:
+It mounts and auto-solves every activity in all eight languages, then builds every screen:
 
 ```
-Alles gut – Gesamt: 789/789 ok
+Alles gut – Gesamt: 901/901 ok
 ```
 
 A contribution is not ready until both are green, and the exact results are pasted into
@@ -213,7 +216,7 @@ Every **pushed commit on every branch** runs `.github/workflows/ci.yml` (pull re
 it against their head commit):
 
 - **unit** — syntax check, unit tests, and “generated seed is up to date”
-- **browser** — Playwright smoke tests and the full self-test (789/789)
+- **browser** — Playwright smoke tests and the full self-test (901/901)
 - **ci-success** — the only check branch protection needs
 
 To actually block merges, require **`ci-success`** in the repository settings:
@@ -230,10 +233,9 @@ No audio files exist. Two local sources:
   click, correct, wrong, star, milestone, pop, bump), through one master gain at 0.25.
   The audio context is unlocked on the first tap.
 - **Bobby's voice** uses the browser's `speechSynthesis` with an operating-system voice,
-  `en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN` or `ne-NP` depending on the child,
-  rate 0.95,
-  pitch 1.0. If no voice is
-  installed, the app is silent but fully usable — every line is also on screen.
+  `en-GB`, `de-DE`, `de-CH`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN` or `ne-NP` depending on the
+  child, rate 0.95, pitch 1.0. If no voice is installed, the app is silent but fully
+  usable — every line is also on screen.
 
 The speaker button cycles **an → nur Töne → stumm**; the parent area can switch effects
 and speech separately and pick a voice. Visual feedback never depends on sound.
@@ -245,16 +247,16 @@ and speech separately and pick a voice. Visual feedback never depends on sound.
 ## Languages
 
 - English is the source language in `content/stage*.js`.
-- Translations live in `i18n/de.js`, `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js` and
-  `i18n/ne.js`, keyed by
-  stage/lesson/activity ID, plus a lexicon for labels and a UI dictionary.
+- Translations live in `i18n/de-DE.js`, `i18n/fr-FR.js`, `i18n/it-IT.js`, `i18n/zh-CN.js`, `i18n/hi-IN.js`,
+  `i18n/ne-NP.js` and `i18n/de-CH.js`, keyed by stage/lesson/activity ID, plus a lexicon for
+  labels and a UI dictionary. Swiss German is experimental; without a Swiss voice it uses a
+  German voice.
 - New profiles default to **English**; the language is a **per-child** setting
   (`profiles.p1.language`), not a runtime toggle.
 - Speech uses the operating system voice (`en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`,
-  `ne-NP`); if
-  none exists the app is silent but fully usable.
+  `ne-NP`, `de-CH`); if none exists the app is silent but fully usable.
 
-Adding a third language is a matter of one more overlay file and one dictionary — the
+Adding another language is a matter of one more overlay file and one dictionary — the
 architecture does not care how many languages exist.
 
 ---

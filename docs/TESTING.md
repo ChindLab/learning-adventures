@@ -7,10 +7,10 @@ tests, and how to verify the app in a real browser.
 The short version:
 
 ```bash
-npm test                       # 104 unit tests
+npm test                       # 107 unit tests
 # then, in a browser:
 open http://localhost:8080/selftest.html
-# expect: Alles gut – Gesamt: 789/789 ok
+# expect: Alles gut – Gesamt: 901/901 ok
 ```
 
 A pull request without both results is not reviewable.
@@ -23,10 +23,10 @@ A pull request without both results is not reviewable.
 |---|---|---|---|
 | **Unit** | pure logic: progress, storage, seed, grid interpreter, typing, arithmetic, JS parser, voice ranking, clock | `npm test` | every function with branches |
 | **Content validator** | ids unique, answers valid, engines exist, speech ≤ 8 words, no placeholders, band/i18n coverage | inside `npm test` | every content change |
-| **Translation coverage** | every stage/lesson/activity has an entry in de, fr, it, zh, hi and ne; each overlay has a UI dictionary and Bobby lines | inside `npm test` | every content/translation change |
+| **Translation coverage** | every stage/lesson/activity has an entry in de-DE, fr-FR, it-IT, zh-CN, hi-IN, ne-NP and de-CH; each overlay has a UI dictionary and Bobby lines | inside `npm test` | every content/translation change |
 | **No-network** | no `fetch`, XHR, WebSocket, external URL in shipped files | inside `npm test` | every change |
 | **Self-test** | every activity mounts, exposes controls, is solvable without a mouse, completes exactly once; every screen builds | `selftest.html` | every content/engine/UI change |
-| **E2E smoke** | real browser: app loads, 9 islands, lesson starts, parent gate, language switch, selftest green | Playwright (CLI or MCP) | every UI change |
+| **E2E browser** | real browser: app shell, lesson start, parent gate, language switch, logic memory (mouse/keyboard/touch/file://), selftest green | Playwright (CLI or MCP) | every UI change |
 | **Manual** | sound, reduced motion, layout, a real child's reaction | human | before a release |
 
 `npm test` is fast (≈1 s). The self-test is the expensive one (≈30 s) and catches exactly
@@ -38,7 +38,7 @@ the class of bug that unit tests cannot: “the button exists but nothing happen
 
 ### A new lesson / activity
 - [ ] `npm test` — the content validator runs automatically.
-- [ ] Add all six translations; `tests/content-de.test.js` and `tests/i18n-languages.test.js` fail if you forget.
+- [ ] Add all seven translations; `tests/content-de.test.js` and `tests/i18n-languages.test.js` fail if you forget.
 - [ ] Update the count in `tests/content.test.js` if you added an activity.
 - [ ] `selftest.html` must show `ok` for the new id.
 - [ ] Play it in English and in at least two overlays.
@@ -62,10 +62,10 @@ self-test are its tests.
 - [ ] Manual: reload after a star, reload after renaming, backup → reset → restore.
 
 ### A translation
-- [ ] Every activity/lesson entry exists in all six overlays (`tests/i18n-languages.test.js`).
+- [ ] Every activity/lesson entry exists in all seven overlays (`tests/i18n-languages.test.js`).
 - [ ] Speech lines ≤ 8 words.
-- [ ] Numbers/letters/words are correct for that language (Q = Queen, CAT not KATZE).
-- [ ] Self-test passes in that language (it runs English and all six overlays).
+- [ ] Typing/alphabet content stays Latin (`Q = Queen`, `CAT`); overlay labels are translated where defined.
+- [ ] Self-test passes in that language (it runs English and all seven overlays).
 
 ### UI / CSS / screens
 - [ ] `selftest.html` builds every screen.
@@ -89,12 +89,12 @@ npm run serve          # http://localhost:8080
 
 Open **`http://localhost:8080/selftest.html`**.
 
-- Green: `Alles gut – Gesamt: 789/789 ok`.
+- Green: `Alles gut – Gesamt: 901/901 ok`.
 - Red: a table row names the activity id, engine and reason
   (`completions=2`, `no-solver`, `no-controls`, `stars=undefined`).
 - A favicon 404 in the console is harmless. Any other console error is not.
 
-`789 = 112 English activities + 6 × 112 translated activities + 5 screens.`
+`901 = 112 English activities + 7 × 112 translated activities + 5 screens.`
 
 Why `localhost` and not `file://`: the app works from `file://`, but Playwright and most
 automation block it. The self-test is the same either way.
@@ -135,7 +135,7 @@ npm run serve            # terminal 1
 npx playwright test      # terminal 2
 ```
 
-`tests/e2e/smoke.spec.js` contains the smoke checks. It is deliberately not an npm
+`tests/e2e/smoke.spec.js` and `tests/e2e/logic-memory.spec.js` contain the browser checks. It is deliberately not an npm
 dependency of the project; contributors who want it install it locally.
 
 ---
@@ -149,7 +149,7 @@ npm run hooks          # once per clone
 ```
 
 This sets `core.hooksPath` to `.githooks`; `.githooks/pre-commit` runs
-`npm run check` — syntax plus 104 unit tests, about 1–2 seconds. It is deliberately **not**
+`npm run check` — syntax plus 107 unit tests, about 1–2 seconds. It is deliberately **not**
 the browser self-test (30 s per commit would be unbearable); CI runs that for every pushed
 commit.
 
@@ -195,10 +195,10 @@ That last item is worth more than the rest of this page.
 Paste into the PR description:
 
 ```
-npm test:               104/104 pass
-selftest.html:          Alles gut – Gesamt: 789/789 ok
+npm test:               107/107 pass
+selftest.html:          Alles gut – Gesamt: 901/901 ok
 console (app):          0 errors
-manual:                 all seven languages, 1024×600, keyboard only
+manual:                 all eight languages, 1024×600, keyboard only
 ```
 
 If you cannot run the browser layer, say so explicitly and ask for a maintainer to run
@@ -211,8 +211,8 @@ it. “Not run” is honest; “should work” is not evidence.
 Every **pushed commit on every branch** runs `.github/workflows/ci.yml` (and every pull
 request runs it against the head commit):
 
-- **unit** — `npm run check` (syntax + 104 unit tests) plus “generated seed is up to date”
-- **browser** — `npx playwright test` (10 browser checks + self-test 789/789)
+- **unit** — `npm run check` (syntax + 107 unit tests) plus “generated seed is up to date”
+- **browser** — `npx playwright test` (10 browser checks + self-test 901/901)
 - **ci-success** — a single aggregating job
 
 Runs are grouped per commit and **not cancelled**, so pushing three commits produces three

@@ -20,7 +20,7 @@ function trackErrors(page) {
 }
 
 async function openWorkshop(page, options = {}) {
-  const lang = options.lang || 'en';
+  const lang = options.lang || 'en-GB';
   await page.goto('/index.html');
   await page.evaluate(({ language, reducedMotion }) => {
     const NS = window.BelaSchool;
@@ -113,16 +113,17 @@ test('Logic Memory boards can be completed with keyboard only', async ({ page })
   expect(errors).toEqual([]);
 });
 
-test('Logic Memory workshop and command labels appear in all seven languages', async ({ page }) => {
+test('Logic Memory workshop and command labels appear in all eight languages', async ({ page }) => {
   const errors = trackErrors(page);
   const translations = [
-    ['en', 'Memory Workshop', 'Remember each command block.', 'Forward'],
-    ['de', 'Memory-Werkstatt', 'Merk dir jeden Befehlsblock.', 'Vorwärts'],
-    ['fr', 'Atelier mémoire', 'Mémorise chaque bloc de commande.', 'Avancer'],
-    ['it', 'Laboratorio della memoria', 'Ricorda ogni blocco di comando.', 'Avanti'],
-    ['zh', '记忆练习坊', '记住每一个指令块。', '向前'],
-    ['hi', 'याद की प्रैक्टिस', 'हर कमांड ब्लॉक याद रखो।', 'आगे'],
-    ['ne', 'स्मृति अभ्यास', 'हरेक कमान्ड ब्लक याद राख।', 'अगाडि']
+    ['en-GB', 'Memory Workshop', 'Remember each command block.', 'Forward'],
+    ['de-DE', 'Memory-Werkstatt', 'Merk dir jeden Befehlsblock.', 'Vorwärts'],
+    ['de-CH', 'Memory-Werkstatt', 'Merk dir alli Befehlsblöck.', 'Vorwärts'],
+    ['fr-FR', 'Atelier mémoire', 'Mémorise chaque bloc de commande.', 'Avancer'],
+    ['it-IT', 'Laboratorio della memoria', 'Ricorda ogni blocco di comando.', 'Avanti'],
+    ['zh-CN', '记忆练习坊', '记住每一个指令块。', '向前'],
+    ['hi-IN', 'याद की प्रैक्टिस', 'हर कमांड ब्लॉक याद रखो।', 'आगे'],
+    ['ne-NP', 'स्मृति अभ्यास', 'हरेक कमान्ड ब्लक याद राख।', 'अगाडि']
   ];
 
   for (const [lang, lessonTitle, codePrompt, forwardLabel] of translations) {

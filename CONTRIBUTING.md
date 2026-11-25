@@ -60,17 +60,17 @@ translation, not a CSS tweak. The full policy and per-change checklist is in
 Every change must pass:
 
 ```bash
-npm test          # 104 unit tests, Node 18+
+npm test          # 107 unit tests, Node 18+
 ```
 
 and the browser self-test:
 
 ```
 http://localhost:8080/selftest.html
-Alles gut – Gesamt: 789/789 ok
+Alles gut – Gesamt: 901/901 ok
 ```
 
-`789 = 112 English activities + 6 × 112 translated activities + 5 screens.` The total grows with
+`901 = 112 English activities + 7 × 112 translated activities + 5 screens.` The total grows with
 every activity or screen you add; a wrong total means something is not being played.
 
 The self-test mounts every activity, finds its controls, solves it the way a child would,
@@ -120,14 +120,14 @@ Full walkthrough with a worked example: **[docs/ADD-A-GAME.md](docs/ADD-A-GAME.m
 Short version:
 
 1. Add the activity to a `js/content/stageN.js` lesson.
-2. Add its translations to `i18n/de.js`, `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js` and `i18n/ne.js`.
+2. Add its translations to `i18n/de-DE.js`, `i18n/fr-FR.js`, `i18n/it-IT.js`, `i18n/zh-CN.js`, `i18n/hi-IN.js`, `i18n/ne-NP.js` and `i18n/de-CH.js`.
 3. Register a new lesson in the stage's `lessons` array.
 4. `npm test` and `selftest.html`.
 5. Update the activity count in `tests/content.test.js` only if you added a whole stage.
 
 Rules for content:
 
-- English is the source; all six overlays (de, fr, it, zh, hi, ne) are required.
+- English is the source; all seven overlays (de-DE, fr-FR, it-IT, zh-CN, hi-IN, ne-NP, de-CH) are required.
 - Speech lines: **8 words maximum**, one idea per line.
 - Never "falsch", "Fehler", "leider", "Game over". Mistakes get a wobble and another try.
 - No time pressure, no score to lose.
@@ -167,17 +167,17 @@ Checklist for a new engine:
 - [ ] No timers that end the task, no lives, no failure screen.
 - [ ] Registered in `js/content/index.js` (`ENGINES`), `index.html` and `selftest.html`.
 - [ ] One unit test for any pure logic you add.
-- [ ] Content uses the engine, in English and all six overlays.
+- [ ] Content uses the engine, in English and all seven overlays.
 
 ---
 
 ## Translating
 
 - English source: `js/content/stage*.js`.
-- Overlays: `i18n/de.js`, `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js`, `i18n/ne.js`, keyed by
+- Overlays: `i18n/de-DE.js`, `i18n/fr-FR.js`, `i18n/it-IT.js`, `i18n/zh-CN.js`, `i18n/hi-IN.js`, `i18n/ne-NP.js`, `i18n/de-CH.js`, keyed by
   stage / lesson / activity id.
 - Short labels (options, targets, cards) go into `content.translations.<lang>.lexicon`.
-- UI strings use `NS.i18n.t('English', 'Deutsch')` at the call site; for fr/it/zh/hi/ne the
+- UI strings use `NS.i18n.t('English', 'Deutsch')` at the call site; for fr-FR/it-IT/zh-CN/hi-IN/ne-NP/de-CH the
   English key is looked up in `content.ui.<lang>`. Dynamic values use `{name}`
   placeholders in the third argument.
 - `tests/i18n-languages.test.js` fails if an overlay misses a stage, lesson or activity.
@@ -185,7 +185,7 @@ Checklist for a new engine:
 A new language means: one overlay file, one lexicon, one UI dictionary, one
 `profiles.p.language` value. The architecture has no language limit.
 
-Speech uses the operating system voice (`en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`, `ne-NP`). If none
+Speech uses the operating system voice (`en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`, `ne-NP`, `de-CH`). If none
 exists for the chosen language the app is silent but fully usable — never make audio
 mandatory.
 
@@ -211,7 +211,7 @@ mandatory.
 - [ ] One topic per pull request.
 - [ ] `npm test` green.
 - [ ] `selftest.html` green.
-- [ ] English and all six overlay texts added.
+- [ ] English and all seven overlay texts added.
 - [ ] Screenshot or short description of what a child sees.
 - [ ] No personal data, no tracking, no external links.
 - [ ] New ids are unique; existing ids unchanged.

@@ -114,7 +114,7 @@ Four places, in this order:
 4. **`selftest.html`** — the same script tag, so the self-test can play it.
 
 Then add an activity in `js/content/stageN.js` with `type: 'myGame'` and the fields your
-engine expects, plus the translations in `i18n/de.js`, `i18n/fr.js`, `i18n/it.js`, `i18n/zh.js`, `i18n/hi.js` and `i18n/ne.js`.
+engine expects, plus the translations in `i18n/de-DE.js`, `i18n/fr-FR.js`, `i18n/it-IT.js`, `i18n/zh-CN.js`, `i18n/hi-IN.js`, `i18n/ne-NP.js` and `i18n/de-CH.js`.
 
 Finally, add a unit test for any pure logic (`tests/myGame.test.js`). If the engine is
 entirely DOM animation with no pure logic, the self-test covers it — but it must then

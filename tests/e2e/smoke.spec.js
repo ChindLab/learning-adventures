@@ -12,7 +12,7 @@ const { test, expect } = require('@playwright/test');
 
 test('self-test is completely green', async ({ page }) => {
   await page.goto('/selftest.html');
-  await expect(page.locator('#summary')).toContainText('Gesamt: 789/789 ok', { timeout: 240000 });
+  await expect(page.locator('#summary')).toContainText('Gesamt: 901/901 ok', { timeout: 300000 });
   await expect(page.locator('#failures li')).toHaveCount(0);
 });
 
@@ -49,13 +49,14 @@ test('parent area requires a sum', async ({ page }) => {
 test('language switches per child', async ({ page }) => {
   await page.goto('/index.html');
   const languages = [
-    ['de', 'Meine erste Computer-Schule', 'Mein Computer'],
-    ['fr', "Mon école d'informatique", 'Mon ordinateur'],
-    ['it', 'La mia prima scuola di computer', 'Il mio computer'],
-    ['zh', '我的第一所电脑学校', '我的电脑'],
-    ['hi', 'मेरा पहला कंप्यूटर स्कूल', 'मेरा कंप्यूटर'],
-    ['ne', 'मेरो पहिलो कम्प्युटर स्कुल', 'मेरो कम्प्युटर'],
-    ['en', 'My First Computer School', 'My Computer']
+    ['de-DE', 'Meine erste Computer-Schule', 'Mein Computer'],
+    ['de-CH', 'Mis erschti Computer-Schuel', 'Mis Computer'],
+    ['fr-FR', "Mon école d'informatique", 'Mon ordinateur'],
+    ['it-IT', 'La mia prima scuola di computer', 'Il mio computer'],
+    ['zh-CN', '我的第一所电脑学校', '我的电脑'],
+    ['hi-IN', 'मेरा पहला कंप्यूटर स्कूल', 'मेरा कंप्यूटर'],
+    ['ne-NP', 'मेरो पहिलो कम्प्युटर स्कुल', 'मेरो कम्प्युटर'],
+    ['en-GB', 'My First Computer School', 'My Computer']
   ];
   for (const [code, title, island] of languages) {
     await page.evaluate((lang) => {

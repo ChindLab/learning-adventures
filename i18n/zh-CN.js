@@ -11,7 +11,7 @@
   var content = NS.content = NS.content || {};
 
   content.translations = content.translations || {};
-  content.translations.zh = {
+  content.translations['zh-CN'] = {
   "lexicon": {
     "Mouse": "鼠标",
     "Star": "星星",
@@ -1185,7 +1185,7 @@
 };
 
   content.ui = content.ui || {};
-  content.ui.zh = {
+  content.ui['zh-CN'] = {
     " and ": " 和 ",
     " for ": "，像 ",
     " min": " 分",
@@ -1343,7 +1343,7 @@
   };
 
   content.bobbyFor = content.bobbyFor || {};
-  content.bobbyFor.zh = {
+  content.bobbyFor['zh-CN'] = {
     welcome: "你好，小探险家！我是 Bobby。",
     welcomeNamed: function (name) { return "你好，" + name + "！我是 Bobby。"; },
     lessonStart: "来，我们一起看看吧！",

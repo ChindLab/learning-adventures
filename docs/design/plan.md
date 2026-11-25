@@ -1,6 +1,6 @@
 # Bela – Implementation Plan
 
-**Goal:** Build the complete offline learning adventure described in the spec: 9 stages, 107 playable activities in English, German, French, Italian, Simplified Chinese, Hindi and Nepali, progress storage, parent dashboard, and a real block-programming editor.
+**Goal:** Build the complete offline learning adventure described in the spec: 9 stages, 107 playable activities in English, German, French, Italian, Simplified Chinese, Hindi, Nepali and Swiss German, progress storage, parent dashboard, and a real block-programming editor.
 
 **Architecture:** Static single-page app, no build step. Classic `<script defer>` files on one global `BelaSchool` namespace so `index.html` works by double-click. Content is declarative data; 15 reusable engines render it. Node.js is used only as the test runner (`node --test`), never as a generator.
 
