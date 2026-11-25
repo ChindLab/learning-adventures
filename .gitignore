@@ -5,3 +5,4 @@ test-results/
 *.log
 
 .playwright-mcp/
+.tools/
