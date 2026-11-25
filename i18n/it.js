@@ -47,6 +47,13 @@
     "Shift": "Maiusc",
     "Start": "Inizio",
     "Turn right": "Gira a destra",
+    "Forward": "Avanti",
+    "Back": "Indietro",
+    "Turn left": "Gira a sinistra",
+    "Jump": "Salta",
+    "Repeat": "Ripeti",
+    "If": "Se",
+    "Collect": "Raccogli",
     "To the star": "Verso la stella",
     "Cat": "Gatto",
     "Dog": "Cane",
@@ -367,6 +374,10 @@
     "6-10": {
       "title": "Cosa va insieme?",
       "goal": "Collega le cose."
+    },
+    "6-11": {
+      "title": "Laboratorio della memoria",
+      "goal": "Ricorda le carte e trova tutte le coppie."
     },
     "6-m": {
       "title": "Finale della tappa",
@@ -919,6 +930,21 @@
         { "prompt": "Chi fa miao?" },
         { "prompt": "Cosa cresce nel prato?" }
       ]
+    },
+    "6-11-1": {
+      "title": "Memory degli animali",
+      "speech": "Trova le carte degli animali uguali.",
+      "prompt": "Gira due carte uguali."
+    },
+    "6-11-2": {
+      "title": "Memory dei numeri",
+      "speech": "Trova le carte dei numeri uguali.",
+      "prompt": "Gira due numeri uguali."
+    },
+    "6-11-3": {
+      "title": "Memory del codice",
+      "speech": "Trova i blocchi di comando uguali.",
+      "prompt": "Ricorda ogni blocco di comando."
     },
     "6-m-1": {
       "title": "L'ultimo angolo",

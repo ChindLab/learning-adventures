@@ -39,6 +39,13 @@
     "Orange": "Orange",
     "Space bar": "Barre d'espace",
     "Turn right": "Tourner à droite",
+    "Forward": "Avancer",
+    "Back": "Reculer",
+    "Turn left": "Tourner à gauche",
+    "Jump": "Sauter",
+    "Repeat": "Répéter",
+    "If": "Si",
+    "Collect": "Ramasser",
     "To the star": "Vers l'étoile",
     "Start": "Départ",
     "Cat": "Chat",
@@ -326,6 +333,10 @@
     "6-10": {
       "title": "Qu'est-ce qui va ensemble ?",
       "goal": "Relie les choses."
+    },
+    "6-11": {
+      "title": "Atelier mémoire",
+      "goal": "Mémorise les cartes et trouve toutes les paires."
     },
     "6-m": {
       "title": "Grande finale",
@@ -878,6 +889,21 @@
         { "prompt": "Qui fait miaou ?" },
         { "prompt": "Qu'est-ce qui pousse dans le pré ?" }
       ]
+    },
+    "6-11-1": {
+      "title": "Memory des animaux",
+      "speech": "Trouve les cartes d'animaux identiques.",
+      "prompt": "Retourne deux cartes identiques."
+    },
+    "6-11-2": {
+      "title": "Memory des nombres",
+      "speech": "Trouve les cartes de nombres identiques.",
+      "prompt": "Retourne deux nombres identiques."
+    },
+    "6-11-3": {
+      "title": "Memory du code",
+      "speech": "Trouve les blocs de commande identiques.",
+      "prompt": "Mémorise chaque bloc de commande."
     },
     "6-m-1": {
       "title": "Le dernier coin",

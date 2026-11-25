@@ -44,6 +44,17 @@ test('German labels come from the lexicon', () => {
   content.applyLanguage('en');
 });
 
+test('Logic Memory translates its lesson and command labels', () => {
+  content.applyLanguage('de');
+  assert.strictEqual(content.findLesson('6-11').lesson.title, 'Memory-Werkstatt');
+  assert.strictEqual(content.activity('6-11-1').prompt, 'Decke zwei gleiche Karten auf.');
+  assert.deepStrictEqual(content.activity('6-11-3').pairs.map((pair) => pair.a.label), [
+    'Vorwärts', 'Zurück', 'Links drehen', 'Rechts drehen',
+    'Springen', 'Wiederholen', 'Wenn', 'Sammeln'
+  ]);
+  content.applyLanguage('en');
+});
+
 test('every activity and lesson has a German translation', () => {
   content.baseStages.forEach((stage) => {
     stage.lessons.forEach((lesson) => {
@@ -54,7 +65,7 @@ test('every activity and lesson has a German translation', () => {
     });
   });
   assert.ok(content.translations.de.stages[1]);
-  assert.strictEqual(Object.keys(content.translations.de.activities).length, 109);
+  assert.strictEqual(Object.keys(content.translations.de.activities).length, 112);
 });
 
 test('Bobby speaks German in German mode', () => {

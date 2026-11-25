@@ -60,17 +60,17 @@ translation, not a CSS tweak. The full policy and per-change checklist is in
 Every change must pass:
 
 ```bash
-npm test          # 101 unit tests, Node 18+
+npm test          # 104 unit tests, Node 18+
 ```
 
 and the browser self-test:
 
 ```
 http://localhost:8080/selftest.html
-Alles gut – Gesamt: 768/768 ok
+Alles gut – Gesamt: 789/789 ok
 ```
 
-`768 = 109 English activities + 6 × 109 translated activities + 5 screens.` The total grows with
+`789 = 112 English activities + 6 × 112 translated activities + 5 screens.` The total grows with
 every activity or screen you add; a wrong total means something is not being played.
 
 The self-test mounts every activity, finds its controls, solves it the way a child would,

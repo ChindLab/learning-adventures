@@ -688,6 +688,118 @@
       ]
     },
     {
+      "id": "6-11",
+      "title": "Memory Workshop",
+      "goal": "Remember the cards and find every pair.",
+      "activities": [
+        {
+          "id": "6-11-1",
+          "type": "matchPairs",
+          "title": "Animal Memory",
+          "speech": "Find the matching animal cards.",
+          "prompt": "Turn over two matching cards.",
+          "mode": "memory",
+          "seed": 10,
+          "pairs": [
+            {
+              "a": { "art": "katze", "label": "Cat" },
+              "b": { "art": "katze", "label": "Cat" }
+            },
+            {
+              "a": { "art": "hund", "label": "Dog" },
+              "b": { "art": "hund", "label": "Dog" }
+            },
+            {
+              "a": { "art": "vogel", "label": "Bird" },
+              "b": { "art": "vogel", "label": "Bird" }
+            },
+            {
+              "a": { "art": "fisch", "label": "Fish" },
+              "b": { "art": "fisch", "label": "Fish" }
+            }
+          ]
+        },
+        {
+          "id": "6-11-2",
+          "type": "matchPairs",
+          "title": "Number Memory",
+          "speech": "Find the matching number cards.",
+          "prompt": "Turn over two matching numbers.",
+          "mode": "memory",
+          "seed": 11,
+          "pairs": [
+            {
+              "a": { "art": "kreis", "label": "1" },
+              "b": { "art": "kreis", "label": "1" }
+            },
+            {
+              "a": { "art": "kreis", "label": "2" },
+              "b": { "art": "kreis", "label": "2" }
+            },
+            {
+              "a": { "art": "kreis", "label": "3" },
+              "b": { "art": "kreis", "label": "3" }
+            },
+            {
+              "a": { "art": "kreis", "label": "4" },
+              "b": { "art": "kreis", "label": "4" }
+            },
+            {
+              "a": { "art": "kreis", "label": "5" },
+              "b": { "art": "kreis", "label": "5" }
+            },
+            {
+              "a": { "art": "kreis", "label": "6" },
+              "b": { "art": "kreis", "label": "6" }
+            }
+          ]
+        },
+        {
+          "id": "6-11-3",
+          "type": "matchPairs",
+          "title": "Code Memory",
+          "speech": "Find the matching command blocks.",
+          "prompt": "Remember each command block.",
+          "mode": "memory",
+          "seed": 12,
+          "pairs": [
+            {
+              "a": { "art": "block-forward", "label": "Forward" },
+              "b": { "art": "block-forward", "label": "Forward" }
+            },
+            {
+              "a": { "art": "block-back", "label": "Back" },
+              "b": { "art": "block-back", "label": "Back" }
+            },
+            {
+              "a": { "art": "block-left", "label": "Turn left" },
+              "b": { "art": "block-left", "label": "Turn left" }
+            },
+            {
+              "a": { "art": "block-right", "label": "Turn right" },
+              "b": { "art": "block-right", "label": "Turn right" }
+            },
+            {
+              "a": { "art": "block-jump", "label": "Jump" },
+              "b": { "art": "block-jump", "label": "Jump" }
+            },
+            {
+              "a": { "art": "block-repeat", "label": "Repeat" },
+              "b": { "art": "block-repeat", "label": "Repeat" }
+            },
+            {
+              "a": { "art": "block-if", "label": "If" },
+              "b": { "art": "block-if", "label": "If" }
+            },
+            {
+              "a": { "art": "block-collect", "label": "Collect" },
+              "b": { "art": "block-collect", "label": "Collect" }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "6-m",
       "title": "Stage finale",
       "goal": "Turn, walk, arrive.",

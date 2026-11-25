@@ -7,10 +7,10 @@ tests, and how to verify the app in a real browser.
 The short version:
 
 ```bash
-npm test                       # 101 unit tests
+npm test                       # 104 unit tests
 # then, in a browser:
 open http://localhost:8080/selftest.html
-# expect: Alles gut – Gesamt: 768/768 ok
+# expect: Alles gut – Gesamt: 789/789 ok
 ```
 
 A pull request without both results is not reviewable.
@@ -89,12 +89,12 @@ npm run serve          # http://localhost:8080
 
 Open **`http://localhost:8080/selftest.html`**.
 
-- Green: `Alles gut – Gesamt: 768/768 ok`.
+- Green: `Alles gut – Gesamt: 789/789 ok`.
 - Red: a table row names the activity id, engine and reason
   (`completions=2`, `no-solver`, `no-controls`, `stars=undefined`).
 - A favicon 404 in the console is harmless. Any other console error is not.
 
-`768 = 109 English activities + 6 × 109 translated activities + 5 screens.`
+`789 = 112 English activities + 6 × 112 translated activities + 5 screens.`
 
 Why `localhost` and not `file://`: the app works from `file://`, but Playwright and most
 automation block it. The self-test is the same either way.
@@ -149,7 +149,7 @@ npm run hooks          # once per clone
 ```
 
 This sets `core.hooksPath` to `.githooks`; `.githooks/pre-commit` runs
-`npm run check` — syntax plus 101 unit tests, about 1–2 seconds. It is deliberately **not**
+`npm run check` — syntax plus 104 unit tests, about 1–2 seconds. It is deliberately **not**
 the browser self-test (30 s per commit would be unbearable); CI runs that for every pushed
 commit.
 
@@ -195,8 +195,8 @@ That last item is worth more than the rest of this page.
 Paste into the PR description:
 
 ```
-npm test:               101/101 pass
-selftest.html:          Alles gut – Gesamt: 768/768 ok
+npm test:               104/104 pass
+selftest.html:          Alles gut – Gesamt: 789/789 ok
 console (app):          0 errors
 manual:                 all seven languages, 1024×600, keyboard only
 ```
@@ -211,8 +211,8 @@ it. “Not run” is honest; “should work” is not evidence.
 Every **pushed commit on every branch** runs `.github/workflows/ci.yml` (and every pull
 request runs it against the head commit):
 
-- **unit** — `npm run check` (syntax + 101 unit tests) plus “generated seed is up to date”
-- **browser** — `npx playwright test` (5 smoke checks + self-test 768/768)
+- **unit** — `npm run check` (syntax + 104 unit tests) plus “generated seed is up to date”
+- **browser** — `npx playwright test` (10 browser checks + self-test 789/789)
 - **ci-success** — a single aggregating job
 
 Runs are grouped per commit and **not cancelled**, so pushing three commits produces three

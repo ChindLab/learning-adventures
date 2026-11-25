@@ -23,8 +23,33 @@ test('Inhalte sind fehlerfrei', () => {
 test('Aktivitätszahlen entsprechen der Spezifikation', () => {
   const counts = content.stages.map((stage) =>
     stage.lessons.reduce((sum, lesson) => sum + lesson.activities.length, 0));
-  assert.deepStrictEqual(counts, [17, 14, 10, 12, 9, 12, 16, 7, 12]);
-  assert.strictEqual(counts.reduce((a, b) => a + b, 0), 109);
+  assert.deepStrictEqual(counts, [17, 14, 10, 12, 9, 15, 16, 7, 12]);
+  assert.strictEqual(counts.reduce((a, b) => a + b, 0), 112);
+});
+
+test('Logic stage offers three progressively larger Memory boards', () => {
+  const stage6 = content.stages.find((stage) => stage.id === 6);
+  const workshop = stage6.lessons.find((lesson) => lesson.id === '6-11');
+  assert.ok(workshop, 'Memory Workshop lesson');
+  assert.deepStrictEqual(workshop.activities.map((activity) => activity.id), ['6-11-1', '6-11-2', '6-11-3']);
+  assert.deepStrictEqual(workshop.activities.map((activity) => activity.pairs.length), [4, 6, 8]);
+  workshop.activities.forEach((activity) => {
+    assert.strictEqual(activity.type, 'matchPairs');
+    assert.strictEqual(activity.mode, 'memory');
+    activity.pairs.forEach((pair) => {
+      assert.strictEqual(pair.a.art, pair.b.art);
+      assert.strictEqual(pair.a.label, pair.b.label);
+    });
+  });
+});
+
+test('Logic code memory covers all eight command blocks', () => {
+  const activity = content.activity('6-11-3');
+  assert.ok(activity, 'Code Memory activity');
+  assert.deepStrictEqual(activity.pairs.map((pair) => pair.a.art), [
+    'block-forward', 'block-back', 'block-left', 'block-right',
+    'block-jump', 'block-repeat', 'block-if', 'block-collect'
+  ]);
 });
 
 test('jede Stufe hat genau einen Meilenstein', () => {

@@ -34,6 +34,13 @@
     "Basket": "Korb",
     "Space bar": "Leertaste",
     "Turn right": "Rechts drehen",
+    "Forward": "Vorwärts",
+    "Back": "Zurück",
+    "Turn left": "Links drehen",
+    "Jump": "Springen",
+    "Repeat": "Wiederholen",
+    "If": "Wenn",
+    "Collect": "Sammeln",
     "To the star": "Zum Stern",
     "Cat": "Katze",
     "Dog": "Hund",
@@ -317,6 +324,10 @@
     "6-10": {
       "title": "Was gehört zusammen?",
       "goal": "Dinge miteinander verbinden."
+    },
+    "6-11": {
+      "title": "Memory-Werkstatt",
+      "goal": "Merk dir die Karten und finde alle Paare."
     },
     "6-m": {
       "title": "Stufen-Abschluss",
@@ -1069,6 +1080,21 @@
           "prompt": "Was wächst auf der Wiese?"
         }
       ]
+    },
+    "6-11-1": {
+      "title": "Tier-Memory",
+      "speech": "Finde die gleichen Tierkarten.",
+      "prompt": "Decke zwei gleiche Karten auf."
+    },
+    "6-11-2": {
+      "title": "Zahlen-Memory",
+      "speech": "Finde die gleichen Zahlenkarten.",
+      "prompt": "Decke zwei gleiche Zahlen auf."
+    },
+    "6-11-3": {
+      "title": "Code-Memory",
+      "speech": "Finde die gleichen Befehlsblöcke.",
+      "prompt": "Merk dir jeden Befehlsblock."
     },
     "6-m-1": {
       "title": "Die letzte Ecke",

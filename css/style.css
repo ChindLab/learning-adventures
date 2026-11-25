@@ -990,10 +990,10 @@ h1[tabindex="-1"]:focus, h1[tabindex="-1"]:focus-visible { outline: none; }
 @media (max-width: 620px) {
   body { font-size: 20px; }
   .app { padding: 12px 14px 180px; }
-  .topbar { padding: 10px 14px; }
+  .topbar { gap: 4px; padding: 10px 8px; }
   .topbar-sub { display: none; }
-  .clock-count { padding: 4px 10px; font-size: 16px; }
-  .star-count { padding: 4px 10px; font-size: 18px; }
+  .clock-count { padding: 4px; font-size: 16px; }
+  .star-count { padding: 4px; font-size: 18px; }
   .map { grid-template-columns: 1fr; }
   .options.cols-2, .options.cols-3 { grid-template-columns: 1fr; }
   .memory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
