@@ -205,7 +205,7 @@ the pull request. Browser automation is not optional for UI changes: unit tests 
 tell whether a button still does anything.
 
 Optional: run `npm run hooks` once per clone to execute the syntax check and unit tests
-before every local commit (≈1–2 s). The browser layer stays in CI.
+before every local commit (≈1–2 s). Run browser checks locally before merging or releasing.
 
 ### CI and the merge gate
 
@@ -213,8 +213,7 @@ Every **pushed commit on every branch** runs `.github/workflows/ci.yml` (pull re
 it against their head commit):
 
 - **unit** — syntax check, unit tests, and “generated seed is up to date”
-- **browser** — Playwright smoke tests and the full self-test (789/789)
-- **ci-success** — the only check branch protection needs
+- **ci-success** — passes only when `unit` passes; the only check branch protection needs
 
 To actually block merges, require **`ci-success`** in the repository settings:
 **[docs/BRANCH-PROTECTION.md](docs/BRANCH-PROTECTION.md)** (UI and `gh` commands). A

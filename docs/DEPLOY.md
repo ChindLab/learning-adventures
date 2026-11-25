@@ -6,7 +6,8 @@ The live site is served from:
 
 The app is plain static files, so Pages can host it without a build step. The CI workflow
 contains two jobs: **build** (packages `_site` and uploads the Pages artifact) and
-**deploy** (publishes it). Both run only after `ci-success` and only for `main`.
+**deploy** (publishes it). Both run only after the unit-only `ci-success` check and only
+for `main`.
 
 ---
 
@@ -55,11 +56,10 @@ All paths are relative (`css/style.css`, `js/…`), so the project works both at
 
 ```
 push to main
-   └─ CI: unit ─┐
-      CI: browser ─┴─ ci-success ─→ deploy ─→ GitHub Pages
+   └─ CI: unit → ci-success → build → deploy → GitHub Pages
 ```
 
-- A failing test prevents the deploy; there is no “deploy anyway” button in the workflow.
+- A failing unit test prevents the deploy; there is no “deploy anyway” button in the workflow.
 - Pull requests run CI but never deploy.
 - Manual re-deploy: **Actions → CI → Run workflow**, branch `main`. The `deploy` job runs
   because `workflow_dispatch` is allowed for `main`.

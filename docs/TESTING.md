@@ -150,8 +150,7 @@ npm run hooks          # once per clone
 
 This sets `core.hooksPath` to `.githooks`; `.githooks/pre-commit` runs
 `npm run check` — syntax plus 104 unit tests, about 1–2 seconds. It is deliberately **not**
-the browser self-test (30 s per commit would be unbearable); CI runs that for every pushed
-commit.
+the browser self-test; run browser checks locally before merging or releasing.
 
 Skip once with `git commit --no-verify`. Disable with
 `git config --unset core.hooksPath`.
@@ -212,8 +211,7 @@ Every **pushed commit on every branch** runs `.github/workflows/ci.yml` (and eve
 request runs it against the head commit):
 
 - **unit** — `npm run check` (syntax + 104 unit tests) plus “generated seed is up to date”
-- **browser** — `npx playwright test` (10 browser checks + self-test 789/789)
-- **ci-success** — a single aggregating job
+- **ci-success** — passes only when the unit job passes
 
 Runs are grouped per commit and **not cancelled**, so pushing three commits produces three
 completed runs. This costs more Actions minutes than a PR-only setup; that is the trade-off
@@ -222,10 +220,6 @@ for having a check on every commit.
 A workflow **cannot** block a merge on its own. A repository admin must require
 `ci-success` in branch protection; exact UI and `gh` steps are in
 **[BRANCH-PROTECTION.md](BRANCH-PROTECTION.md)**.
-
-If the browser job fails only in CI, download the `playwright-results` artifact. The most
-common causes are a timing assumption (use `expect`, not `sleep`) and a missing browser
-dependency (`--with-deps`).
 
 ---
 

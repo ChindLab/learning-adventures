@@ -182,14 +182,15 @@ Request stehen. Für UI-Änderungen ist Browser-Automatisierung nicht optional: 
 erkennen nicht, ob ein Knopf noch etwas tut.
 
 Optional: `npm run hooks` einmal pro Klon ausführen, dann laufen Syntaxprüfung und
-Unit-Tests vor jedem lokalen Commit (ca. 1–2 s). Die Browser-Ebene bleibt in der CI.
+Unit-Tests vor jedem lokalen Commit (ca. 1–2 s). Browserprüfungen laufen lokal vor dem
+Merge oder Release.
 
 ### CI und Merge-Sperre
 
 Jeder **gepushte Commit auf jedem Branch** durchläuft `.github/workflows/ci.yml` (Pull
-Requests zusätzlich gegen den Head-Commit): Syntax + Unit-Tests, Playwright und den
-Selbsttest, zusammengefasst im Check **`ci-success`**. Damit ein Merge wirklich blockiert
-wird, muss ein Admin diesen Check in den Branch-Regeln verlangen –
+Requests zusätzlich gegen den Head-Commit): Syntax und Unit-Tests, zusammengefasst im
+Check **`ci-success`**. Damit ein Merge wirklich blockiert wird, muss ein Admin diesen
+Check in den Branch-Regeln verlangen –
 **[docs/BRANCH-PROTECTION.md](docs/BRANCH-PROTECTION.md)**. Ein Workflow allein kann keinen
 Merge verhindern.
 

@@ -6,8 +6,7 @@ gate is a repository setting: *require the status check `ci-success` before merg
 This repository ships `.github/workflows/ci.yml` with one stable job for exactly that:
 
 - `unit` → syntax check, 104 unit tests, generated seed is up to date
-- `browser` → Playwright smoke tests + `selftest.html` (789 activities/screens)
-- `ci-success` → fails unless both jobs passed
+- `ci-success` → fails unless the unit job passed
 
 Require **`ci-success`**, not the individual jobs. Adding a job later never requires
 touching the branch rule.
@@ -77,15 +76,14 @@ gh api repos/OWNER/REPO/branches/main/protection \
 ## What the CI actually runs
 
 ```yaml
-unit:    npm run check        # syntax + node --test
-         npm run seed         # then git diff --exit-code js/config/seed.js
-browser: npx playwright test  # 10 browser checks + selftest 789/789
+unit: npm run check   # syntax + node --test
+      npm run seed    # then git diff --exit-code js/config/seed.js
 ```
 
 `npm run check` deliberately starts with a syntax pass over every JS file: the Node test
 runner only loads what a test requires, so a broken engine could otherwise pass tests.
 
-Playwright is installed in CI only (`--no-save`); the app itself has no dependencies.
+Playwright remains an optional local test dependency; the app itself has no dependencies.
 
 ---
 
@@ -102,6 +100,5 @@ is necessary but not sufficient; the setting above is the lock.
 |---|---|
 | `ci-success` not listed | Run the workflow once; only finished checks are selectable. |
 | Check stuck on “Expected” | The job was renamed. Keep the `ci-success` name stable or update the rule. |
-| Browser job fails only in CI | Open the uploaded `playwright-results` artifact; usually timing or a missing browser dependency. |
 | Seed diff step fails | Run `npm run seed` locally and commit `js/config/seed.js`. |
 | Fork PR shows no checks | Actions from forks require maintainer approval on the first run. |

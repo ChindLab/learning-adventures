@@ -40,8 +40,8 @@ Nothing to install to play or to edit.
    npm run hooks
    ```
    This enables `.githooks/pre-commit`, which runs the syntax check and unit tests
-   (~1–2 s). It can be skipped with `git commit --no-verify`; the browser self-test only
-   runs in CI.
+   (~1–2 s). It can be skipped with `git commit --no-verify`; run the browser self-test
+   locally before merging or releasing.
 
 If you are a **coding agent**, read **[AGENTS.md](AGENTS.md)** first. It has the
 repository map, registration points, and the definition of done.
@@ -106,7 +106,7 @@ honest and means a maintainer must run it before merge.
 ### CI
 
 Every **pushed commit on every branch** runs `.github/workflows/ci.yml` (pull requests
-against their head commit): unit + browser + the aggregating `ci-success`. Runs are grouped
+against their head commit): unit tests plus the aggregating `ci-success`. Runs are grouped
 per commit and not cancelled, so each commit finishes its own run. To make the check
 mandatory, a repository admin must require **`ci-success`** in branch protection — see
 **[docs/BRANCH-PROTECTION.md](docs/BRANCH-PROTECTION.md)**. The workflow alone cannot block

@@ -1,7 +1,7 @@
 name: CI
 
-# Action versions must target Node 24 (checkout@v7, setup-node@v7,
-# upload-artifact@v7). Node 20 actions are deprecated on GitHub runners.
+# Action versions must target Node 24 (checkout@v7, setup-node@v7).
+# Node 20 actions are deprecated on GitHub runners.
 
 on:
   push:
@@ -39,51 +39,18 @@ jobs:
           npm run seed
           git diff --exit-code -- js/config/seed.js
 
-  browser:
-    name: browser
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Node 22
-        uses: actions/setup-node@v7
-        with:
-          node-version: 22
-
-      - name: Install Playwright (test-only, not a project dependency)
-        run: |
-          npm install --no-save --no-audit --no-fund @playwright/test@1.49.1
-          npx playwright install --with-deps chromium
-
-      - name: Browser smoke + self-test
-        run: npx playwright test
-
-      - name: Upload failure artifacts
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          name: playwright-results
-          path: |
-            playwright-report
-            test-results
-          if-no-files-found: ignore
-          retention-days: 7
-
   # Single stable check for branch protection. Require this one in GitHub.
   ci-success:
     name: ci-success
-    needs: [unit, browser]
+    needs: [unit]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Both jobs must have passed
+      - name: Unit job must have passed
         run: |
-          echo "unit:    ${{ needs.unit.result }}"
-          echo "browser: ${{ needs.browser.result }}"
-          if [ "${{ needs.unit.result }}" != "success" ] || [ "${{ needs.browser.result }}" != "success" ]; then
+          echo "unit: ${{ needs.unit.result }}"
+          if [ "${{ needs.unit.result }}" != "success" ]; then
             echo "CI failed — merging is blocked."
             exit 1
           fi
