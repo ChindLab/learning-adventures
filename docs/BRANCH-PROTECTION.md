@@ -5,7 +5,7 @@ gate is a repository setting: *require the status check `ci-success` before merg
 
 This repository ships `.github/workflows/ci.yml` with one stable job for exactly that:
 
-- `unit` → syntax check, 107 unit tests, generated seed is up to date
+- `unit` → syntax check, 109 unit tests, generated seed is up to date
 - `browser` → Playwright smoke tests + `selftest.html` (901 activities/screens)
 - `ci-success` → fails unless both jobs passed
 

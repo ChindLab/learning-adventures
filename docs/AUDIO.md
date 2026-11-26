@@ -1,8 +1,9 @@
 # Sound and speech
 
-Bela Learning has **no audio files**. Everything is produced locally: short synthesized
-effects and the operating system's text-to-speech voice. Nothing is downloaded, streamed or
-sent anywhere, and `tests/no-network.test.js` enforces that.
+Bela Learning has **no downloaded audio**. Effects are synthesized locally and most speech
+uses the operating system's text-to-speech voice. Swiss German also ships a local recorded
+pack made with the `Swiss-german-lady` voice. Nothing is streamed or sent anywhere, and
+`tests/no-network.test.js` enforces that.
 
 Two separate systems, controlled separately.
 
@@ -38,12 +39,13 @@ Engines call `api.sfx('name')`; they never touch `AudioContext` directly.
 
 ## 2. Speech — `js/core/speech.js`
 
-The browser's `speechSynthesis` API reads Bobby's lines with a voice installed in the
-operating system. It is text-to-speech, not a recording.
+For most languages, the browser's `speechSynthesis` API reads Bobby's lines with a voice
+installed in the operating system. Swiss German first uses the recorded pack described below;
+missing lines fall back to the system voice.
 
 - Language follows the child: `en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`, `ne-NP` or
-  `de-CH` (`speech.setLanguage`). Swiss German is experimental; without a `de-CH` voice it
-  falls back to a German `de-DE` voice.
+  `de-CH` (`speech.setLanguage`). Swiss German is experimental; recorded lines use the
+  `Swiss-german-lady` pack, and missing lines fall back to the system voice.
 - Rate **0.95**, pitch **1.0** — slightly slower, no chipmunk effect.
 - The previous utterance is cancelled before a new one; children tap fast. The latest line wins,
   and a short pause after `cancel()` keeps Chrome's speech queue from wedging.
@@ -57,6 +59,15 @@ operating system. It is text-to-speech, not a recording.
   A tap or key press unlocks speech; the next spoken line works normally.
 - The parent can pick a voice under **Settings → Voice** (German: Einstellungen → Stimme);
   the choice is stored in the device settings.
+
+### Recorded Swiss German pack
+
+- `js/content/voicepack-de-CH.js` maps exact text to an MP3 path.
+- `assets/audio/de-CH/mp3/*.mp3` contains the recordings made with `Swiss-german-lady`.
+- `speech.say(text)` checks this map first. A matching line plays the MP3; a missing or
+  dynamic line falls back to the normal `speechSynthesis` path.
+- `speech.cancel()`, the mute toggle and `pagehide` stop the MP3 as well as TTS.
+- Other languages never consult the pack.
 
 There is no audio queue and no background speech: one line at a time.
 
@@ -107,9 +118,9 @@ table and the guide if it becomes part of the public API.
 
 ### Using real recordings instead
 
-`assets/sounds/` explains how to drop in `.mp3`/`.ogg` files and replace `tone()` with an
-`Audio` element. This is optional; if you do it, use only self-recorded or clearly licensed
-audio, and keep the synthesized fallback for offline first runs.
+`assets/audio/de-CH/` is the existing example: a local voice pack is checked before TTS.
+Use only self-recorded, generated, or clearly licensed audio, and keep the synthesized
+fallback for offline first runs and dynamic lines.
 
 ---
 

@@ -193,7 +193,7 @@ JSON backup/restore in the parent area.
 policy is in **[docs/TESTING.md](docs/TESTING.md)**.
 
 ```bash
-npm run check     # syntax check + 107 unit tests, Node 18+
+npm run check     # syntax check + 109 unit tests, Node 18+
 ```
 
 Then open **`selftest.html`** in a browser (or via Playwright MCP; see the testing guide).
@@ -227,7 +227,7 @@ workflow alone cannot stop a merge.
 
 ## Sound and speech
 
-No audio files exist. Two local sources:
+Almost everything is produced locally:
 
 - **Effects** are synthesized live with the Web Audio API (short oscillator blips for
   click, correct, wrong, star, milestone, pop, bump), through one master gain at 0.25.
@@ -236,6 +236,9 @@ No audio files exist. Two local sources:
   `en-GB`, `de-DE`, `de-CH`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN` or `ne-NP` depending on the
   child, rate 0.95, pitch 1.0. If no voice is installed, the app is silent but fully
   usable — every line is also on screen.
+- **Swiss German recordings** are tried first for `de-CH`: `assets/audio/de-CH/mp3` via
+  `js/content/voicepack-de-CH.js`, using the `Swiss-german-lady` voice. Missing or dynamic
+  lines fall back to the system voice above.
 
 The speaker button cycles **an → nur Töne → stumm**; the parent area can switch effects
 and speech separately and pick a voice. Visual feedback never depends on sound.
@@ -249,8 +252,8 @@ and speech separately and pick a voice. Visual feedback never depends on sound.
 - English is the source language in `content/stage*.js`.
 - Translations live in `i18n/de-DE.js`, `i18n/fr-FR.js`, `i18n/it-IT.js`, `i18n/zh-CN.js`, `i18n/hi-IN.js`,
   `i18n/ne-NP.js` and `i18n/de-CH.js`, keyed by stage/lesson/activity ID, plus a lexicon for
-  labels and a UI dictionary. Swiss German is experimental; without a Swiss voice it uses a
-  German voice.
+  labels and a UI dictionary. Swiss German is experimental and uses a recorded
+  `Swiss-german-lady` voice pack; missing lines fall back to system speech.
 - New profiles default to **English**; the language is a **per-child** setting
   (`profiles.p1.language`), not a runtime toggle.
 - Speech uses the operating system voice (`en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`,

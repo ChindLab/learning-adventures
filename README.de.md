@@ -169,7 +169,7 @@ JSON-Sicherung im Elternbereich.
 vollständige Richtlinie steht in **[docs/TESTING.md](docs/TESTING.md)**.
 
 ```bash
-npm test          # 107 Unit-Tests, Node 18+
+npm test          # 109 Unit-Tests, Node 18+
 ```
 
 Danach **`selftest.html`** im Browser öffnen (oder über Playwright MCP, siehe Anleitung).
@@ -199,7 +199,7 @@ Merge verhindern.
 
 ## Ton und Stimme
 
-Es gibt keine Audiodateien. Zwei lokale Quellen:
+Fast alles wird lokal erzeugt:
 
 - **Geräusche** werden live mit der Web Audio API erzeugt (kurze Oszillator-Töne für
   Klick, richtig, falsch, Stern, Meilenstein, Pop, Bump), über einen Master-Gain von 0,25.
@@ -207,7 +207,10 @@ Es gibt keine Audiodateien. Zwei lokale Quellen:
 - **Bobbys Stimme** kommt aus der `speechSynthesis` des Browsers mit einer Stimme des
   Betriebssystems, `en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`, `ne-NP` oder `de-CH` je
   nach Kind, Rate 0,95, Pitch 1,0. Fehlt eine Stimme, ist die App stumm, aber vollständig
-  nutzbar – jeder Satz steht auch auf dem Bildschirm.
+  nutzbar – jeder Satz steht auf dem Bildschirm.
+- **Schweizerdeutsche Aufnahmen** werden für `de-CH` zuerst genutzt:
+  `assets/audio/de-CH/mp3` über `js/content/voicepack-de-CH.js`, mit der Stimme
+  `Swiss-german-lady`. Fehlende oder dynamische Sätze fallen auf die Systemstimme zurück.
 
 Der Lautsprecher-Knopf schaltet **an → nur Töne → stumm**; im Elternbereich lassen sich
 Geräusche und Vorlesen getrennt schalten und eine Stimme wählen. Die visuelle Rückmeldung
@@ -222,8 +225,8 @@ hängt nie vom Ton ab.
 - Englisch ist die Quellsprache in `content/stage*.js`.
 - Übersetzungen liegen in `i18n/de-DE.js`, `i18n/fr-FR.js`, `i18n/it-IT.js`, `i18n/zh-CN.js`, `i18n/hi-IN.js`,
   `i18n/ne-NP.js` und `i18n/de-CH.js`, nach Stufen-/Lektions-/Aktivitäts-ID, plus Wörterbuch
-  für Beschriftungen und Oberfläche. Schweizerdeutsch ist experimentell; ohne Schweizer Stimme
-  wird eine deutsche Stimme verwendet.
+  für Beschriftungen und Oberfläche. Schweizerdeutsch ist experimentell und nutzt ein
+  aufgenommenes `Swiss-german-lady`-Stimmepaket; fehlende Sätze fallen auf die Systemstimme zurück.
 - Neue Profile starten auf **Englisch**; die Sprache ist eine **Einstellung pro Kind**
   (`profiles.p1.language`), kein Umschalter mitten im Spiel.
 - Die Stimme kommt vom Betriebssystem (`en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`, `ne-NP`, `de-CH`); fehlt

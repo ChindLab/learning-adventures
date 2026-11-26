@@ -54,7 +54,9 @@ selftest.html               development page; not linked from the child UI
 css/style.css               tokens and all components
 js/core/                    app shell, router, progress, audio, speech, i18n, UI helpers
 js/content/                 lessons as data (English source) + Bobby's lines
+js/content/voicepack-de-CH.js  text → recorded MP3 map for Swiss German
 i18n/de-DE.js, fr-FR.js, it-IT.js, zh-CN.js, hi-IN.js, ne-NP.js, de-CH.js  translation overlays (English is the source)
+assets/audio/de-CH/mp3/     Swiss-german-lady recordings (590 files, ~17 MB)
 js/engines/                 one file per game type, shared mount() contract
 js/dev/selftest.js          auto-plays every activity in every language
 tests/                      Node test runner (no dependencies)
@@ -64,6 +66,7 @@ bela.config.json            first-run children/defaults (editable JSON)
 js/config/seed.js           generated from that JSON — do not edit by hand
 tools/setup.js              interactive first-run wizard
 tools/build-seed.js         validates the JSON and writes the seed
+.tools/                     local-only voice/translation generators (gitignored)
 ```
 
 Important files:
@@ -83,7 +86,7 @@ Important files:
 ## 4. Commands
 
 ```bash
-npm test                 # 107 unit tests, Node 18+
+npm test                 # 109 unit tests, Node 18+
 npm run check            # syntax check + unit tests (what CI runs)
 npm run hooks             # enable the pre-commit hook (once per clone)
 npm run serve            # http://localhost:8080 (optional, for development)
@@ -258,7 +261,7 @@ Hard requirements for engines (details in `docs/ENGINE-GUIDE.md`):
 
 ## 8. Translation rules
 
-- English is the source. German, French, Italian, Chinese, Hindi and Nepali are overlays keyed by IDs.
+- English is the source. German, French, Italian, Chinese, Hindi, Nepali and Swiss German are overlays keyed by IDs.
 - UI strings: `NS.i18n.t('English', 'Deutsch')` at the call site; for fr-FR/it-IT/zh-CN/hi-IN/ne-NP/de-CH the same
   English key is looked up in `content.ui.<lang>`. Dynamic values use placeholders:
   `t('Put {n} on the plate', 'Lege {n} auf den Teller', { n: 4 })`.
@@ -271,6 +274,89 @@ Hard requirements for engines (details in `docs/ENGINE-GUIDE.md`):
 - Never add a language toggle inside an activity. Language is per child
   (`profiles.p.language`) and applied by `NS.i18n.apply()`.
 - Speech language: `en-GB`, `de-DE`, `fr-FR`, `it-IT`, `zh-CN`, `hi-IN`, `ne-NP`, `de-CH`.
+
+---
+
+## 8b. Task: add a language overlay and voice pack
+
+### Language overlay
+
+1. Choose a full BCP-47 tag. Current values: `en-GB`, `de-DE`, `de-CH`, `fr-FR`,
+   `it-IT`, `zh-CN`, `hi-IN`, `ne-NP`. Swiss German is `de-CH` (experimental dialect).
+2. Copy the closest overlay (normally `i18n/de-DE.js` for a German variant) to
+   `i18n/<tag>.js`. Keep every ID and structural field; translate only text.
+   The file must set:
+   - `content.translations['<tag>']` with stages, lessons, activities, achievements
+     and `lexicon`,
+   - `content.ui['<tag>']` for UI strings,
+   - `content.bobbyFor['<tag>']` for Bobby's lines.
+3. Register the tag in all of these:
+   - `js/core/progress.js` (`LANGUAGES` + `LANGUAGE_ALIASES`),
+   - `js/core/i18n.js` (`LANGUAGES` + `SPEECH`),
+   - `js/core/speech.js` (`LANGUAGE_TAGS`),
+   - `js/core/parent.js` (language picker),
+   - `tools/setup.js` (aliases + prompt),
+   - `index.html` and `selftest.html` (script tag).
+4. Add the tag to `tests/i18n-languages.test.js`, the E2E language matrix, seed/profile
+   tests and the docs. Selftest total = `112 × number of languages + 5`; unit-test count
+   grows by two per overlay.
+5. Run `npm run check`, `selftest.html` and `npx playwright test`. Use a native speaker
+   for a real release; mark dialect translations as experimental.
+
+### Swiss German voice pack
+
+Only `de-CH` currently has recorded audio. The voice is **`Swiss-german-lady`** and the
+committed artifacts are:
+
+- `assets/audio/de-CH/mp3/*.mp3` — the recordings,
+- `js/content/voicepack-de-CH.js` — exact text → MP3 path map.
+
+**Always check the local service before starting a generation run.** Never assume it is
+running and never silently substitute a cloud service or another voice:
+
+```bash
+curl -fsS http://127.0.0.1:3900/health
+curl -fsS http://127.0.0.1:3900/v1/audio/voices
+```
+
+Proceed only when `/health` says `"status":"ok"` and the voice list contains
+`Swiss-german-lady`. If the check fails, stop and report it.
+
+Generation request:
+
+```bash
+curl -fsS http://127.0.0.1:3900/v1/audio/speech \
+  -H "Content-Type: application/json" \
+  -d '{"model":"tts-1","voice":"Swiss-german-lady","language":"de","input":"TEXT","response_format":"mp3"}' \
+  --output file.mp3
+```
+
+The local generator lives in **`.tools/generate-voicepack.cjs`**. It is deliberately
+gitignored — `.tools/` is local-only. If it is missing, recreate it from this section:
+extract every static spoken string (stage/lesson/activity speech, prompts, points, hints,
+line notes, deck prompts, letter examples and word prompts), skip `{placeholder}` strings,
+hash the text to a stable filename, call the API, skip existing files, and write the
+manifest. Use **concurrency 1** (the local GPU has one worker), retry `429` with backoff,
+and make the run resumable.
+
+```bash
+node .tools/generate-voicepack.cjs --dry-run
+node .tools/generate-voicepack.cjs --limit 5   # smoke test
+node .tools/generate-voicepack.cjs             # full run
+node --test tests/voicepack.test.js
+```
+
+Verify a few files with `file` or `afinfo`, then commit the MP3s and
+`js/content/voicepack-de-CH.js`. Do **not** commit `.tools/`. The current pack has
+**590 lines** (~17 MB). Dynamic strings (child name, typed word, counts) are not recorded
+and fall back to system speech.
+
+Runtime behavior in `js/core/speech.js`:
+
+1. exact text in the pack → play the MP3,
+2. no entry or dynamic text → system `speechSynthesis`,
+3. no matching system voice → silent, but the text remains on screen,
+4. missing/unplayable mapped MP3 → currently silent (no TTS retry).
 
 ---
 
