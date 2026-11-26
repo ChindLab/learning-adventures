@@ -66,8 +66,6 @@
       var letterIndex = 0;
       var freeInput = null;
 
-      api.speak(config.speech || config.prompt || '');
-
       if (mode === 'alphabet') {
         letters = config.letters || [];
         renderLetter();

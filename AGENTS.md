@@ -83,7 +83,7 @@ Important files:
 ## 4. Commands
 
 ```bash
-npm test                 # 107 unit tests, Node 18+
+npm test                 # 109 unit tests, Node 18+
 npm run check            # syntax check + unit tests (what CI runs)
 npm run hooks             # enable the pre-commit hook (once per clone)
 npm run serve            # http://localhost:8080 (optional, for development)

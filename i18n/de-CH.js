@@ -1391,7 +1391,7 @@
   content.ui = content.ui || {};
   content.ui['de-CH'] = {
     " and ": " und ",
-    " for ": " für ",
+    " for ": " wie ",
     " min": " min",
     " of ": " vo ",
     " sec": " Sek",
@@ -1471,7 +1471,7 @@
     "Parent area": "Elterebereich",
     "Piece ": "Teil ",
     "Please solve the task.": "Bitte lös d'Ufgabe.",
-    "Press the key ": "Drück d'Taste ",
+    "Press the key ": "Drück uf d'Taste ",
     "Press ▶ and watch.": "Drück ▶ und lueg zue.",
     "Progress has been reset.": "De Fortschritt isch zruggsetzt.",
     "Progress is not being saved. The browser is blocking storage.": "De Fortschritt wird nöd gspiicheret. De Browser blockiert de Spiicher.",

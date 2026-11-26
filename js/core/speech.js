@@ -16,6 +16,7 @@
   var speakTimer = null;
   var speakToken = 0;
   var pendingCancel = false;
+  var audio = null;
   var LANGUAGE_TAGS = {
     'en-gb': 'en-GB', 'de-de': 'de-DE', 'de-ch': 'de-CH', 'fr-fr': 'fr-FR',
     'it-it': 'it-IT', 'zh-cn': 'zh-CN', 'hi-in': 'hi-IN', 'ne-np': 'ne-NP',
@@ -26,6 +27,31 @@
   function normalizeTag(tag) {
     var raw = String(tag || '').trim().toLowerCase();
     return LANGUAGE_TAGS[raw] || LANGUAGE_TAGS[raw.slice(0, 2)] || 'en-GB';
+  }
+
+  function stopAudio() {
+    if (!audio) { return; }
+    var current = audio;
+    audio = null;
+    try { current.pause(); current.currentTime = 0; } catch (e) { /* egal */ }
+  }
+
+  function playAudio(file) {
+    if (typeof root.Audio !== 'function') { return false; }
+    stopAudio();
+    try {
+      var element = new root.Audio(file);
+      audio = element;
+      element.preload = 'auto';
+      var promise = element.play();
+      if (promise && promise.catch) {
+        promise.catch(function () { if (audio === element) { stopAudio(); } });
+      }
+      return true;
+    } catch (e) {
+      audio = null;
+      return false;
+    }
   }
 
   // Spaß-Stimmen ("Grandma", "Rocko", …) klingen für ein Lernspiel unpassend.
@@ -120,6 +146,10 @@
       voice = null;
       preferredURI = '';
       voicesLoaded = false;
+      stopAudio();
+      if (supported() && (root.speechSynthesis.speaking || root.speechSynthesis.pending)) {
+        try { root.speechSynthesis.cancel(); } catch (e) { /* egal */ }
+      }
       pickVoice();
     },
 
@@ -135,8 +165,24 @@
     currentVoice: function () { return voice; },
 
     say: function (text) {
-      if (!enabled || !supported() || !text) { return; }
+      if (!enabled || !text) { return; }
+      var normalized = String(text).replace(/\s+/g, ' ').trim();
+      var pack = NS.voicePacks && NS.voicePacks[language];
+      var recorded = pack && pack.byText && pack.byText[normalized];
+
+      if (recorded) {
+        speakToken += 1;
+        pendingCancel = false;
+        if (speakTimer) { root.clearTimeout(speakTimer); speakTimer = null; }
+        if (supported()) {
+          try { root.speechSynthesis.cancel(); } catch (e) { /* egal */ }
+        }
+        if (playAudio(recorded)) { return; }
+      }
+
+      if (!supported()) { return; }
       try {
+        stopAudio();
         pickVoice();
         if (!voice) { return; }
 
@@ -153,7 +199,7 @@
         function speakNow() {
           if (token !== speakToken) { return; }
           try {
-            var utterance = new root.SpeechSynthesisUtterance(String(text));
+            var utterance = new root.SpeechSynthesisUtterance(normalized);
             utterance.lang = language;
             utterance.rate = 0.95;
             utterance.pitch = 1;
@@ -178,6 +224,7 @@
       speakToken += 1;
       pendingCancel = false;
       if (speakTimer) { root.clearTimeout(speakTimer); speakTimer = null; }
+      stopAudio();
       if (!supported()) { return; }
       try { root.speechSynthesis.cancel(); } catch (e) { /* egal */ }
     }
@@ -186,6 +233,8 @@
   if (supported()) {
     try { root.speechSynthesis.addEventListener('voiceschanged', pickVoice); } catch (e) { /* egal */ }
     pickVoice();
+  }
+  if (root.addEventListener) {
     root.addEventListener('pagehide', function () { speech.cancel(); });
   }
 

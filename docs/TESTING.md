@@ -7,7 +7,7 @@ tests, and how to verify the app in a real browser.
 The short version:
 
 ```bash
-npm test                       # 107 unit tests
+npm test                       # 109 unit tests
 # then, in a browser:
 open http://localhost:8080/selftest.html
 # expect: Alles gut – Gesamt: 901/901 ok
@@ -24,6 +24,7 @@ A pull request without both results is not reviewable.
 | **Unit** | pure logic: progress, storage, seed, grid interpreter, typing, arithmetic, JS parser, voice ranking, clock | `npm test` | every function with branches |
 | **Content validator** | ids unique, answers valid, engines exist, speech ≤ 8 words, no placeholders, band/i18n coverage | inside `npm test` | every content change |
 | **Translation coverage** | every stage/lesson/activity has an entry in de-DE, fr-FR, it-IT, zh-CN, hi-IN, ne-NP and de-CH; each overlay has a UI dictionary and Bobby lines | inside `npm test` | every content/translation change |
+| **Voice pack** | every `de-CH` MP3 in the generated text map exists | inside `npm test` | every Swiss German audio change |
 | **No-network** | no `fetch`, XHR, WebSocket, external URL in shipped files | inside `npm test` | every change |
 | **Self-test** | every activity mounts, exposes controls, is solvable without a mouse, completes exactly once; every screen builds | `selftest.html` | every content/engine/UI change |
 | **E2E browser** | real browser: app shell, lesson start, parent gate, language switch, logic memory (mouse/keyboard/touch/file://), selftest green | Playwright (CLI or MCP) | every UI change |
@@ -149,7 +150,7 @@ npm run hooks          # once per clone
 ```
 
 This sets `core.hooksPath` to `.githooks`; `.githooks/pre-commit` runs
-`npm run check` — syntax plus 107 unit tests, about 1–2 seconds. It is deliberately **not**
+`npm run check` — syntax plus 109 unit tests, about 1–2 seconds. It is deliberately **not**
 the browser self-test (30 s per commit would be unbearable); CI runs that for every pushed
 commit.
 
@@ -195,7 +196,7 @@ That last item is worth more than the rest of this page.
 Paste into the PR description:
 
 ```
-npm test:               107/107 pass
+npm test:               109/109 pass
 selftest.html:          Alles gut – Gesamt: 901/901 ok
 console (app):          0 errors
 manual:                 all eight languages, 1024×600, keyboard only
@@ -211,7 +212,7 @@ it. “Not run” is honest; “should work” is not evidence.
 Every **pushed commit on every branch** runs `.github/workflows/ci.yml` (and every pull
 request runs it against the head commit):
 
-- **unit** — `npm run check` (syntax + 107 unit tests) plus “generated seed is up to date”
+- **unit** — `npm run check` (syntax + 109 unit tests) plus “generated seed is up to date”
 - **browser** — `npx playwright test` (10 browser checks + self-test 901/901)
 - **ci-success** — a single aggregating job
 

@@ -60,7 +60,7 @@ translation, not a CSS tweak. The full policy and per-change checklist is in
 Every change must pass:
 
 ```bash
-npm test          # 107 unit tests, Node 18+
+npm test          # 109 unit tests, Node 18+
 ```
 
 and the browser self-test:
